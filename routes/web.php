@@ -14,11 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/admin', [App\Http\Controllers\AdminController::class,'index']);
-Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class,'index']);
+Route::middleware(['admin'])->group(function () {
+
+    Route::prefix('admin')->group(function () {
+
+        Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    });
+
+});

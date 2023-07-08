@@ -1,11 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+            <div class="card card-info">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-6">
+                            <!-- {{ __('Login') }} -->
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
