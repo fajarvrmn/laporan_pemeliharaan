@@ -28,6 +28,11 @@ Route::middleware(['admin'])->group(function () {
     Route::prefix('admin')->group(function () {
 
         // Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::resource('merekperalatan', App\Http\Controllers\MerekController::class);
+        Route::resource('tipeperalatan', App\Http\Controllers\TipeController::class);
+        Route::resource('garduinduk', App\Http\Controllers\GarduController::class);
+        Route::resource('status', StatusController::class);
+        Route::resource('namabay', NamabayController::class);
 
     });
 

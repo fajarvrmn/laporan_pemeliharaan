@@ -49,6 +49,15 @@
     <link rel="stylesheet" href="{{ asset('theme/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('theme/dist/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
 </head>
 <body>
     <div id="app">
@@ -213,25 +222,48 @@
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Dashboard
-                                <i class="right fas fa-angle-left"></i>
+                                <i class="right fas fa-file-chart-line"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="./index.html" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Dashboard v1</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-                    <li class="nav-header">EXAMPLES</li>
+                    <li class="nav-header">MASTER DATA</li>
                     <li class="nav-item">
-                        <a href="pages/calendar.html" class="nav-link">
-                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <a href="{{ route('merekperalatan.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
                         <p>
-                            Calendar
-                            <span class="badge badge-info right">2</span>
+                            Merek Peralatan
+                        </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('tipeperalatan.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Tipe Peralatan
+                        </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('garduinduk.index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Gardu Induk
+                        </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Status Pekerjaan
+                        </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Nama Bay
                         </p>
                         </a>
                     </li>
@@ -247,15 +279,9 @@
             <!-- Content Header (Page header) -->
             <div class="content-header">
             <div class="container-fluid">
-                <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard v2</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard v2</li>
-                    </ol>
+                <div class="row mb-1">
+                <div class="col-sm-12">
+                    <h1 class="m-0">Sistem Laporan Pemeliharaan</h1>
                 </div>
                 </div>
             </div>
