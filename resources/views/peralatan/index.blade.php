@@ -99,8 +99,8 @@
         ajax: "{{ route('peralatan.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'id_merk_peralatan', name: 'id_merk_peralatan'},
-            {data: 'id_type_peralatan', name: 'id_type_peralatan'},
+            {data: 'nama_merk', name: 'nama_merk'},
+            {data: 'nama_type', name: 'nama_type'},
             {data: 'serial_number', name: 'serial_number'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]

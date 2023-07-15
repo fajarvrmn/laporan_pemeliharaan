@@ -17,7 +17,9 @@ class PeralatanController extends Controller
     {
         if ($request->ajax()) {
   
-            $data = Peralatan::latest()->get();
+            $data = Peralatan::join('merek_peralatan', 'peralatan.id_merk_peralatan', '=', 'merek_peralatan.id')
+            ->join('type_peralatan', 'peralatan.id_type_peralatan', '=', 'type_peralatan.id')
+            ->get(['peralatan.*', 'merek_peralatan.nama_merk as nama_merk', 'type_peralatan.nama_type as nama_type']);
   
             return Datatables::of($data)
                     ->addIndexColumn()
