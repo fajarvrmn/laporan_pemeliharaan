@@ -12,6 +12,5 @@ class Status extends Model
 
     protected $fillable = [
         'nama'
-        
     ];
 }

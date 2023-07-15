@@ -1,0 +1,4 @@
+INSERT INTO `laporan_pemeliharaan`.`users` (`id`, `username`, `email`, `nip`, `name`, `pendidikan`, `jabatan`, `unit_kerja`, `password`, `remember_token`, `role`, `created_at`, `updated_at`) VALUES (2, 'kahfi', 'kahfi@dev.com', 12345, 'kahfi', NULL, NULL, NULL, '$2y$10$RvpwupUtWhEvOej1MkSXrO5sQTzRmXwbIsPTnGJJyY9NXwvjuOE4O', 'gDWmW6O2HjObWbiqpwlvCdLbchbAtUYDaKQvu7MAQw1kNyPfESoPFdwEy6di', 1, '2023-07-15 13:06:03', '2023-07-15 13:06:03');
+
+nip : 12345
+password : Qwerty12

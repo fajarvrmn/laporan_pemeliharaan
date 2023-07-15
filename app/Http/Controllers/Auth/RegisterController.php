@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = 'register';
 
     /**
      * Create a new controller instance.
@@ -38,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -50,10 +50,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'username' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['required', 'integer', 'max:2'],
+            'nip' => ['required', 'integer'],
+            'pendidikan' => ['required', 'string', 'max:255'],
+            'jabatan' => ['required', 'string', 'max:255'],
+            'unit_kerja' => ['required', 'string', 'max:255']
         ]);
     }
 
@@ -67,10 +72,15 @@ class RegisterController extends Controller
     {
         // dd($data);
         return User::create([
+            'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role' => $data['role']
+            'role' => $data['role'],
+            'nip' => $data['nip'],
+            'pendidikan' => $data['pendidikan'],
+            'jabatan' => $data['jabatan'],
+            'unit_kerja' => $data['unit_kerja'],
         ]);
     }
 }
