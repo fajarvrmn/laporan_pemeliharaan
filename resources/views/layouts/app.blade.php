@@ -185,6 +185,14 @@
                         </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('personil.index') }}" class="nav-link {{ ($routeSelected == 'personil') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Personil
+                        </p>
+                        </a>
+                    </li>
                     <li class="nav-header">ADMIN</li>
                     <li class="nav-item">
                         <a href="{{ route('register') }}" class="nav-link {{ ($routeSelected == 'register') ? 'active' : '' }}">
