@@ -1,26 +1,45 @@
 @extends('layouts.app')
  
 @section('content')
-    <div class="container-fluid">
-    <h3>Master Data Peralatan</h3><br>
+<div class="container-fluid">
+    <h3>Master Data Laporan</h3><br>
     <div>
         <hr>
     </div>
     <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
     <br><br>
-    <table class="table table-bordered data-table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Peralatan</th>
-                <th>NIP</th>
-                <th>Status Pekerjaan</th>
-                <th width="280px">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+
+        <table class="table table-bordered data-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Peralatan</th>
+                    <th>NIP</th>
+                    <th>Status Pekerjaan</th>
+                    <th>Tanggal Pelaksanaan</th>
+                    <th>Gardu Induk</th>
+                    <th>Busbar</th>
+                    <th>Kapasitas</th>
+                    <th>Pengujian Kontak</th>
+                    <th>Pengujian Isolasi</th>
+                    <th>Arus Motor Open</th>
+                    <th>Arus Motor Close</th>
+                    <th>Waktu Open</th>
+                    <th>Waktu Close</th>
+                    <th>Kondisi Visual</th>
+                    <th>Dokumentasi</th>
+                    <th>Pengawas</th>
+                    <th>Keterangan</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+    
 </div>
      
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
@@ -204,6 +223,7 @@
     --------------------------------------------
     --------------------------------------------*/
     var table = $('.data-table').DataTable({
+        responsive: true,
         processing: true,
         serverSide: true,
         ajax: "{{ route('laporan.index') }}",
@@ -212,9 +232,25 @@
             {data: 'id_peralatan', name: 'id_peralatan'},
             {data: 'nip', name: 'nip'},
             {data: 'id_status_pekerjaan', name: 'id_status_pekerjaan'},
+            {data: 'tgl_pelaksanaan', name: 'tgl_pelaksanaan'},
+            {data: 'id_gardu_induk', name: 'id_gardu_induk'},
+            {data: 'busbar', name: 'busbar'},
+            {data: 'kapasitas', name: 'kapasitas'},
+            {data: 'hasil_pengujian_tahanan_kontak', name: 'hasil_pengujian_tahanan_kontak'},
+            {data: 'hasil_pengujian_tahanan_isolasi', name: 'hasil_pengujian_tahanan_isolasi'},
+            {data: 'arus_motor_open', name: 'arus_motor_open'},
+            {data: 'arus_motor_close', name: 'arus_motor_close'},
+            {data: 'waktu_open', name: 'waktu_open'},
+            {data: 'waktu_close', name: 'waktu_close'},
+            {data: 'kondisi_visual', name: 'kondisi_visual'},
+            {data: 'dokumentasi', name: 'dokumentasi'},
+            {data: 'pengawas_pekerjaan', name: 'pengawas_pekerjaan'},
+            {data: 'keterangan', name: 'keterangan'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
+
+    new $.fn.dataTable.FixedHeader( table );
       
     /*------------------------------------------
     --------------------------------------------
