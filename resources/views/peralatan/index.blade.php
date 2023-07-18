@@ -35,25 +35,25 @@
                     <div class="form-group">
                         <label for="nama" class="col-sm-6 control-label">Merk Peralatan</label>
                         <div class="col-sm-12">
-                            <select id="select_id_merk_peralatan" class="form-control">
+                            <select id="id_merk_peralatan" name="id_merk_peralatan" class="form-control">
                                 <option value="" disabled selected>Pilih Merk Peralatan</option>
                                 @foreach(getMerkPeralatan() as $merk)
                                     <option value="{{ $merk->id }}">{{ $merk->nama_merk }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="id_merk_peralatan" id="id_merk_peralatan">
+                            <!-- <input type="hidden" name="id_merk_peralatan" id="id_merk_peralatan"> -->
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="nama" class="col-sm-6 control-label">Tipe Peralatan</label>
                         <div class="col-sm-12">
-                            <select id="select_id_type_peralatan" class="form-control">
+                            <select id="id_type_peralatan" name="id_type_peralatan" class="form-control">
                                 <option value="" disabled selected>Pilih Tipe Peralatan</option>
                                 @foreach(getTypePeralatan() as $tipe)
                                     <option value="{{ $tipe->id }}">{{ $tipe->nama_type }}</option>
                                 @endforeach
                             </select>
-                            <input type="hidden" name="id_type_peralatan" id="id_type_peralatan">
+                            <!-- <input type="hidden" name="id_type_peralatan" id="id_type_peralatan"> -->
                         </div>
                     </div>
                     <div class="form-group">
@@ -121,13 +121,13 @@
         $('select#select_id_type_peralatan').prop('disabled', false);
     });
 
-    $('select#select_id_type_peralatan').change(function(){
-        $('#id_type_peralatan').val($(this).val());
-    })
+    // $('select#select_id_type_peralatan').change(function(){
+    //     $('#id_type_peralatan').val($(this).val());
+    // })
 
-    $('select#select_id_merk_peralatan').change(function(){
-        $('#id_merk_peralatan').val($(this).val());
-    })
+    // $('select#select_id_merk_peralatan').change(function(){
+    //     $('#id_merk_peralatan').val($(this).val());
+    // })
       
     /*------------------------------------------
     --------------------------------------------
@@ -160,13 +160,14 @@
                 $.each(data, function(k, v) {
                     $('input#'+k).val(v);
                     $('textarea#'+k).text(v);
+                    $('select#'+k).val(v).trigger('change');
                 });
 
-                $('select#select_id_merk_peralatan').val(data.id_merk_peralatan).trigger('change');
-                $('select#select_id_type_peralatan').val(data.id_merk_peralatan).trigger('change');
+                // $('select#select_id_merk_peralatan').val(data.id_merk_peralatan).trigger('change');
+                // $('select#select_id_type_peralatan').val(data.id_merk_peralatan).trigger('change');
 
-                $('select#select_id_merk_peralatan').prop('disabled', true);
-                $('select#select_id_type_peralatan').prop('disabled', true);
+                // $('select#select_id_merk_peralatan').prop('disabled', true);
+                // $('select#select_id_type_peralatan').prop('disabled', true);
             },
             error: function(xhr){
                 console.log(xhr.responseText);
@@ -227,8 +228,8 @@
             url: "{{ route('peralatan.store') }}"+'/'+id,
             data: {
                 id_alat: id_alat,
-                id_type_peralatan : id_type_peralatan,
-                id_merk_peralatan : id_merk_peralatan
+                // id_type_peralatan : id_type_peralatan,
+                // id_merk_peralatan : id_merk_peralatan
             },
             success: function (data) {
                 table.draw();

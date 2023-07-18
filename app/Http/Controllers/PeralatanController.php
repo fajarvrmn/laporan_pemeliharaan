@@ -47,8 +47,8 @@ class PeralatanController extends Controller
     public function update(Request $request){
         
         Peralatan::where('id_alat', $request->id_alat)
-        ->where('id_merk_peralatan', $request->id_merk_peralatan)
-        ->where('id_type_peralatan', $request->id_type_peralatan)
+        // ->where('id_merk_peralatan', $request->id_merk_peralatan)
+        // ->where('id_type_peralatan', $request->id_type_peralatan)
         ->update($request->all());
 
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
@@ -69,8 +69,8 @@ class PeralatanController extends Controller
     public function edit(Request $request)
     {
         $data = Peralatan::where('id_alat', $request->id_alat)
-        ->where('id_type_peralatan', $request->id_type_peralatan)
-        ->where('id_merk_peralatan', $request->id_merk_peralatan)
+        // ->where('id_type_peralatan', $request->id_type_peralatan)
+        // ->where('id_merk_peralatan', $request->id_merk_peralatan)
         ->first();
 
         return response()->json($data);
@@ -79,8 +79,8 @@ class PeralatanController extends Controller
     public function destroy(Request $request)
     {
         Peralatan::where('id_alat', $request->id_alat)
-        ->where('id_type_peralatan', $request->id_type_peralatan)
-        ->where('id_merk_peralatan', $request->id_merk_peralatan)
+        // ->where('id_type_peralatan', $request->id_type_peralatan)
+        // ->where('id_merk_peralatan', $request->id_merk_peralatan)
         ->delete();
       
         return response()->json(['success'=>'deleted successfully.']);
