@@ -8,7 +8,7 @@
     </div>
     <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
     <br><br>
-    <div class="table-responsive">
+    <!-- <div class="table-responsive"> -->
 
         <table class="table table-bordered data-table">
             <thead>
@@ -38,7 +38,7 @@
             </tbody>
         </table>
 
-    </div>
+    <!-- </div> -->
     
 </div>
      
@@ -229,11 +229,11 @@
         ajax: "{{ route('laporan.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'id_peralatan', name: 'id_peralatan'},
+            {data: 'serial_number', name: 'serial_number'},
             {data: 'nip', name: 'nip'},
-            {data: 'id_status_pekerjaan', name: 'id_status_pekerjaan'},
+            {data: 'status_pekerjaan_name', name: 'status_pekerjaan_name'},
             {data: 'tgl_pelaksanaan', name: 'tgl_pelaksanaan'},
-            {data: 'id_gardu_induk', name: 'id_gardu_induk'},
+            {data: 'nama_gardu', name: 'nama_gardu'},
             {data: 'busbar', name: 'busbar'},
             {data: 'kapasitas', name: 'kapasitas'},
             {data: 'hasil_pengujian_tahanan_kontak', name: 'hasil_pengujian_tahanan_kontak'},

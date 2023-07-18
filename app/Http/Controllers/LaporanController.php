@@ -17,7 +17,15 @@ class LaporanController extends Controller
     {
         if ($request->ajax()) {
   
-            $data = Laporan::all();
+            $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->get([
+                'laporan.*', 
+                'peralatan.serial_number as serial_number', 
+                'status_pekerjaan.nama as status_pekerjaan_name', 
+                'gardu_induk.nama_gardu'
+            ]);
   
             return Datatables::of($data)
                     ->addIndexColumn()
