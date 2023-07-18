@@ -35,6 +35,7 @@ Route::middleware(['admin'])->group(function () {
         Route::resource('status', App\Http\Controllers\StatusController::class);
         Route::resource('peralatan', App\Http\Controllers\PeralatanController::class);
         Route::resource('personil', App\Http\Controllers\PersonilController::class);
+        Route::resource('laporan', App\Http\Controllers\LaporanController::class);
         // Route::resource('namabay', NamabayController::class);
 
     });

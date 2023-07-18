@@ -182,11 +182,17 @@
     $('#saveBtn').click(function (e) {
         e.preventDefault();
         $(this).html('Sending..');
+
+        var id_alat = $('#id_alat').val();
+        var actionIs = $('#saveBtn').val();
+
+        var myUrl = (actionIs == 'create') ? "peralatan/create" : "peralatan/"+id_alat;
+        var method = (actionIs == 'create') ? "GET" : "PATCH";
       
         $.ajax({
           data: $('#formCRUD').serialize(),
-          url: "{{ route('peralatan.store') }}",
-          type: "POST",
+          url: myUrl,
+          type: method,
           dataType: 'json',
           success: function (data) {
        

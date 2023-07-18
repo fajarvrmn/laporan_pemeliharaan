@@ -12,10 +12,12 @@ class Laporan extends Model
     protected $table = 'laporan';
 
     protected $fillable = [
+        'id_peralatan',
+        'nip',
+        'id_status_pekerjaan',
         'tgl_pelaksanaan',
         'id_gardu_induk',
         'busbar',
-        'id_peralatan',
         'kapasitas',
         'hasil_pengujian_tahanan_kontak',
         'hasil_pengujian_tahanan_isolasi',
@@ -26,8 +28,6 @@ class Laporan extends Model
         'kondisi_visual',
         'dokumentasi',
         'pengawas_pekerjaan',
-        'nip',
-        'keterangan',
-        'id_status_pekerjaan'
+        'keterangan'
     ];
 }

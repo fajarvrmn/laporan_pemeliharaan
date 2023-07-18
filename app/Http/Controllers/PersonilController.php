@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Personil;
 use DataTables;
 use Illuminate\Support\Facades\Hash;
+use App\Providers\RouteServiceProvider;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 
 class PersonilController extends Controller
 {

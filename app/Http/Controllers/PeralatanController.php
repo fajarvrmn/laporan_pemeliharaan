@@ -38,51 +38,36 @@ class PeralatanController extends Controller
         return view('peralatan.index');
     }
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function create(Request $request)
     {
-        // return view('merek.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        Peralatan::updateOrCreate($request->all());
-    
+        Peralatan::create($request->all());
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
     }
-    
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function update(Request $request){
+        
+        Peralatan::where('id_alat', $request->id_alat)
+        ->where('id_merk_peralatan', $request->id_merk_peralatan)
+        ->where('id_type_peralatan', $request->id_type_peralatan)
+        ->update($request->all());
+
+        return response()->json(['success'=>'Data Berhasil Disimpan.']);
+    }
+
+    // public function store(Request $request)
+    // {
+    //     Peralatan::updateOrCreate($request->all());
+    
+    //     return response()->json(['success'=>'Data Berhasil Disimpan.']);
+    // }
+    
     public function show($id)
     {
         return view('peralatan.show', compact('peralatan'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Request $request)
     {
-        // dd(json_decode($id));
-        // dd($request->all());
         $data = Peralatan::where('id_alat', $request->id_alat)
         ->where('id_type_peralatan', $request->id_type_peralatan)
         ->where('id_merk_peralatan', $request->id_merk_peralatan)
@@ -91,31 +76,6 @@ class PeralatanController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function update(Request $request, $id)
-    // {
-    //    $request->validate([
-    //         'nama' => 'required'
-    //     ]);
-    
-    //     $status->update($request->all());
-    
-    //     return redirect()->route('peralatan.index')
-    //                     ->with('success','Data Berhasil Diupdate');
-    // }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         Peralatan::where('id_alat', $request->id_alat)

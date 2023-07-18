@@ -52,11 +52,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script>
 
 </head>
 <body>
@@ -193,6 +196,14 @@
                         </p>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}" class="nav-link {{ ($routeSelected == 'laporan') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Laporan
+                        </p>
+                        </a>
+                    </li>
                     <li class="nav-header">ADMIN</li>
                     <li class="nav-item">
                         <a href="{{ route('register') }}" class="nav-link {{ ($routeSelected == 'register') ? 'active' : '' }}">
@@ -229,7 +240,20 @@
                     </main>
                 </div>
             </section>
+
+            <script>
+                $(document).ready(function(){
+                    $('.datepicker').datepicker({
+                        autoclose: true,
+                        format: "yyyy-mm-dd",
+                        todayBtn: true,
+                        todayHighlight: true
+                    });
+                })
+            </script>
+
         </div>
     </div>
+
 </body>
 </html>
