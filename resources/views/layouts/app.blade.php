@@ -204,7 +204,7 @@
                         </p>
                         </a>
                     </li>
-                    <li class="nav-header">ADMIN</li>
+                    <!-- <li class="nav-header">ADMIN</li>
                     <li class="nav-item">
                         <a href="{{ route('register') }}" class="nav-link {{ ($routeSelected == 'register') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-table"></i>
@@ -212,7 +212,7 @@
                             Register
                         </p>
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
