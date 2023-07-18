@@ -34,6 +34,8 @@ class LaporanController extends Controller
                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
    
                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm preview">Preview</a>';
     
                             return $btn;
                     })
@@ -64,28 +66,35 @@ class LaporanController extends Controller
     {
 
         // dd($request->all());
-        Laporan::updateOrCreate([
-            'id' => $request->id,
-            'id_peralatan' => $request->id_peralatan,
-            'nip' => $request->nip,
-            'id_status_pekerjaan' => $request->id_status_pekerjaan
-        ], 
-        [
-            "tgl_pelaksanaan" => $request->tgl_pelaksanaan,
-            "id_gardu_induk" => $request->id_gardu_induk,
-            "busbar" => $request->busbar,
-            "kapasitas" => $request->kapasitas,
-            "hasil_pengujian_tahanan_kontak" => $request->hasil_pengujian_tahanan_kontak,
-            "hasil_pengujian_tahanan_isolasi" => $request->hasil_pengujian_tahanan_isolasi,
-            "arus_motor_open" => $request->arus_motor_open,
-            "arus_motor_close" => $request->arus_motor_close,
-            "waktu_open" => $request->waktu_open,
-            "waktu_close" => $request->waktu_close,
-            "kondisi_visual" => $request->kondisi_visual,
-            "dokumentasi" => $request->dokumentasi,
-            "pengawas_pekerjaan" => $request->pengawas_pekerjaan,
-            "keterangan" => $request->keterangan
-        ]);
+        $param = $request->all();
+        unset($param['id']);
+        // dd($param);
+
+        Laporan::updateOrCreate(
+            [
+                'id' => $request->id
+            ], 
+            $param
+            // [
+            //     'id_peralatan' => $request->id_peralatan,
+            //     'nip' => $request->nip,
+            //     'id_status_pekerjaan' => $request->id_status_pekerjaan,
+            //     "tgl_pelaksanaan" => $request->tgl_pelaksanaan,
+            //     "id_gardu_induk" => $request->id_gardu_induk,
+            //     "busbar" => $request->busbar,
+            //     "kapasitas" => $request->kapasitas,
+            //     "hasil_pengujian_tahanan_kontak" => $request->hasil_pengujian_tahanan_kontak,
+            //     "hasil_pengujian_tahanan_isolasi" => $request->hasil_pengujian_tahanan_isolasi,
+            //     "arus_motor_open" => $request->arus_motor_open,
+            //     "arus_motor_close" => $request->arus_motor_close,
+            //     "waktu_open" => $request->waktu_open,
+            //     "waktu_close" => $request->waktu_close,
+            //     "kondisi_visual" => $request->kondisi_visual,
+            //     "dokumentasi" => $request->dokumentasi,
+            //     "pengawas_pekerjaan" => $request->pengawas_pekerjaan,
+            //     "keterangan" => $request->keterangan
+            // ]
+        );
     
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
     }

@@ -28,6 +28,8 @@ class Laporan extends Model
         'kondisi_visual',
         'dokumentasi',
         'pengawas_pekerjaan',
-        'keterangan'
+        'keterangan',
+        'status', //1 diterima, 2 ditolak
+        'alasan_ditolak'
     ];
 }

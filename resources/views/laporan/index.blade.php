@@ -183,7 +183,7 @@
                         </div>
 
                         <div class="form-group col-6">
-                            <label for="keterangan" class="col-sm-12 control-label">Pengawas Pekerjaan</label>
+                            <label for="keterangan" class="col-sm-12 control-label">Keterangan</label>
                             <div class="col-sm-12">
                                 <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control"></textarea>
                             </div>
@@ -200,6 +200,270 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="ajaxModelPreview" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading_preview"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="formPreview" name="formPreview" class="form-horizontal">
+                    
+                   <input type="hidden" name="id_preview" id="id_preview">
+                   <input type="hidden" name="id_status_pekerjaan_preview" id="id_status_pekerjaan_preview">
+                   <input type="hidden" name="status_preview" id="status_preview">
+
+                   <div class="row">
+
+                        <div class="form-group col-4">
+                            <label for="id_peralatan" class="col-sm-12 control-label">Peralatan</label>
+                            <div class="col-sm-12">
+                                <select id="id_peralatan_select_preview" class="form-control" required>
+                                    <option value="" disabled selected>Pilih Peralatan</option>
+                                    @foreach(getPeralatan() as $peralatan)
+                                        <option value="{{ $peralatan->id_alat }}">{{ $peralatan->serial_number }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="id_peralatan_preview" id="id_peralatan_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="nip" class="col-sm-12 control-label">NIP</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="nip_preview" id="nip_preview" required>
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group col-4">
+                            <label for="id_status_pekerjaan" class="col-sm-12 control-label">Status Pekerjaan</label>
+                            <div class="col-sm-12">
+                                <select id="id_status_pekerjaan_select_preview" class="form-control" required>
+                                    <option value="" disabled selected>Pilih Status</option>
+                                    @foreach(getStatusPekerjaan() as $status)
+                                        <option value="{{ $status->id }}">{{ $status->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="id_status_pekerjaan_preview" id="id_status_pekerjaan_preview">
+                            </div>
+                        </div> -->
+
+                        <div class="form-group col-4">
+                            <label for="tgl_pelaksanaan" class="col-sm-12 control-label">Tanggal Pelaksanaan</label>
+                            <div class="col-sm-12">
+                                <input type="text" name="tgl_pelaksanaan_preview" id="tgl_pelaksanaan_preview" class="form-control datepicker">
+                            </div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="id_gardu_induk" class="col-sm-12 control-label">Gardu Induk</label>
+                            <div class="col-sm-12">
+                                <select id="id_gardu_induk_preview" name="id_gardu_induk_preview" class="form-control">
+                                    <option value="" disabled selected>Pilih Gardu Induk</option>
+                                    @foreach(getGarduInduk() as $gardu)
+                                        <option value="{{ $gardu->id }}">{{ $gardu->nama_gardu }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="busbar" class="col-sm-12 control-label">Busbar</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="busbar_preview" id="busbar_preview">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-4">
+                            <label for="kapasitas" class="col-sm-12 control-label">Kapasitas</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="kapasitas_preview" id="kapasitas_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="hasil_pengujian_tahanan_kontak" class="col-sm-12 control-label">Hasil Uji Tahanan Kontak</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="hasil_pengujian_tahanan_kontak_preview" id="hasil_pengujian_tahanan_kontak_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="hasil_pengujian_tahanan_isolasi" class="col-sm-12 control-label">Hasil Uji Tahanan Isolasi</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="hasil_pengujian_tahanan_isolasi_preview" id="hasil_pengujian_tahanan_isolasi_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="arus_motor_open" class="col-sm-12 control-label">Arus Motor Open</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="arus_motor_open_preview" id="arus_motor_open_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="arus_motor_close" class="col-sm-12 control-label">Arus Motor Close</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="arus_motor_close_preview" id="arus_motor_close_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="waktu_open" class="col-sm-12 control-label">Waktu Open</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="waktu_open_preview" id="waktu_open_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="waktu_close" class="col-sm-12 control-label">Waktu Close</label>
+                            <div class="col-sm-12">
+                                <input type="number" class="form-control" name="waktu_close_preview" id="waktu_close_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="kondisi_visual" class="col-sm-12 control-label">Kondisi Visual</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="kondisi_visual_preview" id="kondisi_visual_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="dokumentasi" class="col-sm-12 control-label">Dokumentasi</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="dokumentasi_preview" id="dokumentasi_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="pengawas_pekerjaan" class="col-sm-12 control-label">Pengawas Pekerjaan</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" name="pengawas_pekerjaan_preview" id="pengawas_pekerjaan_preview">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label for="keterangan" class="col-sm-12 control-label">Keterangan</label>
+                            <div class="col-sm-12">
+                                <textarea name="keterangan_preview" id="keterangan_preview" cols="30" rows="2" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <hr>
+                        </div>
+
+                        <div class="col-12">
+                            <input type="hidden" id="id_prev">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Jabatan</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Admin</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success" id="admin-belum-kirim">
+                                                <i class="fa fa-envelope"></i> Kirim
+                                            </button>
+                                            <button type="button" class="btn btn-success d-none" id="admin-sudah-kirim">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Supervisor</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success d-none spv-approval" id="spv_setuju">
+                                                <i class="fa fa-check"></i> Setuju
+                                            </button>
+                                            <button type="button" class="btn btn-danger d-none spv-approval" id="spv_tolak">
+                                                <i class="fa fa-times"></i> Tolak
+                                            </button>
+                                            <button type="button" class="btn btn-success d-none" id="spv-sudah-kirim">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger d-none" id="spv-tolak-kirim">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manager</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success d-none manager-approval" id="manager_setuju">
+                                                <i class="fa fa-check"></i> Setuju
+                                            </button>
+                                            <button type="button" class="btn btn-danger d-none manager-approval" id="manager_tolak">
+                                                <i class="fa fa-times"></i> Tolak
+                                            </button>
+                                            <button type="button" class="btn btn-success d-none" id="manager-sudah-kirim">
+                                                <i class="fa fa-check"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger d-none" id="manager-tolak-kirim">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="col-12">
+                            <hr>
+                        </div>
+
+                   </div>
+                   
+                    <div class="col-sm-offset-2 col-sm-10">
+                     <!-- <button type="submit" class="btn btn-primary" id="previewBtn">Simpan</button> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="ajaxModelTolak" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id=""></h4>
+            </div>
+            <div class="modal-body text-center">
+                <form id="formTolak" name="formTolak" class="form-horizontal">
+
+                    <div class="col-12">
+                        <h5>Tolak Laporan Ini ?</h5>
+                    </div>
+
+                    <div class="form-group col-12">
+                        <label for="keterangan" class="col-sm-12 control-label">Alasan Penolakan</label>
+                        <div class="col-sm-12">
+                            <textarea name="alasan_ditolaknya" id="alasan_ditolaknya" cols="30" rows="2" class="form-control"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-danger" id="tolakBtn">Tolak</button>
+                    </div> -->
+
+                </form>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-danger" id="tolakBtn"><i class="fa fa-ban"></i> Tolak</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
       
 </body>
       
@@ -257,6 +521,206 @@
     Click to Button
     --------------------------------------------
     --------------------------------------------*/
+
+    $('body').on('click', '.preview', function () {
+
+        var id = $(this).data('id');
+        var id_peralatan = $(this).data('idperalatan');
+        var nip = $(this).data('idnip');
+        var id_status_pekerjaan = $(this).data('idstatus');
+        // var status = $('#status_preview').val();
+        // alert(status);
+
+        // console.log(param);
+        $.ajax({
+            type: 'GET',
+            url: '{{ route("laporan.index") }}/'+id+'/edit',
+            data: {
+                id: id,
+                id_peralatan : id_peralatan,
+                nip : nip,
+                id_status_pekerjaan: id_status_pekerjaan
+            },
+            success: function(data){
+                var status = data.status;
+                console.log(data);
+                if(data.id_status_pekerjaan == '1'){ //belum dikirim admin
+                    $('#admin-belum-kirim').removeClass('d-none'); //tombol kirim admin ubah jadi hide
+                    $('#admin-sudah-kirim').addClass('d-none');
+                    $('.spv-approval').addClass('d-none');
+                    $('#spv-sudah-kirim').addClass('d-none');
+                    $('.manager-approval').addClass('d-none');
+                    $('#manager-sudah-kirim').addClass('d-none');
+                }else if(data.id_status_pekerjaan == '2'){
+                    if(status == '2'){
+                        $('#spv-tolak-kirim').removeClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                    }else{
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('#spv-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').removeClass('d-none');
+                    }
+                    $('#admin-belum-kirim').addClass('d-none'); //tombol kirim admin ubah jadi hide
+                    $('#admin-sudah-kirim').removeClass('d-none');
+                    // $('.spv-approval').removeClass('d-none');
+                    // $('#spv-sudah-kirim').addClass('d-none');
+                    $('.manager-approval').addClass('d-none');
+                    $('#manager-sudah-kirim').addClass('d-none');
+                }else if(data.id_status_pekerjaan == '3'){
+                    if(status == '2'){
+                        $('#manager-tolak-kirim').removeClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                    }else{
+                        $('#manager-tolak-kirim').addClass('d-none');
+                        $('#manager-sudah-kirim').removeClass('d-none');
+                        $('.manager-approval').removeClass('d-none');
+                    }
+                    $('#admin-belum-kirim').addClass('d-none'); //tombol kirim admin ubah jadi hide
+                    $('#admin-sudah-kirim').removeClass('d-none');
+                    $('.spv-approval').addClass('d-none');
+                    $('#spv-sudah-kirim').removeClass('d-none');
+                    // $('.manager-approval').removeClass('d-none');
+                    // $('#manager-sudah-kirim').addClass('d-none');
+                }else{
+                    $('#admin-belum-kirim').addClass('d-none'); //tombol kirim admin ubah jadi hide
+                    $('#admin-sudah-kirim').removeClass('d-none');
+                    $('.spv-approval').addClass('d-none');
+                    $('#spv-sudah-kirim').removeClass('d-none');
+                    $('.manager-approval').addClass('d-none');
+                    $('#manager-sudah-kirim').removeClass('d-none');
+                    $('#manager-tolak-kirim').addClass('d-none');
+                }
+
+                $('#modelHeading_preview').html("Preview Data");
+                $('#previewBtn').val("preview");
+                $('#ajaxModelPreview').modal('show');
+
+                $.each(data, function(k, v) {
+                    $('input#'+k+"_preview").val(v);
+                    $('textarea#'+k+"_preview").text(v);
+                    $('select#'+k+"_preview").val(v).trigger('change');
+                });
+
+                $('#id_peralatan_select_preview').val(data.id_peralatan).trigger('change');
+                $('#id_status_pekerjaan_select_preview').val(data.id_status_pekerjaan).trigger('change');
+
+                // $('#id_peralatan_select').prop('disabled', true);
+                // $('#nip').prop('readonly', true);
+                // $('#id_status_pekerjaan_select').prop('disabled', true);
+
+            },
+            error: function(xhr){
+                console.log(xhr.responseText);
+            }
+        });
+    });
+
+    $('#admin-belum-kirim').click(function(){
+        var id = $('#id_preview').val();
+        var id_peralatan = $("#id_peralatan_preview").val();
+        var nip = $("#nip_preview").val();
+        $.ajax({
+            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: 2},
+            url: "{{ route('laporan.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+        
+                $('#formPreview').trigger("reset");
+                $('#ajaxModelPreview').modal('hide');
+                table.draw();
+            
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                // $('#saveBtn').html('Simpan');
+            }
+        });
+    });
+
+    $('#spv_setuju').click(function(){
+        var id = $('#id_preview').val();
+        var id_peralatan = $("#id_peralatan_preview").val();
+        var nip = $("#nip_preview").val();
+        $.ajax({
+            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: 3, status: 1},
+            url: "{{ route('laporan.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+        
+                $('#formPreview').trigger("reset");
+                $('#ajaxModelPreview').modal('hide');
+                table.draw();
+            
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                // $('#saveBtn').html('Simpan');
+            }
+        });
+    });
+
+    $('#manager_setuju').click(function(){
+        var id = $('#id_preview').val();
+        var id_peralatan = $("#id_peralatan_preview").val();
+        var nip = $("#nip_preview").val();
+        $.ajax({
+            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: 4, status: 1},
+            url: "{{ route('laporan.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+        
+                $('#formPreview').trigger("reset");
+                $('#ajaxModelPreview').modal('hide');
+                table.draw();
+            
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                // $('#saveBtn').html('Simpan');
+            }
+        });
+    });
+
+    $('#spv_tolak, #manager_tolak').click(function(){
+        $('#ajaxModelTolak').modal('show');
+    });
+
+    $('#tolakBtn').click(function(){
+
+        var id = $('#id_preview').val();
+        var id_peralatan = $("#id_peralatan_preview").val();
+        var nip = $("#nip_preview").val();
+        var id_status_pekerjaan = $('#id_status_pekerjaan_preview').val();
+        var alasan = $('#alasan_ditolaknya').val();
+        // alert(alasan);
+        // return false;
+
+        $.ajax({
+            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: id_status_pekerjaan, alasan_ditolak: alasan, status: 2},
+            url: "{{ route('laporan.store') }}",
+            type: "POST",
+            dataType: 'json',
+            success: function (data) {
+
+                $('#formTolak').trigger("reset");
+                $('#ajaxModelTolak').modal('hide');
+                $('#formPreview').trigger("reset");
+                $('#ajaxModelPreview').modal('hide');
+                table.draw();
+            
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                // $('#saveBtn').html('Simpan');
+            }
+        });
+    })
+
     $('#createNew').click(function () {
         $('#id_peralatan').val("");
         $('#id_status_pekerjaan').val("");
