@@ -7,6 +7,7 @@ use App\Models\Merek;
 use App\Models\Gardu;
 use App\Models\Peralatan;
 use App\Models\Status;
+use App\Models\User;
 
 
 
@@ -15,6 +16,18 @@ if(!function_exists('loggedin_user')){
     function loggedin_user(){
 
         $data = Role::all();
+
+        return $data;
+
+    }
+
+}
+
+if(!function_exists('getAllUsers')){
+
+    function getAllUsers(){
+
+        $data = User::all();
 
         return $data;
 

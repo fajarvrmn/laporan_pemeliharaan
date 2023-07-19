@@ -70,7 +70,13 @@
                         <div class="form-group col-6">
                             <label for="nip" class="col-sm-12 control-label">NIP</label>
                             <div class="col-sm-12">
-                                <input type="number" class="form-control" name="nip" id="nip" required>
+                                <!-- <input type="number" class="form-control" name="nip" id="nip" required> -->
+                                <select id="nip" name="nip" class="form-control" required>
+                                    <option value="" disabled selected>Pilih NIP</option>
+                                    @foreach(getAllUsers() as $users)
+                                        <option value="{{ $users->nip }}">{{ $users->nip }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
@@ -229,10 +235,23 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-4">
+                        <!-- <div class="form-group col-4">
                             <label for="nip" class="col-sm-12 control-label">NIP</label>
                             <div class="col-sm-12">
                                 <input type="number" class="form-control" name="nip_preview" id="nip_preview" required>
+                            </div>
+                        </div> -->
+
+                        <div class="form-group col-6">
+                            <label for="nip" class="col-sm-12 control-label">NIP</label>
+                            <div class="col-sm-12">
+                                <!-- <input type="number" class="form-control" name="nip" id="nip" required> -->
+                                <select id="nip_preview" name="nip_preview" class="form-control" required>
+                                    <option value="" disabled selected>Pilih NIP</option>
+                                    @foreach(getAllUsers() as $users)
+                                        <option value="{{ $users->nip }}">{{ $users->nip }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
