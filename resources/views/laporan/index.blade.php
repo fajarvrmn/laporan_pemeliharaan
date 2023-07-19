@@ -6,7 +6,17 @@
     <div>
         <hr>
     </div>
-    <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
+    <div class="row">
+        <div class="col-4">
+            <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
+        </div>
+        <div class="col-4">
+
+        </div>
+        <div class="col-4 text-right">
+            <a class="btn btn-danger" href="laporan/pdf/no_search" id="export-pdf"> Export PDF</a>
+        </div>
+    </div>
     <br><br>
     <!-- <div class="table-responsive"> -->
 
