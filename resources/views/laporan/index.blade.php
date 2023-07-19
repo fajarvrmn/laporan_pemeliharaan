@@ -74,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-6">
+                        <!-- <div class="form-group col-6">
                             <label for="id_status_pekerjaan" class="col-sm-12 control-label">Status Pekerjaan</label>
                             <div class="col-sm-12">
                                 <select id="id_status_pekerjaan_select" class="form-control" required>
@@ -85,7 +85,7 @@
                                 </select>
                                 <input type="hidden" name="id_status_pekerjaan" id="id_status_pekerjaan">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-6">
                             <label for="tgl_pelaksanaan" class="col-sm-12 control-label">Tanggal Pelaksanaan</label>

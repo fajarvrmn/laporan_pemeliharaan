@@ -38,8 +38,11 @@ class PersonilController extends Controller
 
     public function create(Request $request)
     {
+
+        // dd($req);
         $param = $request->all();
         $param['role'] = '1';
+        $param['password'] = Hash::make($request->password);
         $create = Personil::create($param);
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
     }
@@ -65,6 +68,7 @@ class PersonilController extends Controller
         // dd($request);
         $param = $request->all();
         $param['role'] = '1';
+        $param['password'] = Hash::make($request->password);
         // dd($param);
         $create = Personil::where('id', $request->id)
         ->update($param);
