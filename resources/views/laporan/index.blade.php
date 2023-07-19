@@ -14,7 +14,8 @@
 
         </div>
         <div class="col-4 text-right">
-            <a class="btn btn-danger" href="laporan/pdf/no_search" id="export-pdf"> Export PDF</a>
+            <a class="btn btn-danger" href="laporan/pdf/0" id="export-pdf"> Export PDF</a>
+            <a class="btn btn-success" href="laporan/excel/0" id="export-excel"> Export Excel</a>
         </div>
     </div>
     <br><br>
@@ -574,6 +575,12 @@
     --------------------------------------------
     --------------------------------------------*/
 
+    $('input[type="search"]').keyup(function(){
+        var search = $(this).val();
+        $('#export-pdf').attr('href', 'laporan/pdf/'+search);
+        $('#export-excel').attr('href', 'laporan/excel/'+search);
+    })
+
     $('body').on('click', '.preview', function () {
 
         var id = $(this).data('id');
@@ -613,8 +620,8 @@
                     $('#manager-sudah-kirim').addClass('d-none');
                     $('#manager-tolak-kirim').addClass('d-none');
                 }else if(data.id_status_pekerjaan == '2' && status == '1'){
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('#admin-sudah-kirim').removeClass('d-none');
+                    $('#admin-belum-kirim').removeClass('d-none');
+                    $('#admin-sudah-kirim').addClass('d-none');
                     $('.spv-approval').addClass('d-none');
                     $('#spv-sudah-kirim').addClass('d-none');
                     $('#spv-tolak-kirim').removeClass('d-none');
@@ -631,8 +638,8 @@
                     $('#manager-sudah-kirim').addClass('d-none');
                     $('#manager-tolak-kirim').addClass('d-none');
                 }else if(data.id_status_pekerjaan == '3' && status == '1'){
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('#admin-sudah-kirim').removeClass('d-none');
+                    $('#admin-belum-kirim').removeClass('d-none');
+                    $('#admin-sudah-kirim').addClass('d-none');
                     $('.spv-approval').addClass('d-none');
                     $('#spv-sudah-kirim').removeClass('d-none');
                     $('#spv-tolak-kirim').addClass('d-none');
@@ -679,7 +686,7 @@
         var id_peralatan = $("#id_peralatan_preview").val();
         var nip = $("#nip_preview").val();
         $.ajax({
-            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: 2, status: 0},
+            data: {id: id, id_peralatan: id_peralatan, nip: nip, id_status_pekerjaan: 2, status: 0, alasan_ditolak: null},
             url: "{{ route('laporan.store') }}",
             type: "POST",
             dataType: 'json',

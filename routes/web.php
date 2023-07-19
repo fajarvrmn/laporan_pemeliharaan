@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('personil', App\Http\Controllers\PersonilController::class);
     Route::resource('laporan', App\Http\Controllers\LaporanController::class);
     Route::get('laporan/pdf/{search}', [App\Http\Controllers\LaporanController::class, 'cetak_pdf']);
+    Route::get('laporan/excel/{search}', [App\Http\Controllers\LaporanController::class, 'exportExcel']);
 });
 
 // Route::middleware(['admin'])->group(function () {
