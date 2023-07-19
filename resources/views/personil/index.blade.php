@@ -51,6 +51,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="name" class="col-sm-6 control-label">Role</label>
+                        <div class="col-sm-12">
+                            <select name="role" id="role" class="form-control">
+                                <option value="" disabled selected>Pilih Role</option>
+                                @foreach(getRole() as $role)
+                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="pendidikan" class="col-sm-6 control-label">Pendidikan</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="pendidikan" name="pendidikan" placeholder="Masukan Pendidikan" value="" maxlength="50" required="">
@@ -153,6 +164,7 @@
             $.each(data, function(k, v) {
                 $('input#'+k).val(v);
                 $('textarea#'+k).text(v);
+                $('select#'+k).val(v).trigger('change');
             });
             $('#email').prop('readonly', true);
             $('#nip').prop('readonly', true);

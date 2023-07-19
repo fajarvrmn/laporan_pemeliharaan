@@ -22,6 +22,18 @@ if(!function_exists('loggedin_user')){
 
 }
 
+if(!function_exists('getRole')){
+
+    function getRole(){
+
+        $data = Role::all();
+
+        return $data;
+
+    }
+
+}
+
 if(!function_exists('getTypePeralatan')){
 
     function getTypePeralatan(){
