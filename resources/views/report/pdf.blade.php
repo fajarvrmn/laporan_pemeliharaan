@@ -9,6 +9,11 @@
     <link href="{{ public_path('css/app.css') }}" rel="stylesheet">
 </head>
 
+<style>
+    @page { margin: 37px; }
+    body { margin: 37px; }
+</style>
+
 <body>
 
     <div class="container mt-5">
