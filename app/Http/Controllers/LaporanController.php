@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Laporan;
 use DataTables;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -26,18 +27,37 @@ class LaporanController extends Controller
                 'status_pekerjaan.nama as status_pekerjaan_name', 
                 'gardu_induk.nama_gardu'
             ]);
+
+            // dd($data);
   
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
    
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
-   
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+                        $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
 
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm preview">Preview</a>';
-    
-                            return $btn;
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+
+                        $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm preview">Preview</a>';
+
+                        return $btn;
+                    })
+                    ->addColumn('status_text', function($row){
+                        $status_laporan = "Unknown";
+                        if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
+                            $status_laporan = 'Belum Dikirim Oleh Admin';   
+                        }elseif($row->id_status_pekerjaan == '2' && $row->status == '0'){
+                            $status_laporan = 'Sudah Dikirim Oleh Admin';
+                        }elseif($row->id_status_pekerjaan == '2' && $row->status == '1'){
+                            $status_laporan = 'Ditolak Oleh Supervisor';
+                        }elseif($row->id_status_pekerjaan == '3' && $row->status == '0'){
+                            $status_laporan = 'Sudah Disetujui Oleh Supervisor';
+                        }elseif($row->id_status_pekerjaan == '3' && $row->status == '1'){
+                            $status_laporan = 'Ditolak Oleh Manager';
+                        }elseif($row->id_status_pekerjaan == '4' && $row->status == '0'){
+                            $status_laporan = 'Sudah Disetujui Oleh Manager';
+                        }
+                        return $status_laporan;
                     })
                     ->rawColumns(['action'])
                     ->make(true);
@@ -136,5 +156,25 @@ class LaporanController extends Controller
         ->delete();
       
         return response()->json(['success'=>'deleted successfully.']);
+    }
+
+    public function cetak_pdf()
+    {
+    	$laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->get([
+            'laporan.*', 
+            'peralatan.serial_number as serial_number', 
+            'status_pekerjaan.nama as status_pekerjaan_name', 
+            'gardu_induk.nama_gardu'
+        ]);
+
+        $pdf = PDF::loadView('report.pdf', ['laporan' => $laporan])
+        ->setOptions(['defaultFont' => 'sans-serif'])
+        ->setPaper('a4', 'landscape');
+
+        // return view('report.pdf')->with(['laporan' => $laporan]);
+    	return $pdf->download('laporan.pdf');
     }
 }
