@@ -603,48 +603,113 @@
                 var status = data.status;
                 console.log(data);
                 if(data.id_status_pekerjaan == '1' && status == '0'){
-                    $('#admin-belum-kirim').removeClass('d-none');
-                    $('#admin-sudah-kirim').addClass('d-none');
-                    $('.spv-approval').addClass('d-none');
-                    $('#spv-sudah-kirim').addClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                    $('#manager-sudah-kirim').addClass('d-none');
+
+                    if(role == '1'){
+                        $('#admin-belum-kirim').removeClass('d-none');
+                        $('#admin-sudah-kirim').addClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }else{
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').addClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }
+
                 }else if(data.id_status_pekerjaan == '2' && status == '0'){
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('#admin-sudah-kirim').removeClass('d-none');
-                    $('.spv-approval').removeClass('d-none');
-                    $('#spv-sudah-kirim').addClass('d-none');
-                    $('#spv-tolak-kirim').addClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                    $('#manager-sudah-kirim').addClass('d-none');
-                    $('#manager-tolak-kirim').addClass('d-none');
+
+                    if(role == '2'){
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').removeClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }else{
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }
+
                 }else if(data.id_status_pekerjaan == '2' && status == '1'){
-                    $('#admin-belum-kirim').removeClass('d-none');
-                    $('#admin-sudah-kirim').addClass('d-none');
-                    $('.spv-approval').addClass('d-none');
-                    $('#spv-sudah-kirim').addClass('d-none');
-                    $('#spv-tolak-kirim').removeClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                    $('#manager-sudah-kirim').addClass('d-none');
-                    $('#manager-tolak-kirim').addClass('d-none');
+
+                    if(role == '2'){
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').removeClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }else{
+                        $('#admin-belum-kirim').removeClass('d-none');
+                        $('#admin-sudah-kirim').addClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').addClass('d-none');
+                        $('#spv-tolak-kirim').removeClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }
+
                 }else if(data.id_status_pekerjaan == '3' && status == '0'){
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('#admin-sudah-kirim').removeClass('d-none');
-                    $('.spv-approval').addClass('d-none');
-                    $('#spv-sudah-kirim').removeClass('d-none');
-                    $('#spv-tolak-kirim').addClass('d-none');
-                    $('.manager-approval').removeClass('d-none');
-                    $('#manager-sudah-kirim').addClass('d-none');
-                    $('#manager-tolak-kirim').addClass('d-none');
+
+                    if(role == '3'){
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').removeClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').removeClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }else{
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').removeClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').addClass('d-none');
+                    }
                 }else if(data.id_status_pekerjaan == '3' && status == '1'){
-                    $('#admin-belum-kirim').removeClass('d-none');
-                    $('#admin-sudah-kirim').addClass('d-none');
-                    $('.spv-approval').addClass('d-none');
-                    $('#spv-sudah-kirim').removeClass('d-none');
-                    $('#spv-tolak-kirim').addClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                    $('#manager-sudah-kirim').addClass('d-none');
-                    $('#manager-tolak-kirim').removeClass('d-none');
+
+                    if(role == '3'){
+                        $('#admin-belum-kirim').addClass('d-none');
+                        $('#admin-sudah-kirim').removeClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').removeClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').removeClass('d-none');
+                    }else{
+                        $('#admin-belum-kirim').removeClass('d-none');
+                        $('#admin-sudah-kirim').addClass('d-none');
+                        $('.spv-approval').addClass('d-none');
+                        $('#spv-sudah-kirim').removeClass('d-none');
+                        $('#spv-tolak-kirim').addClass('d-none');
+                        $('.manager-approval').addClass('d-none');
+                        $('#manager-sudah-kirim').addClass('d-none');
+                        $('#manager-tolak-kirim').removeClass('d-none');
+                    }
                 }else if(data.id_status_pekerjaan == '4' && status == '0'){
                     $('#admin-belum-kirim').addClass('d-none');
                     $('#admin-sudah-kirim').removeClass('d-none');
@@ -654,18 +719,6 @@
                     $('.manager-approval').addClass('d-none');
                     $('#manager-sudah-kirim').removeClass('d-none');
                     $('#manager-tolak-kirim').addClass('d-none');
-                }
-
-                
-                if(role == '1'){
-                    $('.spv-approval').addClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                }else if(role == '2'){ //spv -> hide semua action yg lain 
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('.manager-approval').addClass('d-none');
-                }else if(role == '3'){//manager -> hide semua action yg lain 
-                    $('#admin-belum-kirim').addClass('d-none');
-                    $('.spv-approval').addClass('d-none');
                 }
 
                 $('#modelHeading_preview').html("Preview Data");
