@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Schema;
+// use App\Http\Controllers\Auth;
 
 class LaporanController extends Controller
 {
@@ -19,13 +20,19 @@ class LaporanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
+
+            $role = auth()->user()->role;
+            $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : null;
+            $useRole = ($role != '1') ? auth()->user()->role : null;
   
             $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($column, $useRole)
             ->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 
@@ -33,7 +40,9 @@ class LaporanController extends Controller
                 'gardu_induk.nama_gardu'
             ]);
 
-            // dd($data);
+            // if($role != '1'){ //spv
+            //     $data = $data->toQuery()->where('laporan.id_status_pekerjaan', $role)->get();
+            // }
   
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -165,11 +174,16 @@ class LaporanController extends Controller
 
     function exportExcel($search){
 
+        $role = auth()->user()->role;
+        $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : "";
+        $useRole = ($role != '1') ? auth()->user()->role : "";
+
         if($search == '0'){
 
             $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($column, $useRole)
             ->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 
@@ -182,6 +196,7 @@ class LaporanController extends Controller
             $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($column, $useRole)
             ->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 
@@ -262,11 +277,17 @@ class LaporanController extends Controller
 
     public function cetak_pdf($search)
     {
+        $role = auth()->user()->role;
+        $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : "";
+        $useRole = ($role != '1') ? auth()->user()->role : "";
+
+        
         if($search == 0){
 
             $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($column, $useRole)
             ->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 
@@ -279,6 +300,7 @@ class LaporanController extends Controller
             $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($column, $useRole)
             ->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 

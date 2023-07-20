@@ -500,7 +500,6 @@
       
 <script type="text/javascript">
   $(function () {
-      
     /*------------------------------------------
      --------------------------------------------
      Pass Header Token
@@ -655,6 +654,18 @@
                     $('.manager-approval').addClass('d-none');
                     $('#manager-sudah-kirim').removeClass('d-none');
                     $('#manager-tolak-kirim').addClass('d-none');
+                }
+
+                
+                if(role == '1'){
+                    $('.spv-approval').addClass('d-none');
+                    $('.manager-approval').addClass('d-none');
+                }else if(role == '2'){ //spv -> hide semua action yg lain 
+                    $('#admin-belum-kirim').addClass('d-none');
+                    $('.manager-approval').addClass('d-none');
+                }else if(role == '3'){//manager -> hide semua action yg lain 
+                    $('#admin-belum-kirim').addClass('d-none');
+                    $('.spv-approval').addClass('d-none');
                 }
 
                 $('#modelHeading_preview').html("Preview Data");

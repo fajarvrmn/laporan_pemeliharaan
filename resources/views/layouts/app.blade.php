@@ -81,7 +81,13 @@
             $name = $route->getName();
             $split = explode(".", $name);
             $routeSelected = $split[0];
+            $auth_user = auth()->user();
+            $role = $auth_user->role;
         @endphp
+
+        <script>
+            var role = "{{ $role }}";
+        </script>
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
@@ -129,7 +135,7 @@
                 <img src="{{ asset('theme/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block">{{ $auth_user->name }}</a>
                 </div>
             </div>
 
@@ -255,12 +261,16 @@
 
             <script>
                 $(document).ready(function(){
+
+                    var role = "{{ $role }}";
+
                     $('.datepicker').datepicker({
                         autoclose: true,
                         format: "yyyy-mm-dd",
                         todayBtn: true,
                         todayHighlight: true
                     });
+                    
                 })
             </script>
 
