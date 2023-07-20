@@ -25,26 +25,61 @@ class LaporanController extends Controller
     {
         if ($request->ajax()) {
 
+            // dd($request->form_search);
+
             $role = auth()->user()->role;
-            $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : null;
-            $useRole = ($role != '1') ? auth()->user()->role : null;
+
+            // $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : null;
+            // $useRole = ($role != '1') ? auth()->user()->role : null;
+
+            $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+
+            $arrFilter = [];
+            $rangeFilter = [];
+            if(isset($request->form_search)){
+                $i=0;
+                foreach ($request->form_search as $key => $value) {
+                    if($value['value'] !== null){
+                        if($value['name'] == 'tgl_pelaksanaan_dari'){
+                            $rangeFilter['dari'] = $value['value'];
+                            unset($arrFilter[$key]);
+                        }elseif($value['name'] == 'tgl_pelaksanaan_sampai'){
+                            $rangeFilter['sampai'] = $value['value'];
+                            unset($arrFilter[$key]);
+                        }
+                        $arrFilter[$value['name']] = $value['value'];
+                    }
+
+                    $i++;
+                }
+            }
+
+            unset($arrFilter['tgl_pelaksanaan_dari']);
+            unset($arrFilter['tgl_pelaksanaan_sampai']);
+
+            $whereByRole = array_merge($whereByRole, $arrFilter);
   
-            $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+            $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->where($column, $useRole)
-            ->get([
+            ->where($whereByRole);
+
+            if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
+                $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
+            }
+
+            $laporan->get([
                 'laporan.*', 
                 'peralatan.serial_number as serial_number', 
                 'status_pekerjaan.nama as status_pekerjaan_name', 
                 'gardu_induk.nama_gardu'
             ]);
 
-            // if($role != '1'){ //spv
-            //     $data = $data->toQuery()->where('laporan.id_status_pekerjaan', $role)->get();
-            // }
+            // $laporan = $laporan->whereBetween($betweenKey, [$rangeFilter['dari'], $rangeFilter['sampai']]);
+
+            // exit;
   
-            return Datatables::of($data)
+            return Datatables::of($laporan)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
 
@@ -161,11 +196,17 @@ class LaporanController extends Controller
      */
     public function edit(Request $request)
     {
-        $data = Laporan::where('id', $request->id)
-        // ->where('id_peralatan', $request->id_peralatan)
-        // ->where('nip', $request->nip)
-        // ->where('id_status_pekerjaan', $request->id_status_pekerjaan)
-        ->first();
+        // $data = Laporan::where('id', $request->id)
+        $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->where('laporan.id', $request->id)
+        ->get([
+            'laporan.*', 
+            'peralatan.serial_number as serial_number', 
+            'status_pekerjaan.nama as status_pekerjaan_name', 
+            'gardu_induk.nama_gardu'
+        ]);
 
         return response()->json($data);
     }
@@ -180,43 +221,53 @@ class LaporanController extends Controller
         return response()->json(['success'=>'deleted successfully.']);
     }
 
-    function exportExcel($search){
+    function exportExcel(Request $request, $search){
 
+        $request = $request->toArray();
         $role = auth()->user()->role;
-        $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : "";
-        $useRole = ($role != '1') ? auth()->user()->role : "";
 
-        if($search == '0'){
+        $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
 
-            $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->where($column, $useRole)
-            ->get([
-                'laporan.*', 
-                'peralatan.serial_number as serial_number', 
-                'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
-            ]);
+        $arrFilter = [];
+        $rangeFilter = [];
+        if(count($request) != 0){
+            $i=0;
+            foreach ($request as $key => $value) {
+                if($value !== null){
+                    if($key == 'tgl_pelaksanaan_dari'){
+                        $rangeFilter['dari'] = $value;
+                        unset($arrFilter[$key]);
+                    }elseif($key == 'tgl_pelaksanaan_sampai'){
+                        $rangeFilter['sampai'] = $value;
+                        unset($arrFilter[$key]);
+                    }
+                    $arrFilter[$key] = $value;
+                }
 
-        }else{
-
-            $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->where($column, $useRole)
-            ->get([
-                'laporan.*', 
-                'peralatan.serial_number as serial_number', 
-                'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
-            ]);
-
-            foreach($this->column as $column){
-                $data->where($column, 'LIKE', '%' . $search . '%' );
+                $i++;
             }
-
         }
+
+        unset($arrFilter['tgl_pelaksanaan_dari']);
+        unset($arrFilter['tgl_pelaksanaan_sampai']);
+
+        $whereByRole = array_merge($whereByRole, $arrFilter);
+
+        $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->where($whereByRole);
+
+        if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
+            $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
+        }
+
+        $laporan->get([
+            'laporan.*', 
+            'peralatan.serial_number as serial_number', 
+            'status_pekerjaan.nama as status_pekerjaan_name', 
+            'gardu_induk.nama_gardu'
+        ]);
 
         $data_array[] = array(
             'peralatan',
@@ -239,9 +290,8 @@ class LaporanController extends Controller
             'keterangan'
         );
         // echo '<pre>';
-        foreach($data as $key => $row)
+        foreach($laporan as $key => $row)
         {
-
             $status_laporan = "Unknown";
             if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
                 $status_laporan = 'Belum Dikirim Oleh Admin';   
@@ -283,44 +333,53 @@ class LaporanController extends Controller
         
     }
 
-    public function cetak_pdf($search)
+    public function cetak_pdf(Request $request, $search)
     {
+        $request = $request->toArray();
         $role = auth()->user()->role;
-        $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : "";
-        $useRole = ($role != '1') ? auth()->user()->role : "";
 
-        
-        if($search == 0){
+        $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
 
-            $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->where($column, $useRole)
-            ->get([
-                'laporan.*', 
-                'peralatan.serial_number as serial_number', 
-                'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
-            ]);
+        $arrFilter = [];
+        $rangeFilter = [];
+        if(count($request) != 0){
+            $i=0;
+            foreach ($request as $key => $value) {
+                if($value !== null){
+                    if($key == 'tgl_pelaksanaan_dari'){
+                        $rangeFilter['dari'] = $value;
+                        unset($arrFilter[$key]);
+                    }elseif($key == 'tgl_pelaksanaan_sampai'){
+                        $rangeFilter['sampai'] = $value;
+                        unset($arrFilter[$key]);
+                    }
+                    $arrFilter[$key] = $value;
+                }
 
-        }else{
-
-            $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->where($column, $useRole)
-            ->get([
-                'laporan.*', 
-                'peralatan.serial_number as serial_number', 
-                'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
-            ]);
-
-            foreach($this->column as $column){
-                $laporan->where($column, 'LIKE', '%' . $search . '%' );
+                $i++;
             }
-
         }
+
+        unset($arrFilter['tgl_pelaksanaan_dari']);
+        unset($arrFilter['tgl_pelaksanaan_sampai']);
+
+        $whereByRole = array_merge($whereByRole, $arrFilter);
+
+        $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->where($whereByRole);
+
+        if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
+            $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
+        }
+
+        $laporan->get([
+            'laporan.*', 
+            'peralatan.serial_number as serial_number', 
+            'status_pekerjaan.nama as status_pekerjaan_name', 
+            'gardu_induk.nama_gardu'
+        ]);
     	
 
         $pdf = PDF::loadView('report.pdf', ['laporan' => $laporan])
