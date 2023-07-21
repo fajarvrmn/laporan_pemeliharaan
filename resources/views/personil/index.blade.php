@@ -2,9 +2,21 @@
  
 @section('content')
     <div class="container-fluid">
-    <h3>Master Data Personil</h3><br>
-    <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
-    <br><br>
+    <div>
+        <hr>
+    </div>
+        <div class="row mb-3">
+        <div class="col-11">
+            <h4>Data Personil</h4>
+        </div>
+        <div class="col-1">
+            <a class="btn btn-success btn-sm" href="javascript:void(0)" id="createNew"> Tambah</a>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
     <table class="table table-bordered data-table">
         <thead>
             <tr>

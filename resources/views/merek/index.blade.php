@@ -1,10 +1,23 @@
 @extends('layouts.app')
  
 @section('content')
+
     <div class="container-fluid">
-    <h3>Master Data Merek Peralatan</h3><br>
-    <a class="btn btn-success" href="javascript:void(0)" id="createNewMerek"> Tambah</a>
-    <br><br>
+    <div>
+        <hr>
+    </div>
+        <div class="row mb-3">
+        <div class="col-11">
+            <h4>Data Merek Peralatan</h4>
+        </div>
+        <div class="col-1">
+            <a class="btn btn-success btn-sm" href="javascript:void(0)" id="createNewMerek"> Tambah</a>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+
     <table class="table table-bordered data-table">
         <thead>
             <tr>
@@ -16,7 +29,7 @@
         <tbody>
         </tbody>
     </table>
-</div>
+    </div>
      
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
     <div class="modal-dialog">
@@ -28,7 +41,7 @@
                 <form id="merekForm" name="merekForm" class="form-horizontal">
                    <input type="hidden" name="merek_id" id="merek_id">
                     <div class="form-group">
-                        <label for="nama_merk" class="col-sm-6 control-label">Merek Peralatan</label>
+                        <label for="nama_merk" class="col-sm-12 control-label">Merek Peralatan</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="nama_merk" name="nama_merk" placeholder="Masukan Merek" value="" maxlength="50" required="">
                         </div>

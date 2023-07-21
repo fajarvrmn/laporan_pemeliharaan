@@ -57,8 +57,8 @@
                     <input type="text" placeholder="Tanggal Sampai" name="tgl_pelaksanaan_sampai" class="form-control form-control-sm filter_datatable_search datepicker" value="">
                 </div>
                 <div class="col-6">
-                    <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                     <button type="submit" class="btn btn-primary btn-sm">Cari</button>
+                    <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button> 
                     <a class="btn btn-danger btn-sm text-white" href="laporan/pdf/0" id="export-pdf"> Export PDF</a>
                     <a class="btn btn-success btn-sm" href="laporan/excel/0" id="export-excel"> Export Excel</a>
 

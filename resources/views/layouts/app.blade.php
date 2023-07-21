@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Sistem Laporan Pemeliharaan') }}</title>
+    <title>Sistem Laporan Pemeliharaan</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -124,18 +124,15 @@
             <!-- Brand Logo -->
             <a href="{{ route('dashboard.index') }}" class="brand-link">
             <img class="animation__wobble" src="{{ asset('theme/dist/img/pln.png') }}" alt="AdminLTELogo" height="60" width="40">
-            <span class="brand-text font-weight-light">Administrasi Sistem</span>
+            <span class="brand-text font-weight-light">Laporan Pemeliharaan</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                <div class="image">
-                <img src="{{ asset('theme/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
-                </div>
                 <div class="info">
-                <a href="#" class="d-block">{{ $auth_user->name }}</a>
+                <a href="#" class="d-block"><b>User Login </b> {{ $auth_user->name }}</a>
                 </div>
             </div>
 
@@ -190,14 +187,14 @@
                         </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a href="{{ route('status.index') }}" class="nav-link {{ ($routeSelected == 'status') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-table"></i>
                         <p>
                             Status Pekerjaan
                         </p>
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a href="{{ route('peralatan.index') }}" class="nav-link {{ ($routeSelected == 'peralatan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-table"></i>
@@ -241,7 +238,7 @@
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <div class="content-header">
+           <!-- <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-1">
                 <div class="col-sm-12">
@@ -249,7 +246,7 @@
                 </div>
                 </div>
             </div>
-            </div>
+            </div> -->
 
             <section class="content">
                 <div class="container-fluid">
