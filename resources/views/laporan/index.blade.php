@@ -22,7 +22,7 @@
         </div>
         <form id="form_filter">
             <div class="row">
-                <div class="col-2">
+                <div class="col-3">
                     <select name="id_peralatan" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Peralatan</option>
                         @foreach(getPeralatan() as $peralatan)
@@ -30,7 +30,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select name="id_gardu_induk" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Gardu Induk</option>
                         @foreach(getGarduInduk() as $gardu)
@@ -38,7 +38,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select id="nip" name="nip" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Nama</option>
                         @foreach(getAllUsers() as $users)
@@ -46,26 +46,28 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <select name="status" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Status</option>
                         <option value="0">Diterima</option>
                         <option value="1">Ditolak</option>
                     </select>
                 </div>
-                <div class="col-2">
+                <br><br>
+                <div class="col-3">
                     <input type="text" placeholder="Tanggal Dari" name="tgl_pelaksanaan_dari" class="form-control form-control-sm filter_datatable_search datepicker" value="">
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <input type="text" placeholder="Tanggal Sampai" name="tgl_pelaksanaan_sampai" class="form-control form-control-sm filter_datatable_search datepicker" value="">
+                </div>
+                <div class="col-6">
+                      <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
                 </div>
                 <div class="col-12">
                     <hr>
                 </div>
-                <div class="col-12 text-center">
-                    <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button>
-                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
-                </div>
+                
             </div>  
         </form>
         
