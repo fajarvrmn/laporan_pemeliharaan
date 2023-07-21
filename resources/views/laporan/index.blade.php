@@ -2,20 +2,16 @@
  
 @section('content')
 <div class="container-fluid">
-    <h3>Master Data Laporan</h3><br>
+    
     <div>
         <hr>
     </div>
     <div class="row mb-3">
-        <div class="col-4">
-            <a class="btn btn-success" href="javascript:void(0)" id="createNew"> Tambah</a>
+        <div class="col-10">
+            <h4>Data Laporan Pemeliharaan</h4>
         </div>
-        <div class="col-4">
-
-        </div>
-        <div class="col-4 text-right">
-            <a class="btn btn-danger" href="laporan/pdf/0" id="export-pdf"> Export PDF</a>
-            <a class="btn btn-success" href="laporan/excel/0" id="export-excel"> Export Excel</a>
+        <div class="col-2">
+            <a class="btn btn-success btn-sm" href="javascript:void(0)" id="createNew"> Tambah Laporan</a>
         </div>
         <div class="col-12">
             <hr>
@@ -61,8 +57,12 @@
                     <input type="text" placeholder="Tanggal Sampai" name="tgl_pelaksanaan_sampai" class="form-control form-control-sm filter_datatable_search datepicker" value="">
                 </div>
                 <div class="col-6">
-                      <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button>
+                    <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button>
                     <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    <a class="btn btn-danger btn-sm text-white" href="laporan/pdf/0" id="export-pdf"> Export PDF</a>
+                    <a class="btn btn-success btn-sm" href="laporan/excel/0" id="export-excel"> Export Excel</a>
+
+
                 </div>
                 <div class="col-12">
                     <hr>
@@ -282,7 +282,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="modelHeading_preview"></h4>
+                <h5 class="modal-title" id="modelHeading_preview"></h5>
             </div>
             <div class="modal-body">
                 <form id="formPreview" name="formPreview" class="form-horizontal">
@@ -365,6 +365,14 @@
                     </div>
 
                     <div class="col-12">
+                       <h5 align="center">Status Persetujuan</h5>
+                    </div>
+
+                   <div class="col-12">
+                        <hr>
+                    </div>
+
+                    <div class="col-12">
                         <input type="hidden" id="id_prev">
                         <table class="table table-bordered text-center">
                             <thead>
@@ -381,7 +389,7 @@
                                             <i class="fa fa-envelope"></i> Kirim
                                         </button>
                                         <button type="button" class="btn btn-success d-none" id="admin-sudah-kirim">
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-check"> Disetujui</i>
                                         </button>
                                     </td>
                                 </tr>
@@ -395,10 +403,10 @@
                                             <i class="fa fa-times"></i> Tolak
                                         </button>
                                         <button type="button" class="btn btn-success d-none" id="spv-sudah-kirim">
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-check"> Disetujui</i>
                                         </button>
                                         <button type="button" class="btn btn-danger d-none" id="spv-tolak-kirim">
-                                            <i class="fa fa-times"></i>
+                                            <i class="fa fa-times"> Ditolak</i>
                                         </button>
                                     </td>
                                 </tr>
@@ -412,10 +420,10 @@
                                             <i class="fa fa-times"></i> Tolak
                                         </button>
                                         <button type="button" class="btn btn-success d-none" id="manager-sudah-kirim">
-                                            <i class="fa fa-check"></i>
+                                            <i class="fa fa-check"> Disetujui</i>
                                         </button>
                                         <button type="button" class="btn btn-danger d-none" id="manager-tolak-kirim">
-                                            <i class="fa fa-times"></i>
+                                            <i class="fa fa-times"> Ditolak</i>
                                         </button>
                                     </td>
                                 </tr>
@@ -723,7 +731,7 @@
                     $('#manager-tolak-kirim').addClass('d-none');
                 }
 
-                $('#modelHeading_preview').html("Preview Data");
+                $('#modelHeading_preview').html("Detail Laporan");
                 $('#previewBtn').val("preview");
                 $('#ajaxModelPreview').modal('show');
 

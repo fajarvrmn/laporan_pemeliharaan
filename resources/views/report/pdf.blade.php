@@ -18,6 +18,13 @@
 
     <div class="container mt-5">
         <h2 class="text-center mb-3" style="text-align:center;">Laporan</h2>
+        <div class="col-2">            
+            <img src="{{ asset('theme/dist/img/pln.png') }}" height="100" width="80">
+            <h3>asdasddassadsad</h3>
+        </div>
+        <div class="col-12">
+            <hr>
+        </div>
         <!-- <div class="d-flex justify-content-end mb-4">
             <a class="btn btn-primary" href="{{ URL::to('#') }}">Export to PDF</a>
         </div> -->
