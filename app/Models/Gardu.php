@@ -12,6 +12,5 @@ class Gardu extends Model
 
     protected $fillable = [
         'nama',
-        
     ];
 }

@@ -25,12 +25,7 @@ class LaporanController extends Controller
     {
         if ($request->ajax()) {
 
-            // dd($request->form_search);
-
             $role = auth()->user()->role;
-
-            // $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : null;
-            // $useRole = ($role != '1') ? auth()->user()->role : null;
 
             $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
 
@@ -59,25 +54,22 @@ class LaporanController extends Controller
 
             $whereByRole = array_merge($whereByRole, $arrFilter);
   
-            $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+            $laporan = Laporan::select(
+                'laporan.*', 
+                'peralatan.serial_number as serial_number', 
+                'status_pekerjaan.nama as status_pekerjaan_name', 
+                'gardu_induk.nama_gardu'
+            )
+            ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
             ->where($whereByRole);
 
             if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
                 $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
             }
 
-            $laporan->get([
-                'laporan.*', 
-                'peralatan.serial_number as serial_number', 
-                'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
-            ]);
-
-            // $laporan = $laporan->whereBetween($betweenKey, [$rangeFilter['dari'], $rangeFilter['sampai']]);
-
-            // exit;
+            $laporan->get();
   
             return Datatables::of($laporan)
                     ->addIndexColumn()
@@ -197,16 +189,15 @@ class LaporanController extends Controller
     public function edit(Request $request)
     {
         // $data = Laporan::where('id', $request->id)
-        $data = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        $data = Laporan::select('laporan.*', 
+        'peralatan.serial_number as serial_number', 
+        'status_pekerjaan.nama as status_pekerjaan_name', 
+        'gardu_induk.nama_gardu')
+        ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
         ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
         ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
         ->where('laporan.id', $request->id)
-        ->get([
-            'laporan.*', 
-            'peralatan.serial_number as serial_number', 
-            'status_pekerjaan.nama as status_pekerjaan_name', 
-            'gardu_induk.nama_gardu'
-        ]);
+        ->get();
 
         return response()->json($data);
     }
@@ -253,7 +244,11 @@ class LaporanController extends Controller
 
         $whereByRole = array_merge($whereByRole, $arrFilter);
 
-        $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        $laporan = Laporan::select('laporan.*', 
+        'peralatan.serial_number as serial_number', 
+        'status_pekerjaan.nama as status_pekerjaan_name', 
+        'gardu_induk.nama_gardu')
+        ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
         ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
         ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
         ->where($whereByRole);
@@ -262,12 +257,7 @@ class LaporanController extends Controller
             $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
         }
 
-        $laporan->get([
-            'laporan.*', 
-            'peralatan.serial_number as serial_number', 
-            'status_pekerjaan.nama as status_pekerjaan_name', 
-            'gardu_induk.nama_gardu'
-        ]);
+        $laporan->get();
 
         $data_array[] = array(
             'peralatan',
@@ -365,7 +355,11 @@ class LaporanController extends Controller
 
         $whereByRole = array_merge($whereByRole, $arrFilter);
 
-        $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        $laporan = Laporan::select('laporan.*', 
+        'peralatan.serial_number as serial_number', 
+        'status_pekerjaan.nama as status_pekerjaan_name', 
+        'gardu_induk.nama_gardu')
+        ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
         ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
         ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
         ->where($whereByRole);
@@ -374,12 +368,7 @@ class LaporanController extends Controller
             $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
         }
 
-        $laporan->get([
-            'laporan.*', 
-            'peralatan.serial_number as serial_number', 
-            'status_pekerjaan.nama as status_pekerjaan_name', 
-            'gardu_induk.nama_gardu'
-        ]);
+        $laporan->get();
     	
 
         $pdf = PDF::loadView('report.pdf', ['laporan' => $laporan])

@@ -16,6 +16,6 @@ class Peralatan extends Model
         'id_merk_peralatan',
         'id_type_peralatan',
         'serial_number',
-        'nama_bay'
+        // 'nama_bay'
     ];
 }
