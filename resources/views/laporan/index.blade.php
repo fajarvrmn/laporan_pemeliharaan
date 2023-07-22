@@ -35,7 +35,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <select id="nip" name="nip" class="form-control form-control-sm filter_datatable_search">
+                    <select name="nip" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Nama</option>
                         @foreach(getAllUsers() as $users)
                             <option value="{{ $users->name }}">{{ $users->name }}</option>
@@ -609,9 +609,6 @@
                     $('input#'+k+"_preview").val(v);
                 });
 
-                // $('#id_peralatan_select_preview').val(data.id_peralatan).trigger('change');
-                // $('#id_status_pekerjaan_select_preview').val(data.id_status_pekerjaan).trigger('change');
-
                 if(data[0].id_status_pekerjaan == '1' && status == '0'){
 
                     if(role == '1'){
@@ -734,10 +731,6 @@
                 $('#modelHeading_preview').html("Detail Laporan");
                 $('#previewBtn').val("preview");
                 $('#ajaxModelPreview').modal('show');
-
-                // $('#id_peralatan_select').prop('disabled', true);
-                // $('#nip').prop('readonly', true);
-                // $('#id_status_pekerjaan_select').prop('disabled', true);
 
             },
             error: function(xhr){
@@ -877,41 +870,38 @@
     --------------------------------------------*/
     $('body').on('click', '.edit', function () {
 
-        // var param = [];
-
         var id = $(this).data('id');
-        var id_peralatan = $(this).data('idperalatan');
-        var nip = $(this).data('idnip');
-        var id_status_pekerjaan = $(this).data('idstatus');
 
-        // console.log(param);
         $.ajax({
             type: 'GET',
             url: '{{ route("laporan.index") }}/'+id+'/edit',
             data: {
                 id: id,
-                id_peralatan : id_peralatan,
-                nip : nip,
-                id_status_pekerjaan: id_status_pekerjaan
+                // id_peralatan : id_peralatan,
+                // nip : nip,
+                // id_status_pekerjaan: id_status_pekerjaan
             },
             success: function(data){
-                console.log(data);
+                // console.log(data);
                 $('#modelHeading').html("Edit Data");
                 $('#saveBtn').val("edit");
                 $('#ajaxModel').modal('show');
 
-                $.each(data, function(k, v) {
+                $.each(data[0], function(k, v) {
+                    console.log(k, v);
                     $('input#'+k).val(v);
                     $('textarea#'+k).text(v);
                     $('select#'+k).val(v).trigger('change');
                 });
 
-                $('#id_peralatan_select').val(data.id_peralatan).trigger('change');
-                $('#id_status_pekerjaan_select').val(data.id_status_pekerjaan).trigger('change');
+                $('#id_peralatan_select').val(data[0].id_peralatan).trigger('change');
+                $('#id_status_pekerjaan_select').val(data[0].id_status_pekerjaan).trigger('change');
 
                 $('#id_peralatan_select').prop('disabled', true);
                 $('#nip').prop('readonly', true);
                 $('#id_status_pekerjaan_select').prop('disabled', true);
+
+                table.draw();
 
             },
             error: function(xhr){
