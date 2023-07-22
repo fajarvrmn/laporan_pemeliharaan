@@ -18,23 +18,98 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        // if ($request->ajax()) {
+        if ($request->ajax()) {
+
+            // dd($request->form_search);
+
+            $role = auth()->user()->role;
+
+            // $column = ($role != '1') ? 'laporan.id_status_pekerjaan' : null;
+            // $useRole = ($role != '1') ? auth()->user()->role : null;
+
+            $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+
+            $arrFilter = [];
+            $rangeFilter = [];
+            if(isset($request->form_search)){
+                $i=0;
+                foreach ($request->form_search as $key => $value) {
+                    if($value['value'] !== null){
+                        if($value['name'] == 'tgl_pelaksanaan_dari'){
+                            $rangeFilter['dari'] = $value['value'];
+                            unset($arrFilter[$key]);
+                        }elseif($value['name'] == 'tgl_pelaksanaan_sampai'){
+                            $rangeFilter['sampai'] = $value['value'];
+                            unset($arrFilter[$key]);
+                        }
+                        $arrFilter[$value['name']] = $value['value'];
+                    }
+
+                    $i++;
+                }
+            }
+
+            unset($arrFilter['tgl_pelaksanaan_dari']);
+            unset($arrFilter['tgl_pelaksanaan_sampai']);
+
+            $whereByRole = array_merge($whereByRole, $arrFilter);
   
-        //     $get_gardu = Gardu::latest()->get();
+            $laporan = Laporan::join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->where($whereByRole);
+
+            if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
+                $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
+            }
+
+            $laporan->get([
+                'laporan.*', 
+                'peralatan.serial_number as serial_number', 
+                'status_pekerjaan.nama as status_pekerjaan_name', 
+                'gardu_induk.nama_gardu'
+            ]);
   
-        //     return Datatables::of($get_gardu)
-        //             ->addIndexColumn()
-        //             ->addColumn('action', function($row){
-   
-        //                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-primary btn-sm editGardu">Edit</a>';
-   
-        //                    $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-danger btn-sm deleteGardu">Delete</a>';
-    
-        //                     return $btn;
-        //             })
-        //             ->rawColumns(['action'])
-        //             ->make(true);
-        // }
+            return Datatables::of($laporan)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+
+                    // $role = auth()->user()->role;
+                    
+                    // if($role == '1'){
+
+                    //     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Ubah</a>';
+
+                    //     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Hapus</a>';
+
+                    //     $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview">Detail</a>';
+
+                    // }else{
+                    //     $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview">Preview</a>';
+                    // }
+
+                    // return $btn;
+                })
+                ->addColumn('status_text', function($row){
+                    $status_laporan = "Unknown";
+                    if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
+                        $status_laporan = 'Belum Dikirim Oleh Admin';   
+                    }elseif($row->id_status_pekerjaan == '2' && $row->status == '0'){
+                        $status_laporan = 'Sudah Dikirim Oleh Admin';
+                    }elseif($row->id_status_pekerjaan == '2' && $row->status == '1'){
+                        $status_laporan = 'Ditolak Oleh Supervisor';
+                    }elseif($row->id_status_pekerjaan == '3' && $row->status == '0'){
+                        $status_laporan = 'Sudah Disetujui Oleh Supervisor';
+                    }elseif($row->id_status_pekerjaan == '3' && $row->status == '1'){
+                        $status_laporan = 'Ditolak Oleh Manager';
+                    }elseif($row->id_status_pekerjaan == '4' && $row->status == '0'){
+                        $status_laporan = 'Sudah Disetujui Oleh Manager';
+                    }
+                    return $status_laporan;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
 
         $dataCount = [
             'total_peralatan' => Peralatan::count(),
