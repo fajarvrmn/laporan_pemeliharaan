@@ -27,7 +27,7 @@ class LaporanController extends Controller
 
             $role = auth()->user()->role;
 
-            $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+            // $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
 
             $arrFilter = [];
             $rangeFilter = [];
@@ -52,7 +52,7 @@ class LaporanController extends Controller
             unset($arrFilter['tgl_pelaksanaan_dari']);
             unset($arrFilter['tgl_pelaksanaan_sampai']);
 
-            $whereByRole = array_merge($whereByRole, $arrFilter);
+            // $whereByRole = array_merge($whereByRole, $arrFilter);
   
             $laporan = Laporan::select(
                 'laporan.*', 
@@ -62,8 +62,8 @@ class LaporanController extends Controller
             )
             ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->where($whereByRole);
+            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan');
+            // ->where($whereByRole);
 
             if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
                 $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
@@ -280,7 +280,7 @@ class LaporanController extends Controller
             'keterangan'
         );
         // echo '<pre>';
-        foreach($laporan as $key => $row)
+        foreach($laporan->get() as $key => $row)
         {
             $status_laporan = "Unknown";
             if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
@@ -369,13 +369,12 @@ class LaporanController extends Controller
         }
 
         $laporan->get();
-    	
 
-        $pdf = PDF::loadView('report.pdf', ['laporan' => $laporan])
+        $pdf = PDF::loadView('report.pdf', ['laporan' => $laporan->get()])
         ->setOptions(['defaultFont' => 'sans-serif'])
         ->setPaper('a4', 'landscape');
 
-        // return view('report.pdf')->with(['laporan' => $laporan]);
+        // return view('report.pdf')->with(['laporan' => $laporan->get()]);
     	return $pdf->download('laporan.pdf');
     }
 

@@ -51,7 +51,11 @@
             </div>
         </div>
 
-        <div class="col-12">
+        <div>
+            <hr>
+        </div>
+
+        <div class="col-10">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">
@@ -60,6 +64,9 @@
                 </div>
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1">
             </div>
+        </div>
+        <div class="col-2">
+            <button type="button" id="search" class="btn btn-primary" style="width:100%;">Search</button>
         </div>
 
         <div class="col-12">

@@ -19,8 +19,8 @@
     <div class="container mt-5">
         <h2 class="text-center mb-3" style="text-align:center;">Laporan</h2>
         <div class="col-2">            
-            <img src="{{ asset('theme/dist/img/pln.png') }}" height="100" width="80">
-            <h3>asdasddassadsad</h3>
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('theme/dist/img/pln.png'))) }}" height="100" width="80">
+            <h3>Laporan</h3>
         </div>
         <div class="col-12">
             <hr>
@@ -73,7 +73,7 @@
                 @endphp
 				<tr>
 					<td>{{ $i++ }}</td>
-					<td>{{$row->serial_number}}</td>
+					<td>{{$row['serial_number']}}</td>
 					<td>{{$row->nip}}</td>
 					<td>{{$status_laporan}}</td>
 					<td>{{$row->alasan_ditolak}}</td>

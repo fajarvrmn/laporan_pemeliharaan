@@ -38,7 +38,7 @@
                     <select name="nip" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Nama</option>
                         @foreach(getAllUsers() as $users)
-                            <option value="{{ $users->name }}">{{ $users->name }}</option>
+                            <option value="{{ $users->nip }}">{{ $users->name }}</option>
                         @endforeach
                     </select>
                 </div>
