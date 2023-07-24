@@ -21,6 +21,7 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nama Bay</th>
                 <th>Merk Peralatan</th>
                 <th>Tipe Peralatan</th>
                 <th>Serial Number</th>
@@ -66,7 +67,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nama" class="col-sm-6 control-label">Serial Number</label>
+                        <label for="nama_bay" class="col-sm-6 control-label">Nama Bay</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="nama_bay" id="nama_bay">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="serial_number" class="col-sm-6 control-label">Serial Number</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="serial_number" id="serial_number">
                         </div>
@@ -108,6 +115,7 @@
         ajax: "{{ route('peralatan.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'nama_bay', name: 'nama_bay'},
             {data: 'nama_merk', name: 'nama_merk'},
             {data: 'nama_type', name: 'nama_type'},
             {data: 'serial_number', name: 'serial_number'},
