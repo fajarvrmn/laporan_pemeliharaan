@@ -56,10 +56,13 @@ class LaporanController extends Controller
   
             $laporan = Laporan::select(
                 'laporan.*', 
+                // 'users.name as nama_personil',
                 'peralatan.serial_number as serial_number', 
+                'peralatan.nama_bay as nama_bay', 
                 'status_pekerjaan.nama as status_pekerjaan_name', 
                 'gardu_induk.nama_gardu'
             )
+            // ->join('users', 'users.nip', '=', 'laporan.nip')
             ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan');
@@ -191,6 +194,7 @@ class LaporanController extends Controller
         // $data = Laporan::where('id', $request->id)
         $data = Laporan::select('laporan.*', 
         'peralatan.serial_number as serial_number', 
+        'peralatan.nama_bay as nama_bay', 
         'status_pekerjaan.nama as status_pekerjaan_name', 
         'gardu_induk.nama_gardu')
         ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
@@ -246,6 +250,7 @@ class LaporanController extends Controller
 
         $laporan = Laporan::select('laporan.*', 
         'peralatan.serial_number as serial_number', 
+        'peralatan.nama_bay as nama_bay', 
         'status_pekerjaan.nama as status_pekerjaan_name', 
         'gardu_induk.nama_gardu')
         ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
@@ -357,6 +362,7 @@ class LaporanController extends Controller
 
         $laporan = Laporan::select('laporan.*', 
         'peralatan.serial_number as serial_number', 
+        'peralatan.nama_bay as nama_bay', 
         'status_pekerjaan.nama as status_pekerjaan_name', 
         'gardu_induk.nama_gardu')
         ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')

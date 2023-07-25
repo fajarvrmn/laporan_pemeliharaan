@@ -56,6 +56,9 @@
         </div>
 
         <form id="form_filter" class="col-12 row">
+            <div class="col-12">
+                <h3 style ="text-align: center;">Pencarian Algoritma Sequential Search</h3>
+            </div>
             <div class="col-10">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">

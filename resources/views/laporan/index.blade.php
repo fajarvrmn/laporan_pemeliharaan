@@ -22,7 +22,7 @@
                     <select name="id_peralatan" class="form-control form-control-sm filter_datatable_search">
                         <option value="" disabled selected>Pilih Peralatan</option>
                         @foreach(getPeralatan() as $peralatan)
-                            <option value="{{ $peralatan->id_alat }}">{{ $peralatan->serial_number }}</option>
+                            <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -80,7 +80,9 @@
                 <tr>
                     <th>No</th>
                     <th>Peralatan</th>
+                    <th>Serial Number</th>
                     <th>NIP</th>
+                    <!-- <th>Nama Personil</th> -->
                     <th>Status Pekerjaan</th>
                     <th>Alasan</th>
                     <th>Tanggal Pelaksanaan</th>
@@ -126,7 +128,7 @@
                                 <select id="id_peralatan_select" class="form-control" required>
                                     <option value="" disabled selected>Pilih Peralatan</option>
                                     @foreach(getPeralatan() as $peralatan)
-                                        <option value="{{ $peralatan->id_alat }}">{{ $peralatan->serial_number }}</option>
+                                        <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
                                     @endforeach
                                 </select>
                                 <input type="hidden" name="id_peralatan" id="id_peralatan">
@@ -295,6 +297,10 @@
                         <thead>
                             <tr>
                                 <th>Peralatan</th>
+                                <th class="nama_bay_preview"></th>
+                            </tr>
+                            <tr>
+                                <th>Serial Number</th>
                                 <th class="serial_number_preview"></th>
                             </tr>
                             <tr>
@@ -523,8 +529,10 @@
         // ajax: "{{ route('laporan.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
+            {data: 'nama_bay', name: 'nama_bay'},
             {data: 'serial_number', name: 'serial_number'},
             {data: 'nip', name: 'nip'},
+            // {data: 'nama_personil', name: 'nama_personil'},
             {data: 'status_text', name: 'status_text'},
             {data: 'alasan_ditolak', name: 'alasan_ditolak'},
             {data: 'tgl_pelaksanaan', name: 'tgl_pelaksanaan'},

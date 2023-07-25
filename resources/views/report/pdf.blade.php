@@ -33,6 +33,7 @@
                 <tr class="table-danger">
                     <th>No</th>
                     <th>Peralatan</th>
+                    <th>Serial Number</th>
                     <th>NIP</th>
                     <th>Status Pekerjaan</th>
                     <th>Alasan</th>
@@ -73,6 +74,7 @@
                 @endphp
 				<tr>
 					<td>{{ $i++ }}</td>
+                    <td>{{$row['nama_bay']}}</td>
 					<td>{{$row['serial_number']}}</td>
 					<td>{{$row->nip}}</td>
 					<td>{{$status_laporan}}</td>
