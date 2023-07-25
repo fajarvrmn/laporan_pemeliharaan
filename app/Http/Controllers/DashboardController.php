@@ -93,21 +93,21 @@ class DashboardController extends Controller
                         // $responseData[$key] = $value;
 
                         if(strtolower($key) == 'nama_bay'){
-                            if($value == $search){
+                            if(str_contains($value, $search)){
                                 $message = "Laporan dengan nama bay ".$search." ditemukan !";
                                 $result = true;
                                 // $response[$i] = $data[$i];
                                 break;
                             }
                         }elseif(strtolower($key) == 'serial_number'){
-                            if($value == $search){
+                            if(str_contains($value, $search)){
                                 $message = "Laporan dengan serial number ".$search." ditemukan !";
                                 $result = true;
                                 // $response[$i] = $data[$i];
                                 break;
                             }
                         }elseif(strtolower($key) == 'nama_gardu'){
-                            if($value == $search){
+                            if(str_contains($value, $search)){
                                 $message = "Laporan dengan nama gardu ".$search." ditemukan !";
                                 $result = true;
                                 // $response[$i] = $data[$i];
