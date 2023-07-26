@@ -93,7 +93,7 @@ class DashboardController extends Controller
 
                     foreach ($data[$i] as $key => $value) {
 
-                        if(strtolower($key) == 'nama_bay' && str_contains($value, $search) || strtolower($key) == 'serial_number' && str_contains($value, $search) || strtolower($key) == 'nama_gardu' && str_contains($value, $search)){
+                        if(strtolower($key) == 'nama_bay' && str_contains(strtolower($value), strtolower($search)) || strtolower($key) == 'serial_number' && str_contains(strtolower($value), strtolower($search)) || strtolower($key) == 'nama_gardu' && str_contains(strtolower($value), strtolower($search))){
                             $message = "Laporan ditemukan !";
                             $result = true;
                             $responseData[] = $data[$i];

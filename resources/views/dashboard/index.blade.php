@@ -122,12 +122,14 @@
                     $.each(data.data.data, function( index, value ) {
                         // alert( index + ": " + value );
                         // console.log(index, value);
+                        var alasanDitolak = (value.alasan_ditolak === null) ? "" : value.alasan_ditolak;
+
                         $('#fetch_response').append('<tr>'+
                             '<td>'+i+'</td>'+
                             '<td>'+value.nama_bay+'</td>'+
                             '<td>'+value.nip+'</td>'+
                             '<td>'+value.status_pekerjaan_text+'</td>'+
-                            '<td>'+value.alasan_ditolak+'</td>'+
+                            '<td>'+alasanDitolak+'</td>'+
                             '<td>'+value.tgl_pelaksanaan+'</td>'+
                             '<td>'+value.nama_gardu+'</td>'+
                             '<td>'+value.busbar+'</td>'+
@@ -174,12 +176,14 @@
 
                                 if(!$.isEmptyObject(data.data.data[x])){
 
+                                    var alasanDitolak = (value.alasan_ditolak === null) ? "" : value.alasan_ditolak;
+
                                     $('#fetch_response').append('<tr>'+
                                         '<td>'+i+'</td>'+
                                         '<td>'+value.nama_bay+'</td>'+
                                         '<td>'+value.nip+'</td>'+
                                         '<td>'+value.status_pekerjaan_text+'</td>'+
-                                        '<td>'+value.alasan_ditolak+'</td>'+
+                                        '<td>'+alasanDitolak+'</td>'+
                                         '<td>'+value.tgl_pelaksanaan+'</td>'+
                                         '<td>'+value.nama_gardu+'</td>'+
                                         '<td>'+value.busbar+'</td>'+
