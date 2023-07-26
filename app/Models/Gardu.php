@@ -11,6 +11,6 @@ class Gardu extends Model
     protected $table = 'gardu_induk';
 
     protected $fillable = [
-        'nama',
+        'nama_gardu',
     ];
 }

@@ -65,6 +65,8 @@ class DashboardController extends Controller
 
     private function linear_search($data, $search="")
     {
+        // var_dump($search);
+        // exit;
         // dd($data);
         // exit;
         $i = 0;
@@ -74,66 +76,48 @@ class DashboardController extends Controller
         $response = [];
 
         if(count($data) != 0){
-            
-            $start = microtime(true);
 
-            foreach ($data as $key1 => $value1) {
+            if($search == ""){
 
-                if($search == ""){
+                $start = microtime(true);
+                $result = true;
+                $responseData = $data;
+                $end = microtime(true);
+                $estTime = substr(($end - $start), 0,5);
 
-                    $result = true;
-                    $response[$i] = $value1;
+            }else{
 
-                }else{
-                    
+                $start = microtime(true);
+                $responseData = array();
+                foreach ($data as $key1 => $value1) {
+
                     foreach ($data[$i] as $key => $value) {
 
-                        $responseData = $data[$i];
-
-                        // $responseData[$key] = $value;
-
-                        if(strtolower($key) == 'nama_bay'){
-                            if(str_contains($value, $search)){
-                                $message = "Laporan dengan nama bay ".$search." ditemukan !";
-                                $result = true;
-                                // $response[$i] = $data[$i];
-                                break;
-                            }
-                        }elseif(strtolower($key) == 'serial_number'){
-                            if(str_contains($value, $search)){
-                                $message = "Laporan dengan serial number ".$search." ditemukan !";
-                                $result = true;
-                                // $response[$i] = $data[$i];
-                                break;
-                            }
-                        }elseif(strtolower($key) == 'nama_gardu'){
-                            if(str_contains($value, $search)){
-                                $message = "Laporan dengan nama gardu ".$search." ditemukan !";
-                                $result = true;
-                                // $response[$i] = $data[$i];
-                                break;
-                            }
+                        if(strtolower($key) == 'nama_bay' && str_contains($value, $search) || strtolower($key) == 'serial_number' && str_contains($value, $search) || strtolower($key) == 'nama_gardu' && str_contains($value, $search)){
+                            $message = "Laporan ditemukan !";
+                            $result = true;
+                            $responseData[] = $data[$i];
+                            break;
                         }
                     }
 
-                    // dd($responseData);
-                    $response[$i] = ($result) ? $responseData : [];
+                    $i++;
                 }
 
-                $i++;
+                $end = microtime(true);
+                $estTime = substr(($end - $start), 0,5);
+
             }
 
-            $end = microtime(true);
-
-            $estTime = substr(($end - $start), 0,5);
-
         }
+
+        // dd($response);
 
         return [
             'result' => $result,
             'msg' => $message,
             'time' => "Waktu yang dibutuhkan: " . ($estTime)  . " detik",
-            'data' => $response
+            'data' => $responseData
         ];
     }
     
