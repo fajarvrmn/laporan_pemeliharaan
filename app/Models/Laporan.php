@@ -30,6 +30,11 @@ class Laporan extends Model
         'pengawas_pekerjaan',
         'keterangan',
         'status', //1 diterima, 2 ditolak
-        'alasan_ditolak'
+        'alasan_ditolak',
+        'rel',
+        'arus_motor',
+        'pelaksana_uji'
+        // 'merk',
+        // 'type'
     ];
 }

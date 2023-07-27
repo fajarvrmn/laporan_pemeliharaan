@@ -1,6 +1,12 @@
 @extends('layouts.app')
  
 @section('content')
+<style>
+    .label-padding{
+        font-size: 100%;
+        padding-top: 2%;
+    }
+</style>
 <div class="container-fluid">
     
     <div>
@@ -81,13 +87,13 @@
                     <th>No</th>
                     <th>Peralatan</th>
                     <th>Serial Number</th>
-                    <th>NIP</th>
+                    <!-- <th>NIP</th> -->
                     <!-- <th>Nama Personil</th> -->
                     <th>Status Pekerjaan</th>
                     <th>Alasan</th>
                     <th>Tanggal Pelaksanaan</th>
                     <th>Gardu Induk</th>
-                    <th>Busbar</th>
+                    <!-- <th>Busbar</th> -->
                     <th>Kapasitas</th>
                     <th>Pengujian Kontak</th>
                     <th>Pengujian Isolasi</th>
@@ -111,34 +117,360 @@
 </div>
      
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document" style="min-width:90%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="modelHeading"></h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: small;">
+                
                 <form id="formCRUD" name="formCRUD" class="form-horizontal">
-                   <input type="hidden" name="id" id="id">
+                   
+                    <input type="hidden" name="id" id="id">
 
-                   <div class="row">
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Tanggal Pelaksanaan</label>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <input type="text" name="tgl_pelaksanaan" id="tgl_pelaksanaan" class="form-control form-control-sm datepicker" aria-label="">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Tahanan Kontak</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-1 label-padding">R</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_kontak[]" id="hasil_pengujian_tahanan_kontak_1" class="form-control form-control-sm col-3 text-center">
+                                    <label for="" class="col-1 label-padding">S</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_kontak[]" id="hasil_pengujian_tahanan_kontak_2" class="form-control form-control-sm col-3 text-center">
+                                    <label for="" class="col-1 label-padding">T</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_kontak[]" id="hasil_pengujian_tahanan_kontak_3" class="form-control form-control-sm col-3 text-center">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Gardu Induk</label>
+                                </div>
+                                <div class="col-6">
+                                    <select id="id_gardu_induk" name="id_gardu_induk" class="form-control form-control-sm">
+                                        <option value="" disabled selected>Pilih</option>
+                                        @foreach(getGarduInduk() as $gardu)
+                                            <option value="{{ $gardu->id }}">{{ $gardu->nama_gardu }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Tahanan Isolasi</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-1 label-padding">R</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_isolasi[]" id="hasil_pengujian_tahanan_isolasi_1" class="form-control form-control-sm col-3 text-center">
+                                    <label for="" class="col-1 label-padding">S</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_isolasi[]" id="hasil_pengujian_tahanan_isolasi_2" class="form-control form-control-sm col-3 text-center">
+                                    <label for="" class="col-1 label-padding">T</label>
+                                    <input type="text" name="hasil_pengujian_tahanan_isolasi[]" id="hasil_pengujian_tahanan_isolasi_3" class="form-control form-control-sm col-3 text-center">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Nama Bay</label>
+                                </div>
+                                <div class="col-6">
+                                    <select id="id_peralatan" name="id_peralatan" class="form-control form-control-sm" required>
+                                        <option value="" disabled selected>Pilih</option>
+                                        @foreach(getPeralatan() as $peralatan)
+                                            <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Arus Motor</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <input type="number" class="form-control col-12 form-control-sm" name="arus_motor" id="arus_motor">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Rel</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control form-control-sm" name="rel" id="rel">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Waktu</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-2 label-padding">Open</label>
+                                    <input type="number" name="waktu_open" id="waktu_open" class="form-control col-4 form-control-sm text-center">
+                                    <label for="" class="col-2 label-padding">Close</label>
+                                    <input type="number" name="waktu_close" id="waktu_close" class="form-control col-4 form-control-sm text-center">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Merk</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="merk" id="merk" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                        </div> -->
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
+                                </div>
+                                <div class="col-6">
+                                    <select id="pengawas_pekerjaan" name="pengawas_pekerjaan" class="form-control col-12 form-control-sm" required>
+                                        <option value="" disabled selected>Pilih</option>
+                                        @foreach(getAllUsers() as $user)
+                                            <option value="{{ $user->nip }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- <input type="hidden" name="id_peralatan" id="id_peralatan"> -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Type</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="type" id="type" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                        </div> -->
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Pelaksana Uji</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <select id="pelaksana_uji" name="pelaksana_uji" class="form-control col-12 form-control-sm" required>
+                                        <option value="" disabled selected>Pilih</option>
+                                        @foreach(getAllUsers() as $user)
+                                            <option value="{{ $user->name }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <!-- <input type="hidden" name="id_peralatan" id="id_peralatan"> -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Kapasitas</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" name="kapasitas" id="kapasitas" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Kondisi Visual</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <input type="text" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Dokumentasi</label>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" name="dokumentasi" id="dokumentasi" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Keterangan</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <textarea name="keterangan" id="keterangan" cols="30" rows="3" class="form-control col-12 form-control-sm"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!--  -->
+                        
+                        <!-- <div class="form-group row">
+                            <div class="col-3 text-center">
+                                <label for="name" class="control-label label-padding">Tahanan Kontak</label>
+                            </div>
+                            <div class="col-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control form-control-sm datepicker" aria-label="">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+                    </div>
+
+                    
+                    
+                    <div class="form-check form-check-inline">
+                        <label for="tgl_pelaksanaan" class="">Tanggal Pelaksanaan &nbsp;&nbsp;&nbsp; : &nbsp;</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm datepicker" aria-label="">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <label for="tgl_pelaksanaan" class="">Tahanan Kontak &nbsp;&nbsp;&nbsp; : &nbsp;</label>
+                        <p style="padding-top: 5%;padding-right:2%;">R</p>
+                        <input type="text" class="form-control form-control-sm" style="width: 14%;">
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <p style="padding-top: 5%;padding-right:2%;">S</p>
+                        <input type="text" class="form-control form-control-sm" style="width: 14%;">
+                    </div>
+
+                    <div class="row">
 
                         <div class="form-group col-6">
-                            <label for="id_peralatan" class="col-sm-12 control-label">Peralatan</label>
-                            <div class="col-sm-12">
-                                <select id="id_peralatan_select" class="form-control" required>
-                                    <option value="" disabled selected>Pilih Peralatan</option>
-                                    @foreach(getPeralatan() as $peralatan)
-                                        <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="hidden" name="id_peralatan" id="id_peralatan">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="tgl_pelaksanaan" class="col-sm-12 control-label">Tanggal Pelaksanaan</label>
+                                </div>
+                                <div class="col-1" style="font-weight: bolder;padding-top: 2%;text-align: right;">
+                                    :
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-sm-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-6">
+                            <div class="row">
+                                <div class="col-3">
+                                    <label for="id_peralatan" class="col-sm-12 control-label control-label-sm">Peralatan</label>
+                                </div>
+                                <div class="col-1" style="font-weight: bolder;padding-top: 2%;text-align: right;">
+                                    :
+                                </div>
+                                <div class="col-8">
+                                    <div class="col-sm-12">
+                                        <select id="id_peralatan_select" class="form-control" required>
+                                            <option value="" disabled selected>Pilih Peralatan</option>
+                                            @foreach(getPeralatan() as $peralatan)
+                                                <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="hidden" name="id_peralatan" id="id_peralatan">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group col-6">
                             <label for="nip" class="col-sm-12 control-label">NIP</label>
                             <div class="col-sm-12">
-                                <!-- <input type="number" class="form-control" name="nip" id="nip" required> -->
                                 <select id="nip" name="nip" class="form-control" required>
                                     <option value="" disabled selected>Pilih NIP</option>
                                     @foreach(getAllUsers() as $users)
@@ -147,26 +479,7 @@
                                 </select>
                             </div>
                         </div>
-
-                        <!-- <div class="form-group col-6">
-                            <label for="id_status_pekerjaan" class="col-sm-12 control-label">Status Pekerjaan</label>
-                            <div class="col-sm-12">
-                                <select id="id_status_pekerjaan_select" class="form-control" required>
-                                    <option value="" disabled selected>Pilih Status</option>
-                                    @foreach(getStatusPekerjaan() as $status)
-                                        <option value="{{ $status->id }}">{{ $status->nama }}</option>
-                                    @endforeach
-                                </select>
-                                <input type="hidden" name="id_status_pekerjaan" id="id_status_pekerjaan">
-                            </div>
-                        </div> -->
-
-                        <div class="form-group col-6">
-                            <label for="tgl_pelaksanaan" class="col-sm-12 control-label">Tanggal Pelaksanaan</label>
-                            <div class="col-sm-12">
-                                <input type="text" name="tgl_pelaksanaan" id="tgl_pelaksanaan" class="form-control datepicker">
-                            </div>
-                        </div>
+                        
                         <div class="form-group col-6">
                             <label for="id_gardu_induk" class="col-sm-12 control-label">Gardu Induk</label>
                             <div class="col-sm-12">
@@ -176,7 +489,6 @@
                                         <option value="{{ $gardu->id }}">{{ $gardu->nama_gardu }}</option>
                                     @endforeach
                                 </select>
-                                <!-- <input type="hidden" name="id_merk_peralatan" id="id_merk_peralatan"> -->
                             </div>
                         </div>
                         <div class="form-group col-6">
@@ -261,13 +573,12 @@
                             <div class="col-sm-12">
                                 <textarea name="keterangan" id="keterangan" cols="30" rows="5" class="form-control"></textarea>
                             </div>
-                        </div>
+                        </div> -->
 
                    </div>
                    
-                    <div class="col-sm-offset-2 col-sm-10">
-                     <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Simpan
-                     </button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-primary" id="saveBtn" value="create"><i class="fa fa-save"></i> Simpan</button>
                     </div>
                 </form>
             </div>
@@ -281,90 +592,226 @@
 <!-- Preview Modal -->
 <!--  -->
 <div class="modal fade" id="ajaxModelPreview" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg" role="document" style="min-width:90%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modelHeading_preview"></h5>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="font-size: small;">
                 <form id="formPreview" name="formPreview" class="form-horizontal">
                     
                    <input type="hidden" name="id_preview" id="id_preview">
                    <input type="hidden" name="id_status_pekerjaan_preview" id="id_status_pekerjaan_preview">
                    <input type="hidden" name="status_preview" id="status_preview">
 
-                   <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Peralatan</th>
-                                <th class="nama_bay_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Serial Number</th>
-                                <th class="serial_number_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>NIP</th>
-                                <th class="nip_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Tanggal Pelaksanaan</th>
-                                <th class="tgl_pelaksanaan_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Gardu Induk</th>
-                                <th class="nama_gardu_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Busbar</th>
-                                <th class="busbar_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Kapasitas</th>
-                                <th class="kapasitas_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Pengujian Tahan Kontak</th>
-                                <th class="hasil_pengujian_tahanan_kontak_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Pengujian Tahan Isolasi</th>
-                                <th class="hasil_pengujian_tahanan_isolasi_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Arus Motor Open</th>
-                                <th class="arus_motor_open_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Arus Motor Close</th>
-                                <th class="arus_motor_close_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Waktu Open</th>
-                                <th class="waktu_open_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Waktu Close</th>
-                                <th class="waktu_close_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Kondisi Visual</th>
-                                <th class="kondisi_visual_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Dokumentasi</th>
-                                <th class="dokumentasi_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Pengawas Pekerjaan</th>
-                                <th class="pengawas_pekerjaan_preview"></th>
-                            </tr>
-                            <tr>
-                                <th>Keterangan</th>
-                                <th class="keterangan_preview"></th>
-                            </tr>
-                        </thead>
-                   </table>
+                   <div class="row">
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Tanggal Pelaksanaan</label>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group">
+                                        <p id="tgl_pelaksanaan_preview" class="label-padding">: </p>
+                                        <div class="input-group-append">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Tahanan Kontak</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-1 label-padding">R</label>
+                                    <p id="hasil_pengujian_tahanan_kontak_1_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                    <label for="" class="col-1 label-padding">S</label>
+                                    <p id="hasil_pengujian_tahanan_kontak_2_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                    <label for="" class="col-1 label-padding">T</label>
+                                    <p id="hasil_pengujian_tahanan_kontak_3_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Gardu Induk</label>
+                                </div>
+                                <div class="col-6">
+                                    <p id="id_gardu_induk_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Tahanan Isolasi</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-1 label-padding">R</label>
+                                    <p id="hasil_pengujian_tahanan_isolasi_1_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                    <label for="" class="col-1 label-padding">S</label>
+                                    <p id="hasil_pengujian_tahanan_isolasi_2_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                    <label for="" class="col-1 label-padding">T</label>
+                                    <p id="hasil_pengujian_tahanan_isolasi_3_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Nama Bay</label>
+                                </div>
+                                <div class="col-6">
+                                    <p id="id_peralatan_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Arus Motor</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <!-- <input type="number" class="form-control col-12 form-control-sm" name="arus_motor" id="arus_motor"> -->
+                                    <p id="arus_motor_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Rel</label>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <input type="text" class="form-control form-control-sm" name="rel" id="rel"> -->
+                                    <p id="rel_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Waktu</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <label for="" class="col-2 label-padding">Open</label>
+                                    <!-- <input type="number" name="waktu_open" id="waktu_open" class="form-control col-4 form-control-sm text-center"> -->
+                                    <p id="waktu_open_preview" class="col-4 label-padding">: </p>
+                                    <label for="" class="col-2 label-padding">Close</label>
+                                    <!-- <input type="number" name="waktu_close" id="waktu_close" class="form-control col-4 form-control-sm text-center"> -->
+                                    <p id="waktu_close_preview" class="col-4 label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
+                                </div>
+                                <div class="col-6">
+                                    <p id="pengawas_pekerjaan_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Pelaksana Uji</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <p id="pelaksana_uji_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Kapasitas</label>
+                                </div>
+                                <div class="col-6">
+                                    <p id="kapasitas_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Kondisi Visual</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <!-- <input type="number" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm"> -->
+                                    <p id="kondisi_visual_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="name" class="control-label label-padding">Dokumentasi</label>
+                                </div>
+                                <div class="col-6">
+                                    <!-- <input type="number" name="dokumentasi" id="dokumentasi" class="form-control form-control-sm"> -->
+                                    <p id="dokumentasi_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Keterangan</label>
+                                </div>
+                                <div class="col-8 row">
+                                    <textarea id="keterangan_preview" cols="30" rows="3" class="form-control col-12 form-control-sm" readonly></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                   </div>
 
                    <div class="col-12">
                         <hr>
@@ -531,13 +978,13 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'nama_bay', name: 'nama_bay'},
             {data: 'serial_number', name: 'serial_number'},
-            {data: 'nip', name: 'nip'},
+            // {data: 'nip', name: 'nip'},
             // {data: 'nama_personil', name: 'nama_personil'},
             {data: 'status_text', name: 'status_text'},
             {data: 'alasan_ditolak', name: 'alasan_ditolak'},
             {data: 'tgl_pelaksanaan', name: 'tgl_pelaksanaan'},
             {data: 'nama_gardu', name: 'nama_gardu'},
-            {data: 'busbar', name: 'busbar'},
+            // {data: 'busbar', name: 'busbar'},
             {data: 'kapasitas', name: 'kapasitas'},
             {data: 'hasil_pengujian_tahanan_kontak', name: 'hasil_pengujian_tahanan_kontak'},
             {data: 'hasil_pengujian_tahanan_isolasi', name: 'hasil_pengujian_tahanan_isolasi'},
@@ -572,19 +1019,6 @@
         $('#export-excel').attr('href', 'laporan/excel/0');
         table.draw();
     })
-      
-    /*------------------------------------------
-    --------------------------------------------
-    Click to Button
-    --------------------------------------------
-    --------------------------------------------*/
-
-
-    // $('input[type="search"]').keyup(function(){
-    //     var search = $(this).val();
-    //     $('#export-pdf').attr('href', 'laporan/pdf/'+search);
-    //     $('#export-excel').attr('href', 'laporan/excel/'+search);
-    // })
 
     $('body').on('click', '.preview', function () {
 
@@ -613,9 +1047,29 @@
 
                 $.each(data[0], function(k, v) {
                     console.log(k, v);
-                    $('th.'+k+"_preview").text(v);
+                    // $('th.'+k+"_preview").text(v);
+                    $('p.'+k+"_preview").text(': '+v);
+                    $('p#'+k+"_preview").text(': '+v);
                     $('input#'+k+"_preview").val(v);
                 });
+
+                var tahanan_kontak = data[0].hasil_pengujian_tahanan_kontak.split(',');
+                var tahanan_isolasi = data[0].hasil_pengujian_tahanan_isolasi.split(',');
+
+                // console.log(tahanan_kontak);
+
+                var i = 1;
+                for (let index = 0; index < tahanan_kontak.length; index++) {
+                    $('#hasil_pengujian_tahanan_kontak_'+i+'_preview').html(': '+tahanan_kontak[index]+' &#181;Ohm');
+                    i++;
+                }
+
+                var i = 1;
+                for (let index = 0; index < tahanan_isolasi.length; index++) {
+                    // const element = array[index];
+                    $('#hasil_pengujian_tahanan_isolasi_'+i+'_preview').html(': '+tahanan_isolasi[index]+' MOhm');
+                    i++;
+                }
 
                 if(data[0].id_status_pekerjaan == '1' && status == '0'){
 
@@ -896,18 +1350,41 @@
                 $('#ajaxModel').modal('show');
 
                 $.each(data[0], function(k, v) {
-                    console.log(k, v);
+                    // console.log(k, v);
                     $('input#'+k).val(v);
                     $('textarea#'+k).text(v);
                     $('select#'+k).val(v).trigger('change');
                 });
 
-                $('#id_peralatan_select').val(data[0].id_peralatan).trigger('change');
-                $('#id_status_pekerjaan_select').val(data[0].id_status_pekerjaan).trigger('change');
+                var tahanan_kontak = data[0].hasil_pengujian_tahanan_kontak.split(',');
+                var tahanan_isolasi = data[0].hasil_pengujian_tahanan_isolasi.split(',');
 
-                $('#id_peralatan_select').prop('disabled', true);
-                $('#nip').prop('readonly', true);
-                $('#id_status_pekerjaan_select').prop('disabled', true);
+                var i = 1;
+                for (let index = 0; index < tahanan_kontak.length; index++) {
+                    // const element = array[index];
+                    $('#hasil_pengujian_tahanan_kontak_'+i).val(tahanan_kontak[index]);
+                    i++;
+                }
+
+                var i = 1;
+                for (let index = 0; index < tahanan_isolasi.length; index++) {
+                    // const element = array[index];
+                    $('#hasil_pengujian_tahanan_isolasi_'+i).val(tahanan_isolasi[index]);
+                    i++;
+                }
+
+                // if(k == 'hasil_pengujian_tahanan_kontak'){
+                    // var str = 
+                    // const tKontak = v.split(',');
+                    console.log(data[0].hasil_pengujian_tahanan_kontak);
+                // }
+
+                // $('#id_peralatan_select').val(data[0].id_peralatan).trigger('change');
+                // $('#id_status_pekerjaan_select').val(data[0].id_status_pekerjaan).trigger('change');
+
+                // $('#id_peralatan_select').prop('disabled', true);
+                // $('#nip').prop('readonly', true);
+                // $('#id_status_pekerjaan_select').prop('disabled', true);
 
                 table.draw();
 
@@ -936,6 +1413,7 @@
        
               $('#formCRUD').trigger("reset");
               $('#ajaxModel').modal('hide');
+              $('#saveBtn').html('Simpan');
               table.draw();
            
           },

@@ -139,8 +139,24 @@ class LaporanController extends Controller
 
         // dd($request->all());
         $param = $request->all();
+
+        $kr = ($request->hasil_pengujian_tahanan_kontak[0] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[0];
+        $ks = ($request->hasil_pengujian_tahanan_kontak[1] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[1];
+        $kt = ($request->hasil_pengujian_tahanan_kontak[2] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[2];
+
+        $ir = ($request->hasil_pengujian_tahanan_isolasi[0] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[0];
+        $is = ($request->hasil_pengujian_tahanan_isolasi[1] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[1];
+        $it = ($request->hasil_pengujian_tahanan_isolasi[2] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[2];
+
         unset($param['id']);
-        // dd($param);
+        unset($param['hasil_pengujian_tahanan_kontak']);
+        unset($param['hasil_pengujian_tahanan_isolasi']);
+
+        $hu_kontak = $kr.','.$ks.','.$kt;
+        $hu_isolasi = $ir.','.$is.','.$it;
+
+        $param['hasil_pengujian_tahanan_kontak'] = $hu_kontak;
+        $param['hasil_pengujian_tahanan_isolasi'] = $hu_isolasi;
 
         Laporan::updateOrCreate(
             [
