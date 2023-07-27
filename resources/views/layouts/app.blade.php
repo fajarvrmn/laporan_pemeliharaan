@@ -73,6 +73,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+    
 
 </head>
 <body>
@@ -152,8 +153,7 @@
             <!-- Sidebar Menu -->
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-                    with font-awesome or any other icon font library -->
+                @if ($role=='1');
                     <li class="nav-item menu-open">
                         <a href="{{ route('dashboard.index') }}" class="nav-link {{ ($routeSelected == 'dashboard') ? 'active' : '' }}">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -163,10 +163,34 @@
                             </p>
                         </a>
                     </li>
+                @endif
+                @if ($role=='2');
+                    <li class="nav-item menu-open">
+                        <a href="{{ route('dashboard.index') }}" class="nav-link {{ ($routeSelected == 'dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right fas fa-file-chart-line"></i>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if ($role=='3');
+                    <li class="nav-item menu-open">
+                        <a href="{{ route('dashboard.index') }}" class="nav-link {{ ($routeSelected == 'dashboard') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right fas fa-file-chart-line"></i>
+                            </p>
+                        </a>
+                    </li>
+                @endif
+                @if ($role=='1');
                     <li class="nav-header">MASTER DATA</li>
                     <li class="nav-item">
                         <a href="{{ route('merekperalatan.index') }}" class="nav-link {{ ($routeSelected == 'merekperalatan') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-marker"></i>
                         <p>
                             Merek Peralatan
                         </p>
@@ -174,7 +198,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('tipeperalatan.index') }}" class="nav-link {{ ($routeSelected == 'tipeperalatan') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-keyboard"></i>
                         <p>
                             Tipe Peralatan
                         </p>
@@ -182,20 +206,12 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('garduinduk.index') }}" class="nav-link {{ ($routeSelected == 'garduinduk') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-bolt"></i>
                         <p>
                             Gardu Induk
                         </p>
                         </a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a href="{{ route('status.index') }}" class="nav-link {{ ($routeSelected == 'status') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                            Status Pekerjaan
-                        </p>
-                        </a>
-                    </li> -->
                     <li class="nav-item">
                         <a href="{{ route('peralatan.index') }}" class="nav-link {{ ($routeSelected == 'peralatan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-table"></i>
@@ -204,9 +220,10 @@
                         </p>
                         </a>
                     </li>
+                    <li class="nav-header">PEMELIHARAAN</li>
                     <li class="nav-item">
                         <a href="{{ route('personil.index') }}" class="nav-link {{ ($routeSelected == 'personil') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>
                             Personil
                         </p>
@@ -214,12 +231,33 @@
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('laporan.index') }}" class="nav-link {{ ($routeSelected == 'laporan') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-table"></i>
+                        <i class="nav-icon fas fa-file"></i>
                         <p>
                             Laporan
                         </p>
                         </a>
                     </li>
+                @endif
+                @if ($role=='3');
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}" class="nav-link {{ ($routeSelected == 'laporan') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Laporan
+                        </p>
+                        </a>
+                    </li>
+                @endif
+                @if ($role=='2');
+                    <li class="nav-item">
+                        <a href="{{ route('laporan.index') }}" class="nav-link {{ ($routeSelected == 'laporan') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-file"></i>
+                        <p>
+                            Laporan
+                        </p>
+                        </a>
+                    </li>
+                @endif  
                     <!-- <li class="nav-header">ADMIN</li>
                     <li class="nav-item">
                         <a href="{{ route('register') }}" class="nav-link {{ ($routeSelected == 'register') ? 'active' : '' }}">

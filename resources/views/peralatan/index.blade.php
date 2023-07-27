@@ -18,14 +18,16 @@
     </div>
 
     <table class="table table-bordered data-table">
-        <thead>
+        <thead align="center">
             <tr>
                 <th>No</th>
-                <th>Nama Bay</th>
+                <th>Bay</th>
+                <th>ID</th>
+                <th>Lokasi</th>
+                <th>Serial Number</th>
                 <th>Merk Peralatan</th>
                 <th>Tipe Peralatan</th>
-                <th>Serial Number</th>
-                <th width="280px">Action</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -67,17 +69,30 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nama_bay" class="col-sm-6 control-label">Nama Bay</label>
+                        <label for="nama_bay" class="col-sm-6 control-label">Bay</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="nama_bay" id="nama_bay">
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="kode_alat" class="col-sm-6 control-label">ID</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="kode_alat" id="kode_alat">
+                        </div>
+                    </div>
+                     <div class="form-group">
                         <label for="serial_number" class="col-sm-6 control-label">Serial Number</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="serial_number" id="serial_number">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="lokasi" class="col-sm-6 control-label">Lokasi</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" name="lokasi" id="lokasi">
+                        </div>
+                    </div>
+                   
                     <div class="col-sm-offset-2 col-sm-10">
                      <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Simpan
                      </button>
@@ -116,9 +131,11 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nama_bay', name: 'nama_bay'},
-            {data: 'nama_merk', name: 'nama_merk'},
-            {data: 'nama_type', name: 'nama_type'},
+            {data: 'kode_alat', name: 'kode_alat'},
+            {data: 'lokasi', name: 'lokasi'},
             {data: 'serial_number', name: 'serial_number'},
+            {data: 'nama_merk', name: 'nama_merk'},
+            {data: 'nama_type', name: 'nama_type'},            
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

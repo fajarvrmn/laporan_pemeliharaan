@@ -82,29 +82,17 @@
     <!-- <div class="table-responsive"> -->
 
         <table class="table table-bordered data-table">
-            <thead>
+            <thead align="center">
                 <tr>
                     <th>No</th>
-                    <th>Peralatan</th>
-                    <th>Serial Number</th>
-                    <!-- <th>NIP</th> -->
-                    <!-- <th>Nama Personil</th> -->
                     <th>Status Pekerjaan</th>
-                    <th>Alasan</th>
+                    <th>Alasan Penolakan</th>
                     <th>Tanggal Pelaksanaan</th>
                     <th>Gardu Induk</th>
-                    <!-- <th>Busbar</th> -->
-                    <th>Kapasitas</th>
-                    <th>Pengujian Kontak</th>
-                    <th>Pengujian Isolasi</th>
-                    <th>Arus Motor Open</th>
-                    <th>Arus Motor Close</th>
-                    <th>Waktu Open</th>
-                    <th>Waktu Close</th>
-                    <th>Kondisi Visual</th>
-                    <th>Dokumentasi</th>
-                    <th>Pengawas</th>
-                    <th>Keterangan</th>
+                    <th>Bay</th>
+                    <th>Rel</th>
+                    <th>Pengawas Pekerjaan</th>
+                    <th>Pelaksana Uji</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -133,10 +121,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Tanggal Pelaksanaan</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <div class="input-group">
                                         <input type="text" name="tgl_pelaksanaan" id="tgl_pelaksanaan" class="form-control form-control-sm datepicker" aria-label="">
                                         <div class="input-group-append">
@@ -151,10 +139,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Tahanan Kontak</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-9 row">
                                     <label for="" class="col-1 label-padding">R</label>
                                     <input type="text" name="hasil_pengujian_tahanan_kontak[]" id="hasil_pengujian_tahanan_kontak_1" class="form-control form-control-sm col-3 text-center">
                                     <label for="" class="col-1 label-padding">S</label>
@@ -169,10 +157,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Gardu Induk</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <select id="id_gardu_induk" name="id_gardu_induk" class="form-control form-control-sm">
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getGarduInduk() as $gardu)
@@ -187,10 +175,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Tahanan Isolasi</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-9 row">
                                     <label for="" class="col-1 label-padding">R</label>
                                     <input type="text" name="hasil_pengujian_tahanan_isolasi[]" id="hasil_pengujian_tahanan_isolasi_1" class="form-control form-control-sm col-3 text-center">
                                     <label for="" class="col-1 label-padding">S</label>
@@ -205,10 +193,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Nama Bay</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <select id="id_peralatan" name="id_peralatan" class="form-control form-control-sm" required>
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getPeralatan() as $peralatan)
@@ -223,10 +211,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Arus Motor</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-9 row">
                                     <input type="number" class="form-control col-12 form-control-sm" name="arus_motor" id="arus_motor">
                                 </div>
                             </div>
@@ -236,10 +224,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Rel</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <input type="text" class="form-control form-control-sm" name="rel" id="rel">
                                 </div>
                             </div>
@@ -249,14 +237,14 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Waktu</label>
                                 </div>
-                                <div class="col-8 row">
-                                    <label for="" class="col-2 label-padding">Open</label>
-                                    <input type="number" name="waktu_open" id="waktu_open" class="form-control col-4 form-control-sm text-center">
-                                    <label for="" class="col-2 label-padding">Close</label>
-                                    <input type="number" name="waktu_close" id="waktu_close" class="form-control col-4 form-control-sm text-center">
+                                <div class="col-9 row">
+                                    <label for="waktu_open" class="col-2 label-padding">Open</label>
+                                    <input type="time" name="waktu_open" id="waktu_open" step="1" class="form-control col-4 form-control-sm text-center">
+                                    <label for="waktu_close" class="col-2 label-padding">Close</label>
+                                    <input type="time" name="waktu_close" id="waktu_close" step="1" class="form-control col-4 form-control-sm text-center">
                                 </div>
                             </div>
 
@@ -278,10 +266,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <select id="pengawas_pekerjaan" name="pengawas_pekerjaan" class="form-control col-12 form-control-sm" required>
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getAllUsers() as $user)
@@ -310,10 +298,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Pelaksana Uji</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-9 row">
                                     <select id="pelaksana_uji" name="pelaksana_uji" class="form-control col-12 form-control-sm" required>
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getAllUsers() as $user)
@@ -326,13 +314,14 @@
 
                         </div>
 
+
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Kapasitas</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-9">
                                     <input type="number" name="kapasitas" id="kapasitas" class="form-control form-control-sm">
                                 </div>
                             </div>
@@ -342,41 +331,62 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Kondisi Visual</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-9 row">
                                     <input type="text" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm">
                                 </div>
                             </div>
 
                         </div>
 
+
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Dokumentasi</label>
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" name="dokumentasi" id="dokumentasi" class="form-control form-control-sm">
+                                <div class="col-9">
+                                    <input type="file" name="dokumentasi" id="dokumentasi" class="form-control form-control-sm">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-3 text-left">
+                                    <label for="name" class="control-label label-padding">Status Laporan</label>
+                                </div>
+                                <div class="col-9 row">
+                                    <select id="status_laporan" name="status_laporan" class="form-control col-12 form-control-sm" required>
+                                        <option value="" disabled selected>Pilih</option>
+                                        <option value="Selesai">Selesai</option>
+                                        <option value="Selesai">Belum Selesai</option>
+                                       
+                                    </select>
+                                    <!-- <input type="hidden" name="id_peralatan" id="id_peralatan"> -->
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="col-6">
+                       <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Keterangan</label>
-                                </div>
-                                <div class="col-8 row">
+                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="col-9 row">
                                     <textarea name="keterangan" id="keterangan" cols="30" rows="3" class="form-control col-12 form-control-sm"></textarea>
                                 </div>
                             </div>
 
                         </div>
+
+
 
 
 
@@ -935,8 +945,47 @@
 
       
 </body>
-      
+
 <script type="text/javascript">
+
+    document.getElementById('waktu_open').addEventListener('change', function() {
+      var waktu_open = this.value;
+      var parts = waktu_open.split(':');
+      if (parts.length === 3) {
+        // Jika input mengandung detik
+        var hours = parseInt(parts[0]);
+        var minutes = parseInt(parts[1]);
+        var seconds = parseInt(parts[2]);
+        var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+        // Mengatur format detik pada input
+        var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+        this.value = hours + ':' + minutes + ':' + formattedSeconds;
+      } else {
+        // Jika input tidak mengandung detik, tambahkan detik 00
+        this.value += ':00';
+      }
+    });
+    
+    document.getElementById('waktu_close').addEventListener('change', function() {
+      var waktu_close = this.value;
+      var parts = waktu_close.split(':');
+      if (parts.length === 3) {
+        // Jika input mengandung detik
+        var hours = parseInt(parts[0]);
+        var minutes = parseInt(parts[1]);
+        var seconds = parseInt(parts[2]);
+        var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+        // Mengatur format detik pada input
+        var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+        this.value = hours + ':' + minutes + ':' + formattedSeconds;
+      } else {
+        // Jika input tidak mengandung detik, tambahkan detik 00
+        this.value += ':00';
+      }
+    });
+
   $(function () {
     /*------------------------------------------
      --------------------------------------------
@@ -976,26 +1025,14 @@
         // ajax: "{{ route('laporan.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-            {data: 'nama_bay', name: 'nama_bay'},
-            {data: 'serial_number', name: 'serial_number'},
-            // {data: 'nip', name: 'nip'},
-            // {data: 'nama_personil', name: 'nama_personil'},
             {data: 'status_text', name: 'status_text'},
             {data: 'alasan_ditolak', name: 'alasan_ditolak'},
             {data: 'tgl_pelaksanaan', name: 'tgl_pelaksanaan'},
             {data: 'nama_gardu', name: 'nama_gardu'},
-            // {data: 'busbar', name: 'busbar'},
-            {data: 'kapasitas', name: 'kapasitas'},
-            {data: 'hasil_pengujian_tahanan_kontak', name: 'hasil_pengujian_tahanan_kontak'},
-            {data: 'hasil_pengujian_tahanan_isolasi', name: 'hasil_pengujian_tahanan_isolasi'},
-            {data: 'arus_motor_open', name: 'arus_motor_open'},
-            {data: 'arus_motor_close', name: 'arus_motor_close'},
-            {data: 'waktu_open', name: 'waktu_open'},
-            {data: 'waktu_close', name: 'waktu_close'},
-            {data: 'kondisi_visual', name: 'kondisi_visual'},
-            {data: 'dokumentasi', name: 'dokumentasi'},
+            {data: 'nama_bay', name: 'nama_bay'},
+            {data: 'rel', name: 'rel'},
             {data: 'pengawas_pekerjaan', name: 'pengawas_pekerjaan'},
-            {data: 'keterangan', name: 'keterangan'},
+            {data: 'pelaksana_uji', name: 'pelaksana_uji'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

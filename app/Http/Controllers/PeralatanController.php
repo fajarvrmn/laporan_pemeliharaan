@@ -25,9 +25,9 @@ class PeralatanController extends Controller
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
    
-                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id_alat.'" data-idmerk="'.$row->id_merk_peralatan.'" data-idtipe="'.$row->id_type_peralatan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Edit</a>';
+                           $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id_alat.'" data-idmerk="'.$row->id_merk_peralatan.'" data-idtipe="'.$row->id_type_peralatan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit"><i class="fa fa-edit"></i></a>';
    
-                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id_alat.'" data-idmerk="'.$row->id_merk_peralatan.'" data-idtipe="'.$row->id_type_peralatan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Delete</a>';
+                           $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id_alat.'" data-idmerk="'.$row->id_merk_peralatan.'" data-idtipe="'.$row->id_type_peralatan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></a>';
     
                             return $btn;
                     })

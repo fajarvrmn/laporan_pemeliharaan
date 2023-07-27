@@ -33,8 +33,8 @@ class Laporan extends Model
         'alasan_ditolak',
         'rel',
         'arus_motor',
-        'pelaksana_uji'
-        // 'merk',
+        'pelaksana_uji',
+        'status_laporan'
         // 'type'
     ];
 }

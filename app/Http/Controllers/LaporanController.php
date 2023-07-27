@@ -60,7 +60,7 @@ class LaporanController extends Controller
                 'peralatan.serial_number as serial_number', 
                 'peralatan.nama_bay as nama_bay', 
                 'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu'
+                'gardu_induk.nama_gardu as nama_gardu'
             )
             // ->join('users', 'users.nip', '=', 'laporan.nip')
             ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
@@ -82,14 +82,14 @@ class LaporanController extends Controller
                         
                         if($role == '1'){
 
-                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit">Ubah</a>';
+                            $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Edit" class="edit btn btn-primary btn-sm edit"><i class="fa fa-edit"></i></a>';
 
-                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete">Hapus</a>';
+                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="Delete" class="btn btn-danger btn-sm delete"><i class="fa fa-trash"></i></a>';
 
-                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview">Detail</a>';
+                            $btn = $btn.' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview"><i class="fa fa-eye"></i></a>';
 
                         }else{
-                            $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview">Preview</a>';
+                            $btn = ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="'.$row->id.'" data-idperalatan="'.$row->id_peralatan.'" data-idnip="'.$row->nip.'" data-idstatus="'.$row->id_status_pekerjaan.'" data-original-title="preview" class="btn btn-warning btn-sm text-white preview"><i class="fa fa-eye"></i></a>';
                         }
 
                         return $btn;
@@ -158,11 +158,21 @@ class LaporanController extends Controller
         $param['hasil_pengujian_tahanan_kontak'] = $hu_kontak;
         $param['hasil_pengujian_tahanan_isolasi'] = $hu_isolasi;
 
+        // if ($request->hasFile('dokumentasi')) 
+        //     {
+        //     $file = $request->file('dokumentasi');
+        //     $nama = 'doc-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+        //     $file->move(public_path('/img'), $nama);
+        //     $penjualan->dokumentasi = "/img/$nama"; 
+        //     }
+
         Laporan::updateOrCreate(
             [
                 'id' => $request->id
             ], 
             $param
+
+            
             // [
             //     'id_peralatan' => $request->id_peralatan,
             //     'nip' => $request->nip,
@@ -182,6 +192,7 @@ class LaporanController extends Controller
             //     "pengawas_pekerjaan" => $request->pengawas_pekerjaan,
             //     "keterangan" => $request->keterangan
             // ]
+
         );
     
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
