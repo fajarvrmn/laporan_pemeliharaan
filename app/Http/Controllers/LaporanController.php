@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Laporan;
+use App\Models\Peralatan;
 use DataTables;
 use PDF;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -136,8 +137,15 @@ class LaporanController extends Controller
      */
     public function store(Request $request)
     {
-
         // dd($request->all());
+        $dokumentasi_image = "";
+        if(isset($request->dokumentasi)){
+
+            $upload = uploadFile($request);
+            $dokumentasi_image = $upload['file_name'];
+
+        }
+
         $param = $request->all();
 
         $kr = ($request->hasil_pengujian_tahanan_kontak[0] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[0];
@@ -157,42 +165,13 @@ class LaporanController extends Controller
 
         $param['hasil_pengujian_tahanan_kontak'] = $hu_kontak;
         $param['hasil_pengujian_tahanan_isolasi'] = $hu_isolasi;
-
-        // if ($request->hasFile('dokumentasi')) 
-        //     {
-        //     $file = $request->file('dokumentasi');
-        //     $nama = 'doc-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
-        //     $file->move(public_path('/img'), $nama);
-        //     $penjualan->dokumentasi = "/img/$nama"; 
-        //     }
+        $param['dokumentasi'] = $dokumentasi_image;
 
         Laporan::updateOrCreate(
             [
                 'id' => $request->id
             ], 
             $param
-
-            
-            // [
-            //     'id_peralatan' => $request->id_peralatan,
-            //     'nip' => $request->nip,
-            //     'id_status_pekerjaan' => $request->id_status_pekerjaan,
-            //     "tgl_pelaksanaan" => $request->tgl_pelaksanaan,
-            //     "id_gardu_induk" => $request->id_gardu_induk,
-            //     "busbar" => $request->busbar,
-            //     "kapasitas" => $request->kapasitas,
-            //     "hasil_pengujian_tahanan_kontak" => $request->hasil_pengujian_tahanan_kontak,
-            //     "hasil_pengujian_tahanan_isolasi" => $request->hasil_pengujian_tahanan_isolasi,
-            //     "arus_motor_open" => $request->arus_motor_open,
-            //     "arus_motor_close" => $request->arus_motor_close,
-            //     "waktu_open" => $request->waktu_open,
-            //     "waktu_close" => $request->waktu_close,
-            //     "kondisi_visual" => $request->kondisi_visual,
-            //     "dokumentasi" => $request->dokumentasi,
-            //     "pengawas_pekerjaan" => $request->pengawas_pekerjaan,
-            //     "keterangan" => $request->keterangan
-            // ]
-
         );
     
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
@@ -223,10 +202,16 @@ class LaporanController extends Controller
         'peralatan.serial_number as serial_number', 
         'peralatan.nama_bay as nama_bay', 
         'status_pekerjaan.nama as status_pekerjaan_name', 
-        'gardu_induk.nama_gardu')
+        'gardu_induk.nama_gardu',
+        'merek_peralatan.nama_merk as nama_merk',
+        'type_peralatan.nama_type as nama_type',
+        'users.name as user_name')
         ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
         ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
         ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->join('merek_peralatan', 'merek_peralatan.id', '=', 'laporan.merk')
+        ->join('type_peralatan', 'type_peralatan.id', '=', 'laporan.type')
+        ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan')
         ->where('laporan.id', $request->id)
         ->get();
 
@@ -453,6 +438,22 @@ class LaporanController extends Controller
             'status',
             'alasan_ditolak'
         ];
+
+    }
+
+    public function getPeralatan(Request $request, $id_alat){
+
+        $data = Peralatan::select('peralatan.*', 
+        'merek_peralatan.id as id_merk',
+        'merek_peralatan.nama_merk as nama_merk',
+        'type_peralatan.id as id_type',
+        'type_peralatan.nama_type as nama_type')
+        ->join('merek_peralatan', 'peralatan.id_merk_peralatan', '=', 'merek_peralatan.id')
+        ->join('type_peralatan', 'peralatan.id_type_peralatan', '=', 'type_peralatan.id')
+        ->where('peralatan.id_alat', $id_alat)
+        ->get();
+
+        return $data;
 
     }
 }

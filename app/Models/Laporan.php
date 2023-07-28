@@ -34,7 +34,8 @@ class Laporan extends Model
         'rel',
         'arus_motor',
         'pelaksana_uji',
-        'status_laporan'
-        // 'type'
+        'status_laporan',
+        'type',
+        'merk'
     ];
 }

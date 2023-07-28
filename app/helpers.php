@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
+
 use App\Models\Role;
 use App\Models\Tipe;
 use App\Models\Merek;
@@ -8,6 +12,7 @@ use App\Models\Gardu;
 use App\Models\Peralatan;
 use App\Models\Status;
 use App\Models\User;
+
 
 
 
@@ -102,6 +107,20 @@ if(!function_exists('getStatusPekerjaan')){
         $data = Status::all();
 
         return $data;
+
+    }
+
+}
+
+if(!function_exists('uploadFile')){
+
+    function uploadFile(Request $request){
+
+        // $fileName = time().'.'.$request->dokumentasi->getClientOriginalExtension();
+        $fileName = 'doc-' . time() . '.' . $request->dokumentasi->getClientOriginalExtension();
+        $request->dokumentasi->move(public_path('/uploads/images/'), $fileName);
+
+        return ['file_name' => $fileName];
 
     }
 

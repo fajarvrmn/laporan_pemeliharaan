@@ -250,18 +250,19 @@
 
                         </div>
 
-                        <!-- <div class="col-6">
+                        <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Merk</label>
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" name="merk" id="merk" class="form-control form-control-sm">
+                                <div class="col-9">
+                                    <input type="text" id="merk_name" class="form-control form-control-sm" readonly>
+                                    <input type="hidden" id="merk" name="merk" class="form-control form-control-sm">
                                 </div>
                             </div>
 
-                        </div> -->
+                        </div>
 
                         <div class="col-6">
 
@@ -269,7 +270,7 @@
                                 <div class="col-3 text-left">
                                     <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
                                 </div>
-                                <div class="col-9">
+                                <div class="col-9 row">
                                     <select id="pengawas_pekerjaan" name="pengawas_pekerjaan" class="form-control col-12 form-control-sm" required>
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getAllUsers() as $user)
@@ -282,18 +283,19 @@
 
                         </div>
 
-                        <!-- <div class="col-6">
+                        <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
-                                    <label for="name" class="control-label label-padding">Type</label>
+                                <div class="col-3 text-left">
+                                    <label for="type" class="control-label label-padding">Type</label>
                                 </div>
-                                <div class="col-6">
-                                    <input type="text" name="type" id="type" class="form-control form-control-sm">
+                                <div class="col-9">
+                                    <input type="text" id="type_name" class="form-control form-control-sm" readonly>
+                                    <input type="hidden" id="type" name="type" class="form-control form-control-sm">
                                 </div>
                             </div>
 
-                        </div> -->
+                        </div>
 
                         <div class="col-6">
 
@@ -745,10 +747,36 @@
 
                             <div class="form-group row">
                                 <div class="col-6 text-left">
-                                    <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
+                                    <label for="nama_merk_preview" class="control-label label-padding">Merk</label>
                                 </div>
                                 <div class="col-6">
+                                    <p id="nama_merk_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-4 text-left">
+                                    <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
+                                </div>
+                                <div class="col-8 r6w">
                                     <p id="pengawas_pekerjaan_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-6 text-left">
+                                    <label for="nama_type_preview" class="control-label label-padding">Type</label>
+                                </div>
+                                <div class="col-6">
+                                    <p id="nama_type_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 
@@ -960,7 +988,8 @@
 
         // Mengatur format detik pada input
         var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-        this.value = hours + ':' + minutes + ':' + formattedSeconds;
+        var formattedHours = hours < 10 ? '0' + hours : hours;
+        this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
       } else {
         // Jika input tidak mengandung detik, tambahkan detik 00
         this.value += ':00';
@@ -973,13 +1002,15 @@
       if (parts.length === 3) {
         // Jika input mengandung detik
         var hours = parseInt(parts[0]);
+        // console.log(parts[0], parts[0].length, hours);
         var minutes = parseInt(parts[1]);
         var seconds = parseInt(parts[2]);
         var totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
         // Mengatur format detik pada input
         var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-        this.value = hours + ':' + minutes + ':' + formattedSeconds;
+        var formattedHours = hours < 10 ? '0' + hours : hours;
+        this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
       } else {
         // Jika input tidak mengandung detik, tambahkan detik 00
         this.value += ':00';
@@ -1039,6 +1070,29 @@
 
     new $.fn.dataTable.FixedHeader( table );
 
+    $('#id_peralatan').change(function(){
+        // console.log($(this).val());
+        var id_alat = $(this).val();
+
+        $.get('laporan/peralatan/'+id_alat,  // url
+        function (data, textStatus, jqXHR) {  // success callback
+            // console.log(data);
+            $.each(data[0], function(k, v) {
+                console.log(k, v);
+                if(k == 'id_type'){
+                    $('#type').val(v);
+                }else if(k == 'id_merk'){
+                    $('#merk').val(v);
+                }else if(k == 'nama_merk'){
+                    $('#merk_name').val(v);
+                }else if(k == 'nama_type'){
+                    $('#type_name').val(v);
+                }
+            });
+
+        });
+    })
+
     $('form#form_filter').submit(function(){
         // var data = table.$('form#form_filter').serialize();
         var sa = $('form#form_filter').serialize();
@@ -1080,14 +1134,20 @@
                 
                 var status = data[0].status;
                 
-                console.log(status);
+                // console.log(status);
 
                 $.each(data[0], function(k, v) {
-                    console.log(k, v);
+                    // console.log(k, v);
                     // $('th.'+k+"_preview").text(v);
-                    $('p.'+k+"_preview").text(': '+v);
-                    $('p#'+k+"_preview").text(': '+v);
-                    $('input#'+k+"_preview").val(v);
+                    if(k !== 'dokumentasi'){
+                        $('p.'+k+"_preview").text(': '+v);
+                        $('p#'+k+"_preview").text(': '+v);
+                        $('input#'+k+"_preview").val(v);
+                        $('textarea#'+k+"_preview").val(v);
+                    }else{
+                        $('#'+k+'_preview').html('<img src="{{ URL::asset("uploads") }}/images/'+v+'" style="width: 100%;height: 10rem;" alt="No Image Set"></img>');
+                    }
+                    
                 });
 
                 var tahanan_kontak = data[0].hasil_pengujian_tahanan_kontak.split(',');
@@ -1388,9 +1448,14 @@
 
                 $.each(data[0], function(k, v) {
                     // console.log(k, v);
-                    $('input#'+k).val(v);
-                    $('textarea#'+k).text(v);
-                    $('select#'+k).val(v).trigger('change');
+                    if(k !== "dokumentasi"){
+
+                        $('input#'+k).val(v);
+                        $('textarea#'+k).text(v);
+                        $('select#'+k).val(v).trigger('change');
+
+                    }
+                    
                 });
 
                 var tahanan_kontak = data[0].hasil_pengujian_tahanan_kontak.split(',');
@@ -1440,25 +1505,32 @@
     $('#saveBtn').click(function (e) {
         e.preventDefault();
         $(this).html('Sending..');
+
+        var form = $('#formCRUD')[0];
+        var dataForm = new FormData(form);
       
         $.ajax({
-          data: $('#formCRUD').serialize(),
-          url: "{{ route('laporan.store') }}",
-          type: "POST",
-          dataType: 'json',
-          success: function (data) {
-       
-              $('#formCRUD').trigger("reset");
-              $('#ajaxModel').modal('hide');
-              $('#saveBtn').html('Simpan');
-              table.draw();
-           
-          },
-          error: function (data) {
-              console.log('Error:', data);
-              $('#saveBtn').html('Simpan');
-          }
-      });
+            data: dataForm,
+            enctype: 'multipart/form-data',
+            url: "{{ route('laporan.store') }}",
+            type: "POST",
+            processData: false,
+            contentType: false,
+            cache: false,
+            //   dataType: 'json',
+            success: function (data) {
+        
+                $('#formCRUD').trigger("reset");
+                $('#ajaxModel').modal('hide');
+                $('#saveBtn').html('Simpan');
+                table.draw();
+            
+            },
+            error: function (data) {
+                console.log('Error:', data);
+                $('#saveBtn').html('Simpan');
+            }
+        });
     });
       
     /*------------------------------------------
