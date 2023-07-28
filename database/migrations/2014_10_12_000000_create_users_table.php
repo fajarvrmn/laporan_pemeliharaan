@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 
 class CreateUsersTable extends Migration
 {
@@ -21,6 +23,11 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('role');
+            $table->string('username')->unique();
+            $table->string('nip')->unique();
+            $table->string('pendidikan');
+            $table->string('jabatan');
+            $table->string('unit_kerja');
             $table->timestamps();
         });
     }

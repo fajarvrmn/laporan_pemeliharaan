@@ -763,7 +763,7 @@
                                     <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
                                 </div>
                                 <div class="col-8 r6w">
-                                    <p id="pengawas_pekerjaan_preview" class="label-padding">: </p>
+                                    <p id="user_name_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 
