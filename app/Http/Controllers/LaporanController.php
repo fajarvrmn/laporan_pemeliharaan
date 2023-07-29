@@ -138,34 +138,38 @@ class LaporanController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        $dokumentasi_image = "";
+        $param = $request->all();
+        unset($param['id']);
+
         if(isset($request->dokumentasi)){
 
             $upload = uploadFile($request);
             $dokumentasi_image = $upload['file_name'];
 
+            $param['dokumentasi'] = $dokumentasi_image;
+
         }
 
-        $param = $request->all();
+        if(isset($request->hasil_pengujian_tahanan_kontak) && isset($request->hasil_pengujian_tahanan_isolasi)){
 
-        $kr = ($request->hasil_pengujian_tahanan_kontak[0] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[0];
-        $ks = ($request->hasil_pengujian_tahanan_kontak[1] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[1];
-        $kt = ($request->hasil_pengujian_tahanan_kontak[2] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[2];
+            $kr = ($request->hasil_pengujian_tahanan_kontak[0] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[0];
+            $ks = ($request->hasil_pengujian_tahanan_kontak[1] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[1];
+            $kt = ($request->hasil_pengujian_tahanan_kontak[2] == "") ? "0" : $request->hasil_pengujian_tahanan_kontak[2];
 
-        $ir = ($request->hasil_pengujian_tahanan_isolasi[0] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[0];
-        $is = ($request->hasil_pengujian_tahanan_isolasi[1] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[1];
-        $it = ($request->hasil_pengujian_tahanan_isolasi[2] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[2];
+            $ir = ($request->hasil_pengujian_tahanan_isolasi[0] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[0];
+            $is = ($request->hasil_pengujian_tahanan_isolasi[1] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[1];
+            $it = ($request->hasil_pengujian_tahanan_isolasi[2] == "") ? "0" : $request->hasil_pengujian_tahanan_isolasi[2];
 
-        unset($param['id']);
-        unset($param['hasil_pengujian_tahanan_kontak']);
-        unset($param['hasil_pengujian_tahanan_isolasi']);
+            unset($param['hasil_pengujian_tahanan_kontak']);
+            unset($param['hasil_pengujian_tahanan_isolasi']);
 
-        $hu_kontak = $kr.','.$ks.','.$kt;
-        $hu_isolasi = $ir.','.$is.','.$it;
+            $hu_kontak = $kr.','.$ks.','.$kt;
+            $hu_isolasi = $ir.','.$is.','.$it;
 
-        $param['hasil_pengujian_tahanan_kontak'] = $hu_kontak;
-        $param['hasil_pengujian_tahanan_isolasi'] = $hu_isolasi;
-        $param['dokumentasi'] = $dokumentasi_image;
+            $param['hasil_pengujian_tahanan_kontak'] = $hu_kontak;
+            $param['hasil_pengujian_tahanan_isolasi'] = $hu_isolasi;
+
+        }
 
         Laporan::updateOrCreate(
             [
