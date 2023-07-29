@@ -604,7 +604,7 @@
 <!-- Preview Modal -->
 <!--  -->
 <div class="modal fade" id="ajaxModelPreview" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document" style="min-width:90%;">
+    <div class="modal-dialog modal-lg" role="document" style="min-width:70%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modelHeading_preview"></h5>
@@ -621,10 +621,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Tanggal Pelaksanaan</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <div class="input-group">
                                         <p id="tgl_pelaksanaan_preview" class="label-padding">: </p>
                                         <div class="input-group-append">
@@ -638,10 +638,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Tahanan Kontak</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <label for="" class="col-1 label-padding">R</label>
                                     <p id="hasil_pengujian_tahanan_kontak_1_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
                                     <label for="" class="col-1 label-padding">S</label>
@@ -656,10 +656,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Gardu Induk</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <p id="id_gardu_induk_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -669,10 +669,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Tahanan Isolasi</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <label for="" class="col-1 label-padding">R</label>
                                     <p id="hasil_pengujian_tahanan_isolasi_1_preview" class="col-3 label-padding" style="font-size:89%!important;">: </p>
                                     <label for="" class="col-1 label-padding">S</label>
@@ -687,10 +687,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Nama Bay</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <p id="id_peralatan_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -700,10 +700,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Arus Motor</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <!-- <input type="number" class="form-control col-12 form-control-sm" name="arus_motor" id="arus_motor"> -->
                                     <p id="arus_motor_preview" class="label-padding">: </p>
                                 </div>
@@ -714,10 +714,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Rel</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <!-- <input type="text" class="form-control form-control-sm" name="rel" id="rel"> -->
                                     <p id="rel_preview" class="label-padding">: </p>
                                 </div>
@@ -728,10 +728,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Waktu</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <label for="" class="col-2 label-padding">Open</label>
                                     <!-- <input type="number" name="waktu_open" id="waktu_open" class="form-control col-4 form-control-sm text-center"> -->
                                     <p id="waktu_open_preview" class="col-4 label-padding">: </p>
@@ -746,10 +746,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="nama_merk_preview" class="control-label label-padding">Merk</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <p id="nama_merk_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -759,10 +759,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Pengawas Pekerjaan</label>
                                 </div>
-                                <div class="col-8 r6w">
+                                <div class="col-10 row">
                                     <p id="user_name_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -772,10 +772,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="nama_type_preview" class="control-label label-padding">Type</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <p id="nama_type_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -785,10 +785,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Pelaksana Uji</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <p id="pelaksana_uji_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -798,10 +798,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Kapasitas</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <p id="kapasitas_preview" class="label-padding">: </p>
                                 </div>
                             </div>
@@ -811,10 +811,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Kondisi Visual</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <!-- <input type="number" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm"> -->
                                     <p id="kondisi_visual_preview" class="label-padding">: </p>
                                 </div>
@@ -825,12 +825,25 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-6 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Dokumentasi</label>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-10">
                                     <!-- <input type="number" name="dokumentasi" id="dokumentasi" class="form-control form-control-sm"> -->
                                     <p id="dokumentasi_preview" class="label-padding">: </p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+
+                            <div class="form-group row">
+                                <div class="col-2 text-left">
+                                    <label for="name" class="control-label label-padding">Status Laporan</label>
+                                </div>
+                                <div class="col-10 row">
+                                    <!-- <input type="number" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm"> -->
+                                    <p id="status_laporan_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 
@@ -839,10 +852,10 @@
                         <div class="col-6">
 
                             <div class="form-group row">
-                                <div class="col-4 text-left">
+                                <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Keterangan</label>
                                 </div>
-                                <div class="col-8 row">
+                                <div class="col-10 row">
                                     <textarea id="keterangan_preview" cols="30" rows="3" class="form-control col-12 form-control-sm" readonly></textarea>
                                 </div>
                             </div>
