@@ -69,6 +69,10 @@ class LaporanController extends Controller
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan');
             // ->where($whereByRole);
 
+            if(isset($request->form_search)){
+                $laporan->where($arrFilter);
+            }
+
             if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
                 $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
             }
