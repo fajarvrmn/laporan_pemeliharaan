@@ -219,7 +219,7 @@
 
                             Swal.fire(
                                 'Data tidak Ditemukan',
-                                data.data.time,
+                                'waktu yang dibutuhkan '+seconds+' detik',
                                 'error'
                             )
 
