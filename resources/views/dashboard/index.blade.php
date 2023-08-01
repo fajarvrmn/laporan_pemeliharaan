@@ -80,17 +80,13 @@
                     <tr>
                         <th>No</th>
                         <th>Peralatan</th>
-                        <th>NIP</th>
                         <th>Status Pekerjaan</th>
                         <th>Alasan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Gardu Induk</th>
-                        <th>Busbar</th>
                         <th>Kapasitas</th>
                         <th>Pengujian Kontak</th>
                         <th>Pengujian Isolasi</th>
-                        <th>Arus Motor Open</th>
-                        <th>Arus Motor Close</th>
                         <th>Waktu Open</th>
                         <th>Waktu Close</th>
                         <th>Kondisi Visual</th>
@@ -127,17 +123,14 @@
                         $('#fetch_response').append('<tr>'+
                             '<td>'+i+'</td>'+
                             '<td>'+value.nama_bay+'</td>'+
-                            '<td>'+value.nip+'</td>'+
+                            // '<td>'+value.nip+'</td>'+
                             '<td>'+value.status_pekerjaan_text+'</td>'+
                             '<td>'+alasanDitolak+'</td>'+
                             '<td>'+value.tgl_pelaksanaan+'</td>'+
                             '<td>'+value.nama_gardu+'</td>'+
-                            '<td>'+value.busbar+'</td>'+
                             '<td>'+value.kapasitas+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_kontak+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_isolasi+'</td>'+
-                            '<td>'+value.arus_motor_open+'</td>'+
-                            '<td>'+value.arus_motor_close+'</td>'+
                             '<td>'+value.waktu_open+'</td>'+
                             '<td>'+value.waktu_close+'</td>'+
                             '<td>'+value.kondisi_visual+'</td>'+
@@ -190,17 +183,14 @@
                                     $('#fetch_response').append('<tr>'+
                                         '<td>'+i+'</td>'+
                                         '<td>'+value.nama_bay+'</td>'+
-                                        '<td>'+value.nip+'</td>'+
+                                        // '<td>'+value.nip+'</td>'+
                                         '<td>'+value.status_pekerjaan_text+'</td>'+
                                         '<td>'+alasanDitolak+'</td>'+
                                         '<td>'+value.tgl_pelaksanaan+'</td>'+
                                         '<td>'+value.nama_gardu+'</td>'+
-                                        '<td>'+value.busbar+'</td>'+
                                         '<td>'+value.kapasitas+'</td>'+
                                         '<td>'+value.hasil_pengujian_tahanan_kontak+'</td>'+
                                         '<td>'+value.hasil_pengujian_tahanan_isolasi+'</td>'+
-                                        '<td>'+value.arus_motor_open+'</td>'+
-                                        '<td>'+value.arus_motor_close+'</td>'+
                                         '<td>'+value.waktu_open+'</td>'+
                                         '<td>'+value.waktu_close+'</td>'+
                                         '<td>'+value.kondisi_visual+'</td>'+

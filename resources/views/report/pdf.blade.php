@@ -30,27 +30,16 @@
         </div> -->
         <table border='1' class="table table-bordered mb-5" style="width:100%;font-size:10px;">
             <thead style="border:1px solid black;width:100%;">
-                <tr class="table-danger">
+                <tr class="table-danger" align="center" style="text-align:center;">
                     <th>No</th>
-                    <th>Peralatan</th>
-                    <th>Serial Number</th>
-                    <th>NIP</th>
-                    <th>Status Pekerjaan</th>
-                    <th>Alasan</th>
+                    <th>Status Laporan</th>
+                    <th>Alasan Penolakan</th>
                     <th>Tanggal Pelaksanaan</th>
                     <th>Gardu Induk</th>
-                    <th>Busbar</th>
-                    <th>Kapasitas</th>
-                    <th>Pengujian Kontak</th>
-                    <th>Pengujian Isolasi</th>
-                    <th>Arus Motor Open</th>
-                    <th>Arus Motor Close</th>
-                    <th>Waktu Open</th>
-                    <th>Waktu Close</th>
-                    <th>Kondisi Visual</th>
-                    <th>Dokumentasi</th>
-                    <th>Pengawas</th>
-                    <th>Keterangan</th>
+                    <th>Bay</th>
+                    <th>Rel</th>
+                    <th>Pengawas Pekerjaan</th>
+                    <th>Pelaksana Uji</th>
                 </tr>
             </thead>
             <tbody style="border:1px solid black;width:100%;text-align:center;">
@@ -74,25 +63,14 @@
                 @endphp
 				<tr>
 					<td>{{ $i++ }}</td>
-                    <td>{{$row['nama_bay']}}</td>
-					<td>{{$row['serial_number']}}</td>
-					<td>{{$row->nip}}</td>
-					<td>{{$status_laporan}}</td>
-					<td>{{$row->alasan_ditolak}}</td>
+                    <td>{{$status_laporan}}</td>
+                    <td>{{$row->alasan_ditolak}}</td>
                     <td>{{$row->tgl_pelaksanaan }}</td>
-					<td>{{$row->nama_gardu}}</td>
-					<td>{{$row->busbar}}</td>
-					<td>{{$row->kapasitas}}</td>
-					<td>{{$row->hasil_pengujian_tahanan_kontak}}</td>
-                    <td>{{$row->hasil_pengujian_tahanan_isolasi }}</td>
-					<td>{{$row->arus_motor_open}}</td>
-					<td>{{$row->arus_motor_close}}</td>
-					<td>{{$row->waktu_open}}</td>
-					<td>{{$row->waktu_close}}</td>
-                    <td>{{$row->kondisi_visual }}</td>
-					<td>{{$row->dokumentasi}}</td>
-					<td>{{$row->pengawas_pekerjaan}}</td>
-					<td>{{$row->keterangan}}</td>
+                    <td>{{$row->nama_gardu}}</td>
+                    <td>{{$row['nama_bay']}}</td>
+                    <td>{{$row['rel']}}</td>
+                    <td>{{$row->pengawas_pekerjaan}}</td>
+                    <td>{{$row->pelaksana_uji}}</td>
 				</tr>
 				@endforeach
             </tbody>

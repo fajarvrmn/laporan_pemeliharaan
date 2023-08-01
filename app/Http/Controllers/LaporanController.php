@@ -400,8 +400,8 @@ class LaporanController extends Controller
         ->setOptions(['defaultFont' => 'sans-serif'])
         ->setPaper('a4', 'landscape');
 
-        // return view('report.pdf')->with(['laporan' => $laporan->get()]);
-    	return $pdf->download('laporan.pdf');
+        return view('report.pdf')->with(['laporan' => $laporan->get()]);
+    	// return $pdf->download('laporan.pdf');
     }
 
     public function cetak_excel($customer_data){
@@ -429,6 +429,7 @@ class LaporanController extends Controller
             'id_peralatan',
             'nip',
             'id_status_pekerjaan',
+            'alasan_ditolak',
             'tgl_pelaksanaan',
             'id_gardu_induk',
             'busbar',
@@ -443,8 +444,7 @@ class LaporanController extends Controller
             'dokumentasi',
             'pengawas_pekerjaan',
             'keterangan',
-            'status',
-            'alasan_ditolak'
+            'status'
         ];
 
     }

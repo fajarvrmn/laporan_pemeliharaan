@@ -65,7 +65,7 @@
                 <div class="col-6">
                      <button type="submit" class="btn btn-primary btn-sm">Cari</button>
                     <button id="clearFilter" type="button" class="btn btn-warning btn-sm text-white">Clear</button> 
-                    <a class="btn btn-danger btn-sm text-white" href="laporan/pdf/0" id="export-pdf"> Export PDF</a>
+                    <!-- <a class="btn btn-danger btn-sm text-white" href="laporan/pdf/0" id="export-pdf"> Export PDF</a> -->
                     <a class="btn btn-success btn-sm" href="laporan/excel/0" id="export-excel"> Export Excel</a>
 
 
@@ -85,7 +85,7 @@
             <thead align="center">
                 <tr>
                     <th>No</th>
-                    <th>Status Pekerjaan</th>
+                    <th>Status Laporan</th>
                     <th>Alasan Penolakan</th>
                     <th>Tanggal Pelaksanaan</th>
                     <th>Gardu Induk</th>
@@ -360,7 +360,7 @@
 
                             <div class="form-group row">
                                 <div class="col-3 text-left">
-                                    <label for="name" class="control-label label-padding">Status Laporan</label>
+                                    <label for="name" class="control-label label-padding">Status Pekerjaan</label>
                                 </div>
                                 <div class="col-9 row">
                                     <select id="status_laporan" name="status_laporan" class="form-control col-12 form-control-sm" required>
@@ -839,7 +839,7 @@
 
                             <div class="form-group row">
                                 <div class="col-2 text-left">
-                                    <label for="name" class="control-label label-padding">Status Laporan</label>
+                                    <label for="name" class="control-label label-padding">Status Pekerjaan</label>
                                 </div>
                                 <div class="col-10 row">
                                     <!-- <input type="number" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm"> -->
