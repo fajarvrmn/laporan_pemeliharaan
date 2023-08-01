@@ -156,17 +156,26 @@
                 $('#fetch_response').html("");
 
                 $.ajax({
+                    startTime: performance.now(),
                     url: "{{ route('dashboard.index') }}",
                     data: {search: $('#search_dashboard').val()},
                     type: 'GET',
                     dataType: 'json',
                     success: function(data, status, xhr) {
 
+                        var time = performance.now() - this.startTime;
+
+                        //Convert milliseconds to seconds.
+                        var seconds = time / 1000;
+
+                        //Round to 3 decimal places.
+                        seconds = seconds.toFixed(3);
+
                         if(data.data.result === true){
 
                             Swal.fire(
                                 'Data Ditemukan',
-                                data.data.time,
+                                'waktu yang dibutuhkan '+seconds+' detik',
                                 'success'
                             )
 

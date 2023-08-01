@@ -116,7 +116,7 @@ class DashboardController extends Controller
         return [
             'result' => $result,
             'msg' => $message,
-            'time' => "Waktu yang dibutuhkan: " . ($estTime)  . " detik",
+            // 'time' => "Waktu yang dibutuhkan: " . ($estTime)  . " detik",
             'data' => $responseData
         ];
     }
