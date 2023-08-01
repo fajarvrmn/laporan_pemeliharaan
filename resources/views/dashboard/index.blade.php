@@ -79,21 +79,28 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Peralatan</th>
-                        <th>Status Pekerjaan</th>
+                        <th>Status Laporan</th>
                         <th>Alasan</th>
                         <th>Tanggal Pelaksanaan</th>
                         <th>Gardu Induk</th>
+                        <th>Peralatan</th>
+                        <th>Rel</th>
+                        <th>Merek</th>
+                        <th>Tipe</th>
                         <th>Kapasitas</th>
-                        <th>Pengujian Kontak</th>
-                        <th>Pengujian Isolasi</th>
+                        <th>Tahanan Kontak</th>
+                        <th>Tahanan Isolasi</th>
+                        <th>Arus Motor</th>
                         <th>Waktu Open</th>
                         <th>Waktu Close</th>
                         <th>Kondisi Visual</th>
                         <th>Dokumentasi</th>
-                        <th>Pengawas</th>
+                        <th>Pengawas Pekerjaan</th>
+                        <th>Pelaksana Uji</th>
+                        <th>Status Pekerjaan</th>
                         <th>Keterangan</th>
-                        <!-- <th>Action</th> -->
+        );
+
                     </tr>
                 </thead>
                 <tbody id="fetch_response">
@@ -122,24 +129,31 @@
 
                         $('#fetch_response').append('<tr>'+
                             '<td>'+i+'</td>'+
-                            '<td>'+value.nama_bay+'</td>'+
-                            // '<td>'+value.nip+'</td>'+
                             '<td>'+value.status_pekerjaan_text+'</td>'+
                             '<td>'+alasanDitolak+'</td>'+
                             '<td>'+value.tgl_pelaksanaan+'</td>'+
                             '<td>'+value.nama_gardu+'</td>'+
+                            '<td>'+value.nama_bay+'</td>'+
+                            '<td>'+value.rel+'</td>'+
+                            '<td>'+value.merk+'</td>'+
+                            '<td>'+value.type+'</td>'+
                             '<td>'+value.kapasitas+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_kontak+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_isolasi+'</td>'+
+                            '<td>'+value.arus_motor+'</td>'+
                             '<td>'+value.waktu_open+'</td>'+
                             '<td>'+value.waktu_close+'</td>'+
                             '<td>'+value.kondisi_visual+'</td>'+
-                            '<td>'+value.dokumentasi+'</td>'+
+                            // '<td>'+value.dokumentasi+'</td>'+
+                            '<td><img src="{{ URL::asset("uploads") }}/images/'+value.dokumentasi+'" style="width: 100%;height: 100%;" alt="No Image Set"></img>'+'</td>'+
                             '<td>'+value.pengawas_pekerjaan+'</td>'+
+                            '<td>'+value.pelaksana_uji+'</td>'+
+                            '<td>'+value.status_laporan+'</td>'+
                             '<td>'+value.keterangan+'</td>'+
                         '</tr>');
 
                         i++;
+
                     });
                 }
             });

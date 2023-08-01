@@ -287,23 +287,25 @@ class LaporanController extends Controller
 
         //ini buat header title
         $data_array[] = array(
-            'Peralatan',
-            'NIP',
-            'Status Pekerjaan',
+            'Status Laporan',
             'Alasan',
             'Tanggal Pelaksanaan',
             'Gardu Induk',
-            'Busbar',
+            'Peralatan',
+            'Rel',
+            'Merek',
+            'Tipe',
             'Kapasitas',
-            'Pengujian Kontak',
-            'Pengujian Isolasi',
-            'Arus Motor Open',
-            'Arus Motor Close',
+            'Tahanan Kontak',
+            'Tahanan Isolasi',
+            'Arus Motor',
             'Waktu Open',
             'Waktu Close',
             'Kondisi Visual',
             'Dokumentasi',
-            'Pengawas',
+            'Pengawas Pekerjaan',
+            'Pelaksana Uji',
+            'Status Pekerjaan',
             'Keterangan'
         );
 
@@ -326,23 +328,25 @@ class LaporanController extends Controller
             
             //ini value nya
             $data_array[] = array(
-                'peralatan' => $row->id_peralatan,
-                'nip' => $row->nip,
-                'status_pekerjaan' => $status_laporan,
+                'status_laporan' => $status_laporan,
                 'alasan' => $row->alasan_ditolak,
                 'tanggal_pelaksanaan' => $row->tgl_pelaksanaan,
                 'gardu_induk' => $row->id_gardu_induk,
-                'busbar' => $row->busbar,
+                'peralatan' => $row->id_peralatan,
+                'rel' => $row->rel,
+                'merk' => $row->merk,
+                'type' => $row->type,
                 'kapasitas' => $row->kapasitas,
-                'pengujian_kontak' => $row->hasil_pengujian_tahanan_kontak,
-                'pengujian_isolasi' => $row->hasil_pengujian_tahanan_isolasi,
-                'arus_motor_open' => $row->arus_motor_open,
-                'arus_motor_close' => $row->arus_motor_close,
+                'tahanan_kontak' => $row->hasil_pengujian_tahanan_kontak,
+                'tahanan_isolasi' => $row->hasil_pengujian_tahanan_isolasi,
+                'arus_motor' => $row->arus_motor,
                 'waktu_open' => $row->waktu_open,
                 'waktu_close' => $row->waktu_close,
                 'kondisi_visual' => $row->kondisi_visual,
                 'dokumentasi' => $row->dokumentasi,
                 'pengawas' => $row->pengawas_pekerjaan,
+                'pelaksana_uji' => $row->pelaksana_uji,
+                'status_pekerjaan' => $row->status_laporan,
                 'keterangan' => $row->keterangan
             );
         }
