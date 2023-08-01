@@ -241,7 +241,8 @@ class LaporanController extends Controller
         $request = $request->toArray();
         $role = auth()->user()->role;
 
-        $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+        // $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+        $whereByRole = [] ;
 
         $arrFilter = [];
         $rangeFilter = [];
@@ -284,27 +285,28 @@ class LaporanController extends Controller
 
         $laporan->get();
 
+        //ini buat header title
         $data_array[] = array(
-            'peralatan',
-            'nip',
-            'status_pekerjaan',
-            'alasan',
-            'tanggal_pelaksanaan',
-            'gardu_induk',
-            'busbar',
-            'kapasitas',
-            'pengujian_kontak',
-            'pengujian_isolasi',
-            'arus_motor_open',
-            'arus_motor_close',
-            'waktu_open',
-            'waktu_close',
-            'kondisi_visual',
-            'dokumentasi',
-            'pengawas',
-            'keterangan'
+            'Peralatan',
+            'NIP',
+            'Status Pekerjaan',
+            'Alasan',
+            'Tanggal Pelaksanaan',
+            'Gardu Induk',
+            'Busbar',
+            'Kapasitas',
+            'Pengujian Kontak',
+            'Pengujian Isolasi',
+            'Arus Motor Open',
+            'Arus Motor Close',
+            'Waktu Open',
+            'Waktu Close',
+            'Kondisi Visual',
+            'Dokumentasi',
+            'Pengawas',
+            'Keterangan'
         );
-        // echo '<pre>';
+
         foreach($laporan->get() as $key => $row)
         {
             $status_laporan = "Unknown";
@@ -322,6 +324,7 @@ class LaporanController extends Controller
                 $status_laporan = 'Sudah Disetujui Oleh Manager';
             }
             
+            //ini value nya
             $data_array[] = array(
                 'peralatan' => $row->id_peralatan,
                 'nip' => $row->nip,
@@ -353,7 +356,8 @@ class LaporanController extends Controller
         $request = $request->toArray();
         $role = auth()->user()->role;
 
-        $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+        // $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+        $whereByRole = [] ;
 
         $arrFilter = [];
         $rangeFilter = [];
@@ -404,13 +408,15 @@ class LaporanController extends Controller
     	// return $pdf->download('laporan.pdf');
     }
 
-    public function cetak_excel($customer_data){
+    public function cetak_excel($data){
+
+        // dd($data);
         ini_set('max_execution_time', 0);
         ini_set('memory_limit', '4000M');
         try {
             $spreadSheet = new Spreadsheet();
             $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
-            $spreadSheet->getActiveSheet()->fromArray($customer_data);
+            $spreadSheet->getActiveSheet()->fromArray($data);
             $Excel_writer = new Xls($spreadSheet);
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename="Laporan.xls"');
