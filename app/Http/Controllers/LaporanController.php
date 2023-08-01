@@ -12,6 +12,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Support\Facades\Schema;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 // use App\Http\Controllers\Auth;
 
 class LaporanController extends Controller
@@ -412,25 +413,104 @@ class LaporanController extends Controller
     	// return $pdf->download('laporan.pdf');
     }
 
+    // public function cetak_excel($data){
+
+    //     // dd($data);
+    //     ini_set('max_execution_time', 0);
+    //     ini_set('memory_limit', '4000M');
+    //     try {
+    //         $spreadSheet = new Spreadsheet();
+    //         $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+    //         $spreadSheet->getActiveSheet()->fromArray($data);
+    //         $Excel_writer = new Xls($spreadSheet);
+    //         header('Content-Type: application/vnd.ms-excel');
+    //         header('Content-Disposition: attachment;filename="Laporan.xls"');
+    //         header('Cache-Control: max-age=0');
+    //         ob_end_clean();
+    //         $Excel_writer->save('php://output');
+    //         exit();
+    //     } catch (Exception $e) {
+    //         return;
+    //     }
+    // }
+
     public function cetak_excel($data){
 
-        // dd($data);
-        ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '4000M');
+        // dd($data[0]);
+
         try {
-            $spreadSheet = new Spreadsheet();
-            $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
-            $spreadSheet->getActiveSheet()->fromArray($data);
-            $Excel_writer = new Xls($spreadSheet);
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="Laporan.xls"');
+
+            $spreadsheet = new Spreadsheet();
+            // $sheet = $spreadsheet->getActiveSheet();
+            // $spreadsheet->getActiveSheet()->getStyle('B2:B5')->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getLeft()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+            $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(30);
+
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            $drawing->setPath(public_path('theme/dist/img/pln.png')); /* put your path and image here */
+            $drawing->setCoordinates('B2');
+            $drawing->setHeight(80);
+            $drawing->setOffsetX(10); 
+            $drawing->setOffsetY(10); 
+
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            
+            $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(30);
+            $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);
+            $spreadsheet->getActiveSheet()->getColumnDimension('Y')->setWidth(12);
+            $spreadsheet->getActiveSheet()->mergeCells('B2:B5');
+
+            // ----------------------- //
+
+            $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            $drawing2->setPath(public_path('theme/dist/img/pdkb.png')); /* put your path and image here */
+            $drawing2->setCoordinates('Y2');
+            $drawing2->setHeight(80);
+            $drawing2->setOffsetX(5); 
+            $drawing2->setOffsetY(10); 
+            
+            $drawing2->setWorksheet($spreadsheet->getActiveSheet());
+
+
+            $spreadsheet->getActiveSheet()->mergeCells('Y2:Y5');
+            $spreadsheet->getActiveSheet()->mergeCells('C2:X2');
+            $spreadsheet->getActiveSheet()->mergeCells('C3:X3');
+            $spreadsheet->getActiveSheet()->mergeCells('C4:X4');
+            $spreadsheet->getActiveSheet()->mergeCells('C5:X5');
+            $spreadsheet->getActiveSheet()->mergeCells('B6:X6');
+
+            $spreadsheet->getActiveSheet()->setCellValue('C2','PT. PLN (PERSERO)')->setPrintGridlines(true); 
+            $spreadsheet->getActiveSheet()->setCellValue('C3','UNIT INDUK TRANSMISI JAWA BAGIAN TENGAH'); 
+            $spreadsheet->getActiveSheet()->setCellValue('C4','UPT BANDUNG');
+            $spreadsheet->getActiveSheet()->setCellValue('C5','PDKB TT/TET');
+            $spreadsheet->getActiveSheet()->setCellValue('B6','LAPORAN PEMELIHARAAN');
+
+            $char = range('A', 'Z'); //abjad array
+            $start_from = 1;
+            foreach ($data[0] as $key => $value) {
+                // echo $value;
+                $spreadsheet->getActiveSheet()->setCellValue($char[$start_from].'7', $value);
+
+                $start_from ++;
+            }
+
+            $filename = 'Laporan';
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
             header('Cache-Control: max-age=0');
-            ob_end_clean();
-            $Excel_writer->save('php://output');
-            exit();
+
+            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+            $writer->save('php://output');
+
         } catch (Exception $e) {
             return;
         }
+        
     }
 
     public function column(){
