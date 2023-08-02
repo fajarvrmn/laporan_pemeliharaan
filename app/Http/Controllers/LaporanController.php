@@ -56,19 +56,20 @@ class LaporanController extends Controller
 
             // $whereByRole = array_merge($whereByRole, $arrFilter);
   
-            $laporan = Laporan::select(
-                'laporan.*', 
-                // 'users.name as nama_personil',
+            $laporan = Laporan::select('laporan.*', 
                 'peralatan.serial_number as serial_number', 
                 'peralatan.nama_bay as nama_bay', 
                 'status_pekerjaan.nama as status_pekerjaan_name', 
-                'gardu_induk.nama_gardu as nama_gardu'
-            )
-            // ->join('users', 'users.nip', '=', 'laporan.nip')
-            ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-            ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan');
-            // ->where($whereByRole);
+                'gardu_induk.nama_gardu',
+                'merek_peralatan.nama_merk as nama_merk',
+                'type_peralatan.nama_type as nama_type',
+                'users.name as user_name')
+                    ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+                    ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+                    ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+                    ->join('merek_peralatan', 'merek_peralatan.id', '=', 'laporan.merk')
+                    ->join('type_peralatan', 'type_peralatan.id', '=', 'laporan.type')
+                    ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan');
 
             if(isset($request->form_search)){
                 $laporan->where($arrFilter);
@@ -237,125 +238,6 @@ class LaporanController extends Controller
         return response()->json(['success'=>'deleted successfully.']);
     }
 
-    function exportExcel(Request $request, $search){
-
-        $request = $request->toArray();
-        $role = auth()->user()->role;
-
-        // $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
-        $whereByRole = [] ;
-
-        $arrFilter = [];
-        $rangeFilter = [];
-        if(count($request) != 0){
-            $i=0;
-            foreach ($request as $key => $value) {
-                if($value !== null){
-                    if($key == 'tgl_pelaksanaan_dari'){
-                        $rangeFilter['dari'] = $value;
-                        unset($arrFilter[$key]);
-                    }elseif($key == 'tgl_pelaksanaan_sampai'){
-                        $rangeFilter['sampai'] = $value;
-                        unset($arrFilter[$key]);
-                    }
-                    $arrFilter[$key] = $value;
-                }
-
-                $i++;
-            }
-        }
-
-        unset($arrFilter['tgl_pelaksanaan_dari']);
-        unset($arrFilter['tgl_pelaksanaan_sampai']);
-
-        $whereByRole = array_merge($whereByRole, $arrFilter);
-
-        $laporan = Laporan::select('laporan.*', 
-        'peralatan.serial_number as serial_number', 
-        'peralatan.nama_bay as nama_bay', 
-        'status_pekerjaan.nama as status_pekerjaan_name', 
-        'gardu_induk.nama_gardu')
-        ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
-        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
-        ->where($whereByRole);
-
-        if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
-            $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
-        }
-
-        $laporan->get();
-
-        //ini buat header title
-        $data_array[] = array(
-            'Status Laporan',
-            'Alasan',
-            'Tanggal Pelaksanaan',
-            'Gardu Induk',
-            'Peralatan',
-            'Rel',
-            'Merek',
-            'Tipe',
-            'Kapasitas',
-            'Tahanan Kontak',
-            'Tahanan Isolasi',
-            'Arus Motor',
-            'Waktu Open',
-            'Waktu Close',
-            'Kondisi Visual',
-            'Dokumentasi',
-            'Pengawas Pekerjaan',
-            'Pelaksana Uji',
-            'Status Pekerjaan',
-            'Keterangan'
-        );
-
-        foreach($laporan->get() as $key => $row)
-        {
-            $status_laporan = "Unknown";
-            if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
-                $status_laporan = 'Belum Dikirim Oleh Admin';   
-            }elseif($row->id_status_pekerjaan == '2' && $row->status == '0'){
-                $status_laporan = 'Sudah Dikirim Oleh Admin';
-            }elseif($row->id_status_pekerjaan == '2' && $row->status == '1'){
-                $status_laporan = 'Ditolak Oleh Supervisor';
-            }elseif($row->id_status_pekerjaan == '3' && $row->status == '0'){
-                $status_laporan = 'Sudah Disetujui Oleh Supervisor';
-            }elseif($row->id_status_pekerjaan == '3' && $row->status == '1'){
-                $status_laporan = 'Ditolak Oleh Manager';
-            }elseif($row->id_status_pekerjaan == '4' && $row->status == '0'){
-                $status_laporan = 'Sudah Disetujui Oleh Manager';
-            }
-            
-            //ini value nya
-            $data_array[] = array(
-                'status_laporan' => $status_laporan,
-                'alasan' => $row->alasan_ditolak,
-                'tanggal_pelaksanaan' => $row->tgl_pelaksanaan,
-                'gardu_induk' => $row->id_gardu_induk,
-                'peralatan' => $row->id_peralatan,
-                'rel' => $row->rel,
-                'merk' => $row->merk,
-                'type' => $row->type,
-                'kapasitas' => $row->kapasitas,
-                'tahanan_kontak' => $row->hasil_pengujian_tahanan_kontak,
-                'tahanan_isolasi' => $row->hasil_pengujian_tahanan_isolasi,
-                'arus_motor' => $row->arus_motor,
-                'waktu_open' => $row->waktu_open,
-                'waktu_close' => $row->waktu_close,
-                'kondisi_visual' => $row->kondisi_visual,
-                'dokumentasi' => $row->dokumentasi,
-                'pengawas' => $row->pengawas_pekerjaan,
-                'pelaksana_uji' => $row->pelaksana_uji,
-                'status_pekerjaan' => $row->status_laporan,
-                'keterangan' => $row->keterangan
-            );
-        }
-
-        $this->cetak_excel($data_array);
-        
-    }
-
     public function cetak_pdf(Request $request, $search)
     {
         $request = $request->toArray();
@@ -413,6 +295,322 @@ class LaporanController extends Controller
     	// return $pdf->download('laporan.pdf');
     }
 
+    function exportExcel(Request $request, $search){
+
+        $request = $request->toArray();
+        $role = auth()->user()->role;
+
+        // $whereByRole = ($role != '1') ? ['laporan.id_status_pekerjaan' => auth()->user()->role] : [] ;
+        $whereByRole = [] ;
+
+        $arrFilter = [];
+        $rangeFilter = [];
+        if(count($request) != 0){
+            $i=0;
+            foreach ($request as $key => $value) {
+                if($value !== null){
+                    if($key == 'tgl_pelaksanaan_dari'){
+                        $rangeFilter['dari'] = $value;
+                        unset($arrFilter[$key]);
+                    }elseif($key == 'tgl_pelaksanaan_sampai'){
+                        $rangeFilter['sampai'] = $value;
+                        unset($arrFilter[$key]);
+                    }
+                    $arrFilter[$key] = $value;
+                }
+
+                $i++;
+            }
+        }
+
+        unset($arrFilter['tgl_pelaksanaan_dari']);
+        unset($arrFilter['tgl_pelaksanaan_sampai']);
+
+        $whereByRole = array_merge($whereByRole, $arrFilter);
+
+        $laporan = Laporan::select('laporan.*', 
+        'peralatan.serial_number as serial_number', 
+        'peralatan.nama_bay as nama_bay', 
+        'status_pekerjaan.nama as status_pekerjaan_name', 
+        'gardu_induk.nama_gardu',
+        'merek_peralatan.nama_merk as nama_merk',
+        'type_peralatan.nama_type as nama_type',
+        'users.name as user_name')
+        ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+        ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
+        ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+        ->join('merek_peralatan', 'merek_peralatan.id', '=', 'laporan.merk')
+        ->join('type_peralatan', 'type_peralatan.id', '=', 'laporan.type')
+        ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan')
+        ->where($whereByRole);
+
+        if(!empty($rangeFilter['dari']) && !empty($rangeFilter['sampai'])) {
+            $laporan->whereBetween('tgl_pelaksanaan', [$rangeFilter['dari'], $rangeFilter['sampai']]);
+        }
+
+        $laporan->get();
+
+        //ini buat header title
+        // $data_array[] = array(
+        //     'Status Laporan',
+        //     'Alasan',
+        //     'Tanggal Pelaksanaan',
+        //     'Gardu Induk',
+        //     'Peralatan',
+        //     'Rel',
+        //     'Merek',
+        //     'Tipe',
+        //     'Kapasitas',
+        //     'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm',
+        //     'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm',
+        //     'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm',
+        //     'Tahanan Isolasi',
+        //     'Arus Motor',
+        //     'Waktu Open',
+        //     'Waktu Close',
+        //     'Kondisi Visual',
+        //     'Dokumentasi',
+        //     'Pengawas Pekerjaan',
+        //     'Pelaksana Uji',
+        //     'Status Pekerjaan',
+        //     'Keterangan'
+        // );
+
+        // dd($laporan->get());
+
+        foreach($laporan->get() as $key => $row)
+        {
+            $status_laporan = "Unknown";
+            if($row->id_status_pekerjaan == '1' && $row->status == '0'){ //belum dikirim admin
+                $status_laporan = 'Belum Dikirim Oleh Admin';   
+            }elseif($row->id_status_pekerjaan == '2' && $row->status == '0'){
+                $status_laporan = 'Sudah Dikirim Oleh Admin';
+            }elseif($row->id_status_pekerjaan == '2' && $row->status == '1'){
+                $status_laporan = 'Ditolak Oleh Supervisor';
+            }elseif($row->id_status_pekerjaan == '3' && $row->status == '0'){
+                $status_laporan = 'Sudah Disetujui Oleh Supervisor';
+            }elseif($row->id_status_pekerjaan == '3' && $row->status == '1'){
+                $status_laporan = 'Ditolak Oleh Manager';
+            }elseif($row->id_status_pekerjaan == '4' && $row->status == '0'){
+                $status_laporan = 'Sudah Disetujui Oleh Manager';
+            }
+            
+            $exp_kontak = explode(",",$row->hasil_pengujian_tahanan_kontak);
+            $r_kontak = $exp_kontak[0];
+            $s_kontak = $exp_kontak[1];
+            $t_kontak = $exp_kontak[2];
+
+            $exp_isolasi = explode(",",$row->hasil_pengujian_tahanan_isolasi);
+            $r_isolasi = $exp_isolasi[0];
+            $s_isolasi = $exp_isolasi[1];
+            $t_isolasi = $exp_isolasi[2];
+            //ini value nya
+            $data_array[] = array(
+                'status_laporan' => $status_laporan,
+                'alasan' => $row->alasan_ditolak,
+                'tanggal_pelaksanaan' => $row->tgl_pelaksanaan,
+                'gardu_induk' => $row->nama_gardu,
+                'peralatan' => $row->nama_bay,
+                'rel' => $row->rel,
+                'merk' => $row->nama_merk,
+                'type' => $row->nama_type,
+                'kapasitas' => $row->kapasitas,
+                // 'tahanan_kontak' => $row->hasil_pengujian_tahanan_kontak,
+                'kontak_r' => $r_kontak,
+                'kontak_s' => $s_kontak,
+                'kontak_t' => $t_kontak,
+                // 'tahanan_kontak' => $row->hasil_pengujian_tahanan_kontak,
+                'isolasi_r' => $r_isolasi,
+                'isolasi_s' => $s_isolasi,
+                'isolasi_t' => $t_isolasi,
+                // 'tahanan_isolasi' => $row->hasil_pengujian_tahanan_isolasi,
+                'arus_motor' => $row->arus_motor,
+                'waktu_open' => $row->waktu_open,
+                'waktu_close' => $row->waktu_close,
+                'kondisi_visual' => $row->kondisi_visual,
+                'dokumentasi' => $row->dokumentasi,
+                'pengawas' => $row->pengawas_pekerjaan,
+                'pelaksana_uji' => $row->pelaksana_uji,
+                'status_pekerjaan' => $row->status_laporan,
+                'keterangan' => $row->keterangan
+            );
+        }
+
+        // dd($data_array);
+
+        $this->cetak_excel($data_array);
+        
+    }
+
+    public function cetak_excel($data){
+
+        // dd($data);
+
+        try {
+
+            $spreadsheet = new Spreadsheet();
+            $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(30);
+
+            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            $drawing->setPath(public_path('theme/dist/img/pln.png')); /* put your path and image here */
+            $drawing->setCoordinates('B2');
+            $drawing->setHeight(100);
+            $drawing->setOffsetX(80); 
+            $drawing->setOffsetY(3); 
+
+            $drawing->setWorksheet($spreadsheet->getActiveSheet());
+            
+            $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(30);
+            $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);
+            $spreadsheet->getActiveSheet()->getColumnDimension('Y')->setWidth(12);
+            $spreadsheet->getActiveSheet()->mergeCells('B2:B5');
+
+            // ----------------------- //
+
+            $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+            $drawing2->setPath(public_path('theme/dist/img/pdkb.png')); /* put your path and image here */
+            $drawing2->setCoordinates('Y2');
+            $drawing2->setHeight(80);
+            $drawing2->setOffsetX(5); 
+            $drawing2->setOffsetY(10); 
+            
+            $drawing2->setWorksheet($spreadsheet->getActiveSheet());
+
+            $spreadsheet->getActiveSheet()->mergeCells('Y2:Y5');
+            $spreadsheet->getActiveSheet()->mergeCells('C2:X2');
+            $spreadsheet->getActiveSheet()->mergeCells('C3:X3');
+            $spreadsheet->getActiveSheet()->mergeCells('C4:X4');
+            $spreadsheet->getActiveSheet()->mergeCells('C5:X5');
+            $spreadsheet->getActiveSheet()->mergeCells('B6:X6');
+
+            $spreadsheet->getActiveSheet()->setCellValue('C2','PT. PLN (PERSERO)'); 
+            $spreadsheet->getActiveSheet()->setCellValue('C3','UNIT INDUK TRANSMISI JAWA BAGIAN TENGAH'); 
+            $spreadsheet->getActiveSheet()->setCellValue('C4','UPT BANDUNG');
+            $spreadsheet->getActiveSheet()->setCellValue('C5','PDKB TT/TET');
+            $spreadsheet->getActiveSheet()->setCellValue('B6','LAPORAN PEMELIHARAAN');
+            $spreadsheet->getActiveSheet()->getStyle('C2:C5')->getFont()->setBold(true);
+            $spreadsheet->getActiveSheet()->getStyle('B6')->getFont()->setBold(true);
+
+            $spreadsheet->getActiveSheet()->mergeCells('B7:B8');
+            $spreadsheet->getActiveSheet()->mergeCells('C7:C8');
+            $spreadsheet->getActiveSheet()->mergeCells('D7:D8');
+            $spreadsheet->getActiveSheet()->mergeCells('E7:E8');
+            $spreadsheet->getActiveSheet()->mergeCells('F7:F8');
+            $spreadsheet->getActiveSheet()->mergeCells('G7:G8');
+            $spreadsheet->getActiveSheet()->mergeCells('H7:H8');
+            $spreadsheet->getActiveSheet()->mergeCells('I7:I8');
+            $spreadsheet->getActiveSheet()->mergeCells('J7:J8');
+
+            $spreadsheet->getActiveSheet()->mergeCells('K7:M7');
+            $spreadsheet->getActiveSheet()->mergeCells('N7:P7');
+
+            $spreadsheet->getActiveSheet()->mergeCells('Q7:Q8');
+            $spreadsheet->getActiveSheet()->mergeCells('R7:R8');
+            $spreadsheet->getActiveSheet()->mergeCells('S7:S8');
+            $spreadsheet->getActiveSheet()->mergeCells('T7:T8');
+            $spreadsheet->getActiveSheet()->mergeCells('U7:U8');
+            $spreadsheet->getActiveSheet()->mergeCells('V7:V8');
+            $spreadsheet->getActiveSheet()->mergeCells('W7:W8');
+            $spreadsheet->getActiveSheet()->mergeCells('X7:X8');
+            $spreadsheet->getActiveSheet()->mergeCells('Y7:Y8');
+
+            for ($i = 'A'; $i !=  $spreadsheet->getActiveSheet()->getHighestColumn(); $i++) {
+                $spreadsheet->getActiveSheet()->getColumnDimension($i)->setAutoSize(TRUE);
+            }
+
+            $spreadsheet->getActiveSheet()->getRowDimension('9')->setRowHeight(25);
+
+            $spreadsheet->getActiveSheet()->setCellValue('B7', 'Status Laporan');
+            $spreadsheet->getActiveSheet()->setCellValue('C7', 'Alasan');
+            $spreadsheet->getActiveSheet()->setCellValue('D7', 'Tanggal Pelaksanaan');
+            $spreadsheet->getActiveSheet()->setCellValue('E7', 'Gardu Induk');
+            $spreadsheet->getActiveSheet()->setCellValue('F7', 'Peralatan');
+            $spreadsheet->getActiveSheet()->setCellValue('G7', 'Rel');
+            $spreadsheet->getActiveSheet()->setCellValue('H7', 'Merek');
+            $spreadsheet->getActiveSheet()->setCellValue('I7', 'Tipe');
+            $spreadsheet->getActiveSheet()->setCellValue('J7', 'Kapasitas');
+            $spreadsheet->getActiveSheet()->setCellValue('K7', 'Tahanan Kontak');
+                $spreadsheet->getActiveSheet()->setCellValue('K8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('L8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('M8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+            $spreadsheet->getActiveSheet()->setCellValue('N7', 'Tahanan Isolasi');
+                $spreadsheet->getActiveSheet()->setCellValue('N8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('O8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('P8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+            $spreadsheet->getActiveSheet()->setCellValue('Q7', 'Arus Motor');
+            $spreadsheet->getActiveSheet()->setCellValue('R7', 'Waktu Open');
+            $spreadsheet->getActiveSheet()->setCellValue('S7', 'Waktu Close');
+            $spreadsheet->getActiveSheet()->setCellValue('T7', 'Kondisi Visual');
+            $spreadsheet->getActiveSheet()->setCellValue('U7', 'Dokumentasi');
+            $spreadsheet->getActiveSheet()->setCellValue('V7', 'Pengawas Pekerjaan');
+            $spreadsheet->getActiveSheet()->setCellValue('W7', 'Pelaksana Uji');
+            $spreadsheet->getActiveSheet()->setCellValue('X7', 'Status Pekerjaan');
+            $spreadsheet->getActiveSheet()->setCellValue('Y7', 'Keterangan');
+
+            $char = range('A', 'Z'); //abjad array
+            // $start_header_table = 1;
+            // foreach ($data[0] as $key => $value) {
+
+            //     $spreadsheet->getActiveSheet()->setCellValue($char[$start_header_table].'7', $value);
+
+            //     $start_header_table ++;
+            // }
+
+            // dd($data);
+            $spreadsheet->getActiveSheet()->getStyle('7')->getAlignment()->setVertical('center');
+            $spreadsheet->getActiveSheet()->getStyle('7')->getAlignment()->setHorizontal('center');
+
+            $start_col = 9;
+            foreach ($data as $key => $value) {
+
+                $spreadsheet->getActiveSheet()->getRowDimension($start_col)->setRowHeight(50);
+                $spreadsheet->getActiveSheet()->getStyle($start_col)->getAlignment()->setVertical('center');
+                $spreadsheet->getActiveSheet()->getStyle($start_col)->getAlignment()->setHorizontal('center');
+
+                $spreadsheet->getActiveSheet()->setCellValue($char[1].$start_col, $value['status_laporan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[2].$start_col, $value['alasan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[3].$start_col, $value['tanggal_pelaksanaan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[4].$start_col, $value['gardu_induk']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[5].$start_col, $value['peralatan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[6].$start_col, $value['rel']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[7].$start_col, $value['merk']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[8].$start_col, $value['type']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[9].$start_col, $value['kapasitas']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[10].$start_col, $value['kontak_r']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[11].$start_col, $value['kontak_s']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[12].$start_col, $value['kontak_t']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[13].$start_col, $value['isolasi_r']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[14].$start_col, $value['isolasi_s']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[15].$start_col, $value['isolasi_t']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[16].$start_col, $value['arus_motor']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[17].$start_col, $value['waktu_open']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[18].$start_col, $value['waktu_close']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[19].$start_col, $value['kondisi_visual']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[20].$start_col, $value['dokumentasi']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[21].$start_col, $value['pengawas']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[22].$start_col, $value['pelaksana_uji']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[23].$start_col, $value['status_pekerjaan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[24].$start_col, $value['keterangan']);
+
+                $start_col ++;
+            }
+
+            $filename = 'Laporan';
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+            header('Cache-Control: max-age=0');
+
+            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+            $writer->save('php://output');
+
+        } catch (Exception $e) {
+            return;
+        }
+        
+    }
+
     // public function cetak_excel($data){
 
     //     // dd($data);
@@ -433,85 +631,6 @@ class LaporanController extends Controller
     //         return;
     //     }
     // }
-
-    public function cetak_excel($data){
-
-        // dd($data[0]);
-
-        try {
-
-            $spreadsheet = new Spreadsheet();
-            // $sheet = $spreadsheet->getActiveSheet();
-            // $spreadsheet->getActiveSheet()->getStyle('B2:B5')->getBorders()->getTop()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getBottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getLeft()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-            // $spreadsheet->getActiveSheet()->getStyle('B2:Y6')->getBorders()->getRight()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
-
-            $spreadsheet->getActiveSheet()->getDefaultRowDimension()->setRowHeight(30);
-
-            $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-            $drawing->setPath(public_path('theme/dist/img/pln.png')); /* put your path and image here */
-            $drawing->setCoordinates('B2');
-            $drawing->setHeight(80);
-            $drawing->setOffsetX(10); 
-            $drawing->setOffsetY(10); 
-
-            $drawing->setWorksheet($spreadsheet->getActiveSheet());
-            
-            $spreadsheet->getActiveSheet()->getRowDimension('2')->setRowHeight(30);
-            $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(12);
-            $spreadsheet->getActiveSheet()->getColumnDimension('Y')->setWidth(12);
-            $spreadsheet->getActiveSheet()->mergeCells('B2:B5');
-
-            // ----------------------- //
-
-            $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-            $drawing2->setPath(public_path('theme/dist/img/pdkb.png')); /* put your path and image here */
-            $drawing2->setCoordinates('Y2');
-            $drawing2->setHeight(80);
-            $drawing2->setOffsetX(5); 
-            $drawing2->setOffsetY(10); 
-            
-            $drawing2->setWorksheet($spreadsheet->getActiveSheet());
-
-
-            $spreadsheet->getActiveSheet()->mergeCells('Y2:Y5');
-            $spreadsheet->getActiveSheet()->mergeCells('C2:X2');
-            $spreadsheet->getActiveSheet()->mergeCells('C3:X3');
-            $spreadsheet->getActiveSheet()->mergeCells('C4:X4');
-            $spreadsheet->getActiveSheet()->mergeCells('C5:X5');
-            $spreadsheet->getActiveSheet()->mergeCells('B6:X6');
-
-            $spreadsheet->getActiveSheet()->setCellValue('C2','PT. PLN (PERSERO)')->setPrintGridlines(true); 
-            $spreadsheet->getActiveSheet()->setCellValue('C3','UNIT INDUK TRANSMISI JAWA BAGIAN TENGAH'); 
-            $spreadsheet->getActiveSheet()->setCellValue('C4','UPT BANDUNG');
-            $spreadsheet->getActiveSheet()->setCellValue('C5','PDKB TT/TET');
-            $spreadsheet->getActiveSheet()->setCellValue('B6','LAPORAN PEMELIHARAAN');
-
-            $char = range('A', 'Z'); //abjad array
-            $start_from = 1;
-            foreach ($data[0] as $key => $value) {
-                // echo $value;
-                $spreadsheet->getActiveSheet()->setCellValue($char[$start_from].'7', $value);
-
-                $start_from ++;
-            }
-
-            $filename = 'Laporan';
-
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
-            header('Cache-Control: max-age=0');
-
-            $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-
-            $writer->save('php://output');
-
-        } catch (Exception $e) {
-            return;
-        }
-        
-    }
 
     public function column(){
 
