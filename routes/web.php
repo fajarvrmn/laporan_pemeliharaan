@@ -27,6 +27,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('merekperalatan', App\Http\Controllers\MerekController::class);
     Route::resource('tipeperalatan', App\Http\Controllers\TipeController::class);
     Route::resource('garduinduk', App\Http\Controllers\GarduController::class);
+    Route::resource('role', App\Http\Controllers\RoleController::class);
     Route::resource('status', App\Http\Controllers\StatusController::class);
     Route::resource('peralatan', App\Http\Controllers\PeralatanController::class);
     Route::resource('personil', App\Http\Controllers\PersonilController::class);

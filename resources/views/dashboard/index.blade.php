@@ -88,8 +88,8 @@
                         <th>Merek</th>
                         <th>Tipe</th>
                         <th>Kapasitas</th>
-                        <th>Tahanan Kontak</th>
-                        <th>Tahanan Isolasi</th>
+                        <th>Tahanan Kontak (R S T)</th>
+                        <th>Tahanan Isolasi (R S T)</th>
                         <th>Arus Motor</th>
                         <th>Waktu Open</th>
                         <th>Waktu Close</th>
@@ -99,8 +99,6 @@
                         <th>Pelaksana Uji</th>
                         <th>Status Pekerjaan</th>
                         <th>Keterangan</th>
-        );
-
                     </tr>
                 </thead>
                 <tbody id="fetch_response">
@@ -135,8 +133,8 @@
                             '<td>'+value.nama_gardu+'</td>'+
                             '<td>'+value.nama_bay+'</td>'+
                             '<td>'+value.rel+'</td>'+
-                            '<td>'+value.merk+'</td>'+
-                            '<td>'+value.type+'</td>'+
+                            '<td>'+value.nama_merk+'</td>'+
+                            '<td>'+value.nama_type+'</td>'+
                             '<td>'+value.kapasitas+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_kontak+'</td>'+
                             '<td>'+value.hasil_pengujian_tahanan_isolasi+'</td>'+
@@ -144,9 +142,8 @@
                             '<td>'+value.waktu_open+'</td>'+
                             '<td>'+value.waktu_close+'</td>'+
                             '<td>'+value.kondisi_visual+'</td>'+
-                            // '<td>'+value.dokumentasi+'</td>'+
                             '<td><img src="{{ URL::asset("uploads") }}/images/'+value.dokumentasi+'" style="width: 100%;height: 100%;" alt="No Image Set"></img>'+'</td>'+
-                            '<td>'+value.pengawas_pekerjaan+'</td>'+
+                            '<td>'+value.user_name+'</td>'+
                             '<td>'+value.pelaksana_uji+'</td>'+
                             '<td>'+value.status_laporan+'</td>'+
                             '<td>'+value.keterangan+'</td>'+
@@ -196,20 +193,25 @@
 
                                     $('#fetch_response').append('<tr>'+
                                         '<td>'+i+'</td>'+
-                                        '<td>'+value.nama_bay+'</td>'+
-                                        // '<td>'+value.nip+'</td>'+
                                         '<td>'+value.status_pekerjaan_text+'</td>'+
                                         '<td>'+alasanDitolak+'</td>'+
                                         '<td>'+value.tgl_pelaksanaan+'</td>'+
                                         '<td>'+value.nama_gardu+'</td>'+
+                                        '<td>'+value.nama_bay+'</td>'+
+                                        '<td>'+value.rel+'</td>'+
+                                        '<td>'+value.nama_merk+'</td>'+
+                                        '<td>'+value.nama_type+'</td>'+
                                         '<td>'+value.kapasitas+'</td>'+
                                         '<td>'+value.hasil_pengujian_tahanan_kontak+'</td>'+
                                         '<td>'+value.hasil_pengujian_tahanan_isolasi+'</td>'+
+                                        '<td>'+value.arus_motor+'</td>'+
                                         '<td>'+value.waktu_open+'</td>'+
                                         '<td>'+value.waktu_close+'</td>'+
                                         '<td>'+value.kondisi_visual+'</td>'+
-                                        '<td>'+value.dokumentasi+'</td>'+
-                                        '<td>'+value.pengawas_pekerjaan+'</td>'+
+                                        '<td><img src="{{ URL::asset("uploads") }}/images/'+value.dokumentasi+'" style="width: 100%;height: 100%;" alt="No Image Set"></img>'+'</td>'+
+                                        '<td>'+value.user_name+'</td>'+
+                                        '<td>'+value.pelaksana_uji+'</td>'+
+                                        '<td>'+value.status_laporan+'</td>'+
                                         '<td>'+value.keterangan+'</td>'+
                                     '</tr>');
 

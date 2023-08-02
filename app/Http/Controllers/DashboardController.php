@@ -31,6 +31,9 @@ class DashboardController extends Controller
             'peralatan.nama_bay as nama_bay', 
             'status_pekerjaan.nama as status_pekerjaan_name', 
             'gardu_induk.nama_gardu',
+            'merek_peralatan.nama_merk as nama_merk',
+            'type_peralatan.nama_type as nama_type',
+            'users.name as user_name',
             DB::raw('(CASE WHEN laporan.id_status_pekerjaan = 1 AND laporan.status = 0 THEN "Belum Dikirim Oleh Admin"
             WHEN laporan.id_status_pekerjaan = 2 AND laporan.status = 0 THEN "Sudah Dikirim Oleh Admin"
             WHEN laporan.id_status_pekerjaan = 2 AND laporan.status = 1 THEN "Ditolak Oleh Supervisor"
@@ -41,7 +44,12 @@ class DashboardController extends Controller
             )
             ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
             ->join('status_pekerjaan', 'status_pekerjaan.id', '=', 'laporan.id_status_pekerjaan')
-            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk');
+            ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+            ->join('merek_peralatan', 'merek_peralatan.id', '=', 'laporan.merk')
+            ->join('type_peralatan', 'type_peralatan.id', '=', 'laporan.type')
+            ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan');
+
+            
 
             $data = $laporan;
 

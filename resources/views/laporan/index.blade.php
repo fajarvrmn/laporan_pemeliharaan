@@ -1075,7 +1075,7 @@
             {data: 'nama_gardu', name: 'nama_gardu'},
             {data: 'nama_bay', name: 'nama_bay'},
             {data: 'rel', name: 'rel'},
-            {data: 'pengawas_pekerjaan', name: 'pengawas_pekerjaan'},
+            {data: 'user_name', name: 'user_name'},
             {data: 'pelaksana_uji', name: 'pelaksana_uji'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]

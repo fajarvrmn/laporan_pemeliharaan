@@ -189,6 +189,14 @@
                 @if ($role=='1');
                     <li class="nav-header">MASTER DATA</li>
                     <li class="nav-item">
+                        <a href="{{ route('role.index') }}" class="nav-link {{ ($routeSelected == 'role') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-dice"></i>
+                        <p>
+                            Management Role
+                        </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ route('merekperalatan.index') }}" class="nav-link {{ ($routeSelected == 'merekperalatan') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-marker"></i>
                         <p>
