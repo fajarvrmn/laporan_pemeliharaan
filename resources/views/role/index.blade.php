@@ -117,11 +117,12 @@
    $('body').on('click', '.editRole', function () {
       var role_id = $(this).data('id');
       $.get("{{ route('role.index') }}" +'/' + role_id +'/edit', function (data) {
-          $('#modelHeading').html("Edit Merek");
+          $('#modelHeading').html("Edit Role");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel').modal('show');
           $('#role_id').val(data.id);
-          $('#nama_role').val(data.nama_role);
+          $('#nama_role').val(data.name);
+          $('#deskripsi_role').val(data.description);
           
       })
     });

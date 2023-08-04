@@ -541,7 +541,7 @@ class LaporanController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('R7', 'Waktu Open');
             $spreadsheet->getActiveSheet()->setCellValue('S7', 'Waktu Close');
             $spreadsheet->getActiveSheet()->setCellValue('T7', 'Kondisi Visual');
-            $spreadsheet->getActiveSheet()->setCellValue('U7', 'Dokumentasi');
+            $spreadsheet->getActiveSheet()->setCellValue('U7', 'File Dokumentasi');
             $spreadsheet->getActiveSheet()->setCellValue('V7', 'Pengawas Pekerjaan');
             $spreadsheet->getActiveSheet()->setCellValue('W7', 'Pelaksana Uji');
             $spreadsheet->getActiveSheet()->setCellValue('X7', 'Status Pekerjaan');

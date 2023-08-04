@@ -33,15 +33,16 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
+     dd($request->all());
        Role::updateOrCreate([
-                    'id' => $request->gardu_id
+                    'id' => $request->role_id
                 ],
                 [
                     'name' => $request->nama_role,
                     'description' => $request->deskripsi_role,
                                 
         
-                ]);        
+                ]);       
      
         return response()->json(['success'=>'Role Berhasil Disimpan.']);
     }
@@ -65,10 +66,10 @@ class RoleController extends Controller
         
         ]);
     
-        $role->update($request->all());
+        $role->update([1]);
     
         return redirect()->route('role.index')
-                        ->with('success','Role Berhasil Ditambahkan');
+                        ->with('success','Role Berhasil Diubah');
     }
 
       public function destroy($id)
