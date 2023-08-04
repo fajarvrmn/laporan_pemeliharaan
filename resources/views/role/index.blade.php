@@ -135,7 +135,7 @@
     $('#saveBtn').click(function (e) {
         e.preventDefault();
         $(this).html('Sending..');
-      
+        // console.log($('#roleForm').serialize());
         $.ajax({
           data: $('#roleForm').serialize(),
           url: "{{ route('role.store') }}",

@@ -33,7 +33,7 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-     dd($request->all());
+    //  dd($request->all());
        Role::updateOrCreate([
                     'id' => $request->role_id
                 ],
