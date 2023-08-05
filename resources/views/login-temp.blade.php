@@ -23,7 +23,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Login</h3>
+		      	<h3 class="mb-4 text-center">Login Sistem</h3>
 		      	<form method="POST" action="{{ route('login') }}" class="signin-form">
 		      		@csrf
 		      		<div class="form-group">
