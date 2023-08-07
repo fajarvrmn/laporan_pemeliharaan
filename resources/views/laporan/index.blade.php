@@ -228,8 +228,13 @@
                                     <label for="name" class="control-label label-padding">Rel</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" class="form-control form-control-sm" name="rel" id="rel">
+                                    <select id="rel" name="rel" class="form-control col-12 form-control-sm" required>
+                                        <option value="" disabled selected>Pilih</option>
+                                        <option value="Selesai">Satu</option>
+                                        <option value="Selesai">Dua</option>
+                                </select>
                                 </div>
+                                
                             </div>
 
                         </div>
@@ -242,9 +247,9 @@
                                 </div>
                                 <div class="col-9 row">
                                     <label for="waktu_open" class="col-2 label-padding">Open</label>
-                                    <input type="time" name="waktu_open" id="waktu_open" step="1" class="form-control col-4 form-control-sm text-center">
+                                    <input type="text" class="form-control col-4 form-control-sm" name="waktu_open" id="waktu_open">
                                     <label for="waktu_close" class="col-2 label-padding">Close</label>
-                                    <input type="time" name="waktu_close" id="waktu_close" step="1" class="form-control col-4 form-control-sm text-center">
+                                    <input type="text" class="form-control col-4 form-control-sm" name="waktu_close" id="waktu_close">
                                 </div>
                             </div>
 
@@ -791,46 +796,46 @@
 
 <script type="text/javascript">
 
-    document.getElementById('waktu_open').addEventListener('change', function() {
-      var waktu_open = this.value;
-      var parts = waktu_open.split(':');
-      if (parts.length === 3) {
-        // Jika input mengandung detik
-        var hours = parseInt(parts[0]);
-        var minutes = parseInt(parts[1]);
-        var seconds = parseInt(parts[2]);
-        var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    // document.getElementById('waktu_open').addEventListener('change', function() {
+    //   var waktu_open = this.value;
+    //   var parts = waktu_open.split(':');
+    //   if (parts.length === 3) {
+    //     // Jika input mengandung detik
+    //     var hours = parseInt(parts[0]);
+    //     var minutes = parseInt(parts[1]);
+    //     var seconds = parseInt(parts[2]);
+    //     var totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
-        // Mengatur format detik pada input
-        var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-        var formattedHours = hours < 10 ? '0' + hours : hours;
-        this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
-      } else {
-        // Jika input tidak mengandung detik, tambahkan detik 00
-        this.value += ':00';
-      }
-    });
+    //     // Mengatur format detik pada input
+    //     var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+    //     var formattedHours = hours < 10 ? '0' + hours : hours;
+    //     this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
+    //   } else {
+    //     // Jika input tidak mengandung detik, tambahkan detik 00
+    //     this.value += ':00';
+    //   }
+    // });
     
-    document.getElementById('waktu_close').addEventListener('change', function() {
-      var waktu_close = this.value;
-      var parts = waktu_close.split(':');
-      if (parts.length === 3) {
-        // Jika input mengandung detik
-        var hours = parseInt(parts[0]);
-        // console.log(parts[0], parts[0].length, hours);
-        var minutes = parseInt(parts[1]);
-        var seconds = parseInt(parts[2]);
-        var totalSeconds = hours * 3600 + minutes * 60 + seconds;
+    // document.getElementById('waktu_close').addEventListener('change', function() {
+    //   var waktu_close = this.value;
+    //   var parts = waktu_close.split(':');
+    //   if (parts.length === 3) {
+    //     // Jika input mengandung detik
+    //     var hours = parseInt(parts[0]);
+    //     // console.log(parts[0], parts[0].length, hours);
+    //     var minutes = parseInt(parts[1]);
+    //     var seconds = parseInt(parts[2]);
+    //     var totalSeconds = hours * 3600 + minutes * 60 + seconds;
 
-        // Mengatur format detik pada input
-        var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
-        var formattedHours = hours < 10 ? '0' + hours : hours;
-        this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
-      } else {
-        // Jika input tidak mengandung detik, tambahkan detik 00
-        this.value += ':00';
-      }
-    });
+    //     // Mengatur format detik pada input
+    //     var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+    //     var formattedHours = hours < 10 ? '0' + hours : hours;
+    //     this.value = formattedHours + ':' + minutes + ':' + formattedSeconds;
+    //   } else {
+    //     // Jika input tidak mengandung detik, tambahkan detik 00
+    //     this.value += ':00';
+    //   }
+    // });
 
   $(function () {
     /*------------------------------------------

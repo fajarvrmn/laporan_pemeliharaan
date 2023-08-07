@@ -23,7 +23,6 @@
                 <th>No</th>
                 <th>Bay</th>
                 <th>ID</th>
-                <th>Lokasi</th>
                 <th>Serial Number</th>
                 <th>Merk Peralatan</th>
                 <th>Tipe Peralatan</th>
@@ -86,12 +85,12 @@
                             <input type="text" class="form-control" name="serial_number" id="serial_number">
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label for="lokasi" class="col-sm-6 control-label">Lokasi</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" name="lokasi" id="lokasi">
                         </div>
-                    </div>
+                    </div> -->
                    
                     <div class="col-sm-offset-2 col-sm-10">
                      <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Simpan
@@ -132,7 +131,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'nama_bay', name: 'nama_bay'},
             {data: 'kode_alat', name: 'kode_alat'},
-            {data: 'lokasi', name: 'lokasi'},
+            // {data: 'lokasi', name: 'lokasi'},
             {data: 'serial_number', name: 'serial_number'},
             {data: 'nama_merk', name: 'nama_merk'},
             {data: 'nama_type', name: 'nama_type'},            
