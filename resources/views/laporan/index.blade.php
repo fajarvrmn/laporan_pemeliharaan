@@ -461,7 +461,7 @@
                                     <label for="name" class="control-label label-padding">Gardu Induk</label>
                                 </div>
                                 <div class="col-10">
-                                    <p id="id_gardu_induk_preview" class="label-padding">: </p>
+                                    <p id="nama_gardu_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 
@@ -492,7 +492,8 @@
                                     <label for="name" class="control-label label-padding">Nama Bay</label>
                                 </div>
                                 <div class="col-10">
-                                    <p id="id_peralatan_preview" class="label-padding">: </p>
+                                    <!-- <p id="id_peralatan_preview" class="label-padding">: </p> -->
+                                    <p id="nama_bay_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 

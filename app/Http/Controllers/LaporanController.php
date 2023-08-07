@@ -469,14 +469,14 @@ class LaporanController extends Controller
 
             $drawing2 = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
             $drawing2->setPath(public_path('theme/dist/img/pdkb.png')); /* put your path and image here */
-            $drawing2->setCoordinates('Y2');
+            $drawing2->setCoordinates('V2');
             $drawing2->setHeight(80);
             $drawing2->setOffsetX(5); 
             $drawing2->setOffsetY(10); 
             
             $drawing2->setWorksheet($spreadsheet->getActiveSheet());
 
-            $spreadsheet->getActiveSheet()->mergeCells('Y2:Y5');
+            $spreadsheet->getActiveSheet()->mergeCells('V2:V5'); //rowsapan image pdkb
             $spreadsheet->getActiveSheet()->mergeCells('C2:X2');
             $spreadsheet->getActiveSheet()->mergeCells('C3:X3');
             $spreadsheet->getActiveSheet()->mergeCells('C4:X4');
@@ -498,11 +498,11 @@ class LaporanController extends Controller
             $spreadsheet->getActiveSheet()->mergeCells('F7:F8');
             $spreadsheet->getActiveSheet()->mergeCells('G7:G8');
             $spreadsheet->getActiveSheet()->mergeCells('H7:H8');
-            $spreadsheet->getActiveSheet()->mergeCells('I7:I8');
-            $spreadsheet->getActiveSheet()->mergeCells('J7:J8');
+            $spreadsheet->getActiveSheet()->mergeCells('O7:O8');
+            $spreadsheet->getActiveSheet()->mergeCells('P7:P8');
 
-            $spreadsheet->getActiveSheet()->mergeCells('K7:M7');
-            $spreadsheet->getActiveSheet()->mergeCells('N7:P7');
+            $spreadsheet->getActiveSheet()->mergeCells('I7:K7'); //tahanan kontak colspan
+            $spreadsheet->getActiveSheet()->mergeCells('L7:N7'); //tahanan isolasi colspan
 
             $spreadsheet->getActiveSheet()->mergeCells('Q7:Q8');
             $spreadsheet->getActiveSheet()->mergeCells('R7:R8');
@@ -520,32 +520,32 @@ class LaporanController extends Controller
 
             $spreadsheet->getActiveSheet()->getRowDimension('9')->setRowHeight(25);
 
-            $spreadsheet->getActiveSheet()->setCellValue('B7', 'Status Laporan');
-            $spreadsheet->getActiveSheet()->setCellValue('C7', 'Alasan');
-            $spreadsheet->getActiveSheet()->setCellValue('D7', 'Tanggal Pelaksanaan');
-            $spreadsheet->getActiveSheet()->setCellValue('E7', 'Gardu Induk');
-            $spreadsheet->getActiveSheet()->setCellValue('F7', 'Peralatan');
-            $spreadsheet->getActiveSheet()->setCellValue('G7', 'Rel');
-            $spreadsheet->getActiveSheet()->setCellValue('H7', 'Merek');
-            $spreadsheet->getActiveSheet()->setCellValue('I7', 'Tipe');
-            $spreadsheet->getActiveSheet()->setCellValue('J7', 'Kapasitas');
-            $spreadsheet->getActiveSheet()->setCellValue('K7', 'Tahanan Kontak');
-                $spreadsheet->getActiveSheet()->setCellValue('K8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('L8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('M8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-            $spreadsheet->getActiveSheet()->setCellValue('N7', 'Tahanan Isolasi');
-                $spreadsheet->getActiveSheet()->setCellValue('N8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('O8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('P8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-            $spreadsheet->getActiveSheet()->setCellValue('Q7', 'Arus Motor');
-            $spreadsheet->getActiveSheet()->setCellValue('R7', 'Waktu Open');
-            $spreadsheet->getActiveSheet()->setCellValue('S7', 'Waktu Close');
-            $spreadsheet->getActiveSheet()->setCellValue('T7', 'Kondisi Visual');
-            $spreadsheet->getActiveSheet()->setCellValue('U7', 'File Dokumentasi');
-            $spreadsheet->getActiveSheet()->setCellValue('V7', 'Pengawas Pekerjaan');
-            $spreadsheet->getActiveSheet()->setCellValue('W7', 'Pelaksana Uji');
-            $spreadsheet->getActiveSheet()->setCellValue('X7', 'Status Pekerjaan');
-            $spreadsheet->getActiveSheet()->setCellValue('Y7', 'Keterangan');
+            // $spreadsheet->getActiveSheet()->setCellValue('B7', 'Status Laporan');
+            // $spreadsheet->getActiveSheet()->setCellValue('C7', 'Alasan');
+            $spreadsheet->getActiveSheet()->setCellValue('B7', 'Tanggal Pelaksanaan');
+            $spreadsheet->getActiveSheet()->setCellValue('C7', 'Gardu Induk');
+            $spreadsheet->getActiveSheet()->setCellValue('D7', 'Peralatan');
+            $spreadsheet->getActiveSheet()->setCellValue('E7', 'Rel');
+            $spreadsheet->getActiveSheet()->setCellValue('F7', 'Merek');
+            $spreadsheet->getActiveSheet()->setCellValue('G7', 'Tipe');
+            $spreadsheet->getActiveSheet()->setCellValue('H7', 'Kapasitas');
+            $spreadsheet->getActiveSheet()->setCellValue('I7', 'Tahanan Kontak');
+                $spreadsheet->getActiveSheet()->setCellValue('I8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('J8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('K8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+            $spreadsheet->getActiveSheet()->setCellValue('L7', 'Tahanan Isolasi');
+                $spreadsheet->getActiveSheet()->setCellValue('L8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('M8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('N8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+            $spreadsheet->getActiveSheet()->setCellValue('O7', 'Arus Motor');
+            $spreadsheet->getActiveSheet()->setCellValue('P7', 'Waktu Open');
+            $spreadsheet->getActiveSheet()->setCellValue('Q7', 'Waktu Close');
+            $spreadsheet->getActiveSheet()->setCellValue('R7', 'Kondisi Visual');
+            // $spreadsheet->getActiveSheet()->setCellValue('U7', 'File Dokumentasi');
+            $spreadsheet->getActiveSheet()->setCellValue('S7', 'Pengawas Pekerjaan');
+            $spreadsheet->getActiveSheet()->setCellValue('T7', 'Pelaksana Uji');
+            $spreadsheet->getActiveSheet()->setCellValue('U7', 'Status Pekerjaan');
+            $spreadsheet->getActiveSheet()->setCellValue('V7', 'Keterangan');
 
             $char = range('A', 'Z'); //abjad array
             // $start_header_table = 1;
@@ -567,30 +567,30 @@ class LaporanController extends Controller
                 $spreadsheet->getActiveSheet()->getStyle($start_col)->getAlignment()->setVertical('center');
                 $spreadsheet->getActiveSheet()->getStyle($start_col)->getAlignment()->setHorizontal('center');
 
-                $spreadsheet->getActiveSheet()->setCellValue($char[1].$start_col, $value['status_laporan']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[2].$start_col, $value['alasan']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[3].$start_col, $value['tanggal_pelaksanaan']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[4].$start_col, $value['gardu_induk']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[5].$start_col, $value['peralatan']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[6].$start_col, $value['rel']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[7].$start_col, $value['merk']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[8].$start_col, $value['type']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[9].$start_col, $value['kapasitas']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[10].$start_col, $value['kontak_r']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[11].$start_col, $value['kontak_s']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[12].$start_col, $value['kontak_t']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[13].$start_col, $value['isolasi_r']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[14].$start_col, $value['isolasi_s']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[15].$start_col, $value['isolasi_t']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[16].$start_col, $value['arus_motor']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[17].$start_col, $value['waktu_open']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[18].$start_col, $value['waktu_close']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[19].$start_col, $value['kondisi_visual']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[20].$start_col, $value['dokumentasi']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[21].$start_col, $value['pengawas']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[22].$start_col, $value['pelaksana_uji']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[23].$start_col, $value['status_pekerjaan']);
-                $spreadsheet->getActiveSheet()->setCellValue($char[24].$start_col, $value['keterangan']);
+                // $spreadsheet->getActiveSheet()->setCellValue($char[1].$start_col, $value['status_laporan']);
+                // $spreadsheet->getActiveSheet()->setCellValue($char[2].$start_col, $value['alasan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[1].$start_col, $value['tanggal_pelaksanaan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[2].$start_col, $value['gardu_induk']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[3].$start_col, $value['peralatan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[4].$start_col, $value['rel']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[5].$start_col, $value['merk']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[6].$start_col, $value['type']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[7].$start_col, $value['kapasitas']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[8].$start_col, $value['kontak_r']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[9].$start_col, $value['kontak_s']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[10].$start_col, $value['kontak_t']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[11].$start_col, $value['isolasi_r']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[12].$start_col, $value['isolasi_s']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[13].$start_col, $value['isolasi_t']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[14].$start_col, $value['arus_motor']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[15].$start_col, $value['waktu_open']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[16].$start_col, $value['waktu_close']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[17].$start_col, $value['kondisi_visual']);
+                // $spreadsheet->getActiveSheet()->setCellValue($char[20].$start_col, $value['dokumentasi']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[18].$start_col, $value['pengawas']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[19].$start_col, $value['pelaksana_uji']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[20].$start_col, $value['status_pekerjaan']);
+                $spreadsheet->getActiveSheet()->setCellValue($char[21].$start_col, $value['keterangan']);
 
                 $start_col ++;
             }
