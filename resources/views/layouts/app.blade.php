@@ -7,6 +7,10 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <style>
+        .select2-container--bootstrap { padding-left: 0px; }
+    </style>
+
     <title>Sistem Laporan Pemeliharaan</title>
 
     <!-- Fonts -->
@@ -74,6 +78,7 @@
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/10.5.1/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     
 
 </head>
@@ -316,17 +321,19 @@
                         todayHighlight: true
                     });
 
-                $("#id_gardu_induk").select2({
-                    placeholder: "Pilih"
-                });
-                
-                $("#id_peralatan").select2({
-                    placeholder: "Pilih"
-                });
+                    $(".select2").select2({
+                        placeholder: "Pilih",
+                        width: '100%'
+                    });
+
+                    $(".select2_in_modal").select2({
+                        placeholder: "Pilih",
+                        width: '100%',
+                        dropdownParent: $('#ajaxModel')
+                    });
                     
                 })
             </script>
-            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         </div>
     </div>

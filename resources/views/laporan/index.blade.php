@@ -25,7 +25,7 @@
         <form id="form_filter">
             <div class="row">
                 <div class="col-3">
-                    <select name="id_peralatan" class="form-control form-control-sm filter_datatable_search">
+                    <select name="id_peralatan" class="form-control form-control-sm filter_datatable_search select2">
                         <option value="" disabled selected>Pilih Peralatan</option>
                         @foreach(getPeralatan() as $peralatan)
                             <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <select name="id_gardu_induk" class="form-control form-control-sm filter_datatable_search">
+                    <select name="id_gardu_induk" class="form-control form-control-sm filter_datatable_search select2">
                         <option value="" disabled selected>Pilih Gardu Induk</option>
                         @foreach(getGarduInduk() as $gardu)
                             <option value="{{ $gardu->id }}">{{ $gardu->nama_gardu }}</option>
@@ -161,7 +161,7 @@
                                     <label for="name" class="control-label label-padding">Gardu Induk</label>
                                 </div>
                                 <div class="col-9">
-                                    <select id="id_gardu_induk" name="id_gardu_induk" class="form-control form-control-sm">
+                                    <select id="id_gardu_induk" name="id_gardu_induk" class="form-control form-control-sm select2_in_modal">
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getGarduInduk() as $gardu)
                                             <option value="{{ $gardu->id }}">{{ $gardu->nama_gardu }}</option>
@@ -197,7 +197,7 @@
                                     <label for="name" class="control-label label-padding">Nama Bay</label>
                                 </div>
                                 <div class="col-9">
-                                    <select id="id_peralatan" name="id_peralatan" class="form-control form-control-sm" required>
+                                    <select id="id_peralatan" name="id_peralatan" class="form-control form-control-sm select2_in_modal" required>
                                         <option value="" disabled selected>Pilih</option>
                                         @foreach(getPeralatan() as $peralatan)
                                             <option value="{{ $peralatan->id_alat }}">{{ $peralatan->nama_bay }}</option>
