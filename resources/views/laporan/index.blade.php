@@ -230,8 +230,8 @@
                                 <div class="col-9">
                                     <select id="rel" name="rel" class="form-control col-12 form-control-sm" required>
                                         <option value="" disabled selected>Pilih</option>
-                                        <option value="Selesai">Satu</option>
-                                        <option value="Selesai">Dua</option>
+                                        <option value="Satu">Satu</option>
+                                        <option value="Dua">Dua</option>
                                 </select>
                                 </div>
                                 
