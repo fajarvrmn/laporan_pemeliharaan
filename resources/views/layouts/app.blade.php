@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.3.2/css/fixedHeader.bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -314,9 +315,18 @@
                         todayBtn: true,
                         todayHighlight: true
                     });
+
+                $("#id_gardu_induk").select2({
+                    placeholder: "Pilih"
+                });
+                
+                $("#id_peralatan").select2({
+                    placeholder: "Pilih"
+                });
                     
                 })
             </script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         </div>
     </div>
