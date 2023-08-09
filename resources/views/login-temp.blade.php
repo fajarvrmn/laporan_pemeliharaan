@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-  	<title>Login 10</title>
+  	<title>Login Sistem</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="../login-template/css/style.css">
 
 	</head>
-	<body class="img js-fullheight" style="background-image: url(../login-template/images/pln.jpeg);">
+	<body class="img js-fullheight" style="background-image: url(../login-template/images/upt.jpeg);">
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -23,7 +23,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-6 col-lg-4">
 					<div class="login-wrap p-0">
-		      	<h3 class="mb-4 text-center">Login Sistem</h3>
+		      	<h3 class="mb-4 text-center">Login</h3>
 		      	<form method="POST" action="{{ route('login') }}" class="signin-form">
 		      		@csrf
 		      		<div class="form-group">
@@ -48,16 +48,16 @@
 	            </div>
 	            <div class="form-group d-md-flex">
 	            	<div class="w-50">
-		            	<label class="checkbox-wrap checkbox-primary">Remember Me
+		            	<label class="checkbox-wrap checkbox-primary">Remember Me !
 									  <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}  checked>
 									  <span class="checkmark"></span>
 									</label>
 								</div>
-								<div class="w-50 text-md-right">
+								<!-- <div class="w-50 text-md-right">
 									@if (Route::has('password.request'))
 									<a href="{{ route('password.request') }}" style="color: #fff">Forgot Password</a>
 									@endif
-								</div>
+								</div> -->
 	            </div>
 	          </form>
 		      </div>
