@@ -429,7 +429,7 @@ class LaporanController extends Controller
                 'waktu_close' => $row->waktu_close,
                 'kondisi_visual' => $row->kondisi_visual,
                 'dokumentasi' => $row->dokumentasi,
-                'pengawas' => $row->pengawas_pekerjaan,
+                'pengawas' => $row->user_name,
                 'pelaksana_uji' => $row->pelaksana_uji,
                 'status_pekerjaan' => $row->status_laporan,
                 'keterangan' => $row->keterangan
@@ -534,9 +534,9 @@ class LaporanController extends Controller
                 $spreadsheet->getActiveSheet()->setCellValue('J8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
                 $spreadsheet->getActiveSheet()->setCellValue('K8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
             $spreadsheet->getActiveSheet()->setCellValue('L7', 'Tahanan Isolasi');
-                $spreadsheet->getActiveSheet()->setCellValue('L8', 'R '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('M8', 'S '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
-                $spreadsheet->getActiveSheet()->setCellValue('N8', 'T '.html_entity_decode('&#181;',ENT_QUOTES,'UTF-8').'Ohm');
+                $spreadsheet->getActiveSheet()->setCellValue('L8', 'R '.'Mohm');
+                $spreadsheet->getActiveSheet()->setCellValue('M8', 'S '.'Mohm');
+                $spreadsheet->getActiveSheet()->setCellValue('N8', 'T '.'Mohm');
             $spreadsheet->getActiveSheet()->setCellValue('O7', 'Arus Motor');
             $spreadsheet->getActiveSheet()->setCellValue('P7', 'Waktu Open');
             $spreadsheet->getActiveSheet()->setCellValue('Q7', 'Waktu Close');

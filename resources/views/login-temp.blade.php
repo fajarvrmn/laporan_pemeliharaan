@@ -36,7 +36,7 @@
 		      		</div>
 	            <div class="form-group">
 	              <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" required>
-	              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+	              <span toggle="#toggle-password" class="fa fa-fw fa-eye field-icon toggle-password" style="color : black;"></span>
 	              @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
