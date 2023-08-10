@@ -36,7 +36,8 @@
 		      		</div>
 	            <div class="form-group">
 	              <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password" required>
-	              <span toggle="#toggle-password" class="fa fa-fw fa-eye field-icon toggle-password" style="color : black;"></span>
+	              <!-- <span toggle="#toggle-password" class="fa fa-fw fa-eye field-icon toggle-password" style="color : black;"></span> -->
+	              <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password" style="color : black;"></span>
 	              @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -65,6 +66,20 @@
 			</div>
 		</div>
 	</section>
+
+
+	<script type="text/javascript">
+		$(".toggle-password").click(function() {
+
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+    input.attr("type", "text");
+  } else {
+    input.attr("type", "password");
+  }
+});
+	</script>
 
 	<script src="../login-template/js/jquery.min.js"></script>
   <script src="../login-template/js/popper.js"></script>
