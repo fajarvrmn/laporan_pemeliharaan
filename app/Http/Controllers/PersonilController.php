@@ -17,7 +17,10 @@ class PersonilController extends Controller
     {
         if ($request->ajax()) {
   
-            $data = Personil::latest()->get();
+            // $data = Personil::latest()->get();
+
+            $data = Personil::select('users.*','roles.name as role_name')
+                    ->join('roles', 'roles.id', '=', 'users.role')->get();
   
             return Datatables::of($data)
                     ->addIndexColumn()
@@ -41,7 +44,7 @@ class PersonilController extends Controller
 
         // dd($req);
         $param = $request->all();
-        $param['role'] = '1';
+        // $param['role'] = '1';
         $param['password'] = Hash::make($request->password);
         $create = Personil::create($param);
         return response()->json(['success'=>'Data Berhasil Disimpan.']);
@@ -67,7 +70,7 @@ class PersonilController extends Controller
     public function update(Request $request){
         // dd($request);
         $param = $request->all();
-        $param['role'] = '1';
+        // $param['role'] = '1';
         $param['password'] = Hash::make($request->password);
         // dd($param);
         $create = Personil::where('id', $request->id)

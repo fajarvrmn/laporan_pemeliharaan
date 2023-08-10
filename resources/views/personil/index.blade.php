@@ -27,6 +27,7 @@
                 <th>Pendidikan</th>
                 <th>Jabatan</th>
                 <th>Unit Kerja</th>
+                <th>Role</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -141,6 +142,7 @@
             {data: 'pendidikan', name: 'pendidikan'},
             {data: 'jabatan', name: 'jabatan'},
             {data: 'unit_kerja', name: 'unit_kerja'},
+            {data: 'role_name', name: 'role_name'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
