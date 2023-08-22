@@ -155,7 +155,9 @@
     $('body').on('click', '.deleteMerek', function () {
      
         var merek_id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+         if(!confirm("Are You sure want to delete !")){
+            return false;
+        }
         
         $.ajax({
             type: "DELETE",

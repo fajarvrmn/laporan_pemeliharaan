@@ -232,7 +232,9 @@
     $('body').on('click', '.delete', function () {
      
         var id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+         if(!confirm("Are You sure want to delete !")){
+            return false;
+        }
         
         $.ajax({
             type: "DELETE",

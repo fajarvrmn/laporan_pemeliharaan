@@ -69,7 +69,8 @@ class LaporanController extends Controller
                     ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
                     ->join('merek_peralatan', 'merek_peralatan.id', '=', 'laporan.merk')
                     ->join('type_peralatan', 'type_peralatan.id', '=', 'laporan.type')
-                    ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan');
+                    ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan')
+                    ->orderBy('tgl_pelaksanaan', 'desc');
 
             if(isset($request->form_search)){
                 $laporan->where($arrFilter);

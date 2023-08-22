@@ -1361,7 +1361,9 @@
     $('body').on('click', '.delete', function () {
      
         // var id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+       if(!confirm("Are You sure want to delete !")){
+            return false;
+        }
 
         var id = $(this).data('id');
         var id_peralatan = $(this).data('idperalatan');

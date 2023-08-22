@@ -154,7 +154,10 @@
     $('body').on('click', '.deleteGardu', function () {
      
         var gardu_id = $(this).data("id");
-        confirm("Are You sure want to delete !");
+        
+         if(!confirm("Are You sure want to delete !")){
+            return false;
+        }
         
         $.ajax({
             type: "DELETE",
