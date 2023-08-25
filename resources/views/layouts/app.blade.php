@@ -55,7 +55,7 @@
     <script src="{{ asset('theme/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
     <script src="{{ asset('theme/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
     <!-- ChartJS -->
-    <!-- <script src="{{ asset('theme/plugins/chart.js/Chart.min.js') }}"></script> -->
+    <script src="{{ asset('theme/plugins/chart.js/Chart.min.js') }}"></script>
 
     <!-- AdminLTE for demo purposes -->
     <!-- <script src="{{ asset('theme/dist/js/demo.js') }}"></script> -->

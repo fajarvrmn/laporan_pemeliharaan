@@ -215,4 +215,31 @@ class DashboardController extends Controller
       
         return response()->json(['success'=>'Gardu deleted successfully.']);
     }
+
+    public function countGardu(){
+        $laporan = Laporan::select(DB::raw('COUNT(id_gardu_induk) as total_gardu'), 
+            'gardu_induk.nama_gardu as nama_gardu')
+                ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
+                ->groupBy('id_gardu_induk');
+
+        return response()->json(['success'=>true, 'data' => $laporan->get()]);
+    }
+
+    public function countBay(){
+        $laporan = Laporan::select(DB::raw('COUNT(id_peralatan) as total'), 
+            'peralatan.nama_bay as nama')
+                ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
+                ->groupBy('id_peralatan');
+
+        return response()->json(['success'=>true, 'data' => $laporan->get()]);
+    }
+
+    public function countPengawas(){
+        $laporan = Laporan::select(DB::raw('COUNT(pengawas_pekerjaan) as total'), 
+            'users.name as nama')
+                ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan')
+                ->groupBy('pengawas_pekerjaan');
+
+        return response()->json(['success'=>true, 'data' => $laporan->get()]);
+    }
 }

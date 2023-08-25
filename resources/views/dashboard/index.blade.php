@@ -106,10 +106,30 @@
             </table>
         </div>
 
+        <div>
+            <hr>
+        </div>
+
+        <div class="col-12">
+            <canvas id="chartGarduInduk"></canvas>
+        </div>
+        <div><hr></div>
+        <div class="col-12">
+            <canvas id="chartBay"></canvas>
+        </div>
+        <div><hr></div>
+        <div class="col-12">
+            <canvas id="chartPengawas"></canvas>
+        </div>
+
     </div>
 
     <script>
         $(document).ready(function(){
+
+            countGardu();
+            countBay();
+            countPengawas();
 
             $.ajax({
                 url: "{{ route('dashboard.index') }}",
@@ -233,9 +253,159 @@
                     }
                 });
 
-            })
+            });
 
-        })
+        });
+
+        function countGardu(){
+            $.ajax({
+                url: "dashboard/gardu/chart",
+                data: {},
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                    var nama_gardu = [];
+                    var total_gardu = [];
+                    var bColor = [];
+                    for (let index = 0; index < data.data.length; index++) {
+                        // const element = array[index];
+                        $.each(data.data[index], function(k, v) {
+                            console.log(k, v);
+                            if(k == 'nama_gardu'){
+                                nama_gardu[index] = v;
+                            }else if(k == 'total_gardu'){
+                                total_gardu[index] = v;
+                                bColor[index] = 'rgb(51, 73, 242)';
+                            }
+                        });
+                    }
+                    
+                    var ctx = document.getElementById("chartGarduInduk").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: nama_gardu,
+                            datasets: [{
+                                label: 'Gardu Induk',
+                                data: total_gardu,
+                                backgroundColor: bColor,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function countBay(){
+            $.ajax({
+                url: "dashboard/bay/chart",
+                data: {},
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                    var nama = [];
+                    var total = [];
+                    var bColor = [];
+                    for (let index = 0; index < data.data.length; index++) {
+                        // const element = array[index];
+                        $.each(data.data[index], function(k, v) {
+                            console.log(k, v);
+                            if(k == 'nama'){
+                                nama[index] = v;
+                            }else if(k == 'total'){
+                                total[index] = v;
+                                bColor[index] = 'rgb(51, 73, 242)';
+                            }
+                        });
+                    }
+                    
+                    var ctx = document.getElementById("chartBay").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: nama,
+                            datasets: [{
+                                label: 'Bay',
+                                data: total,
+                                backgroundColor: bColor,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function countPengawas(){
+            $.ajax({
+                url: "dashboard/pengawas/chart",
+                data: {},
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                    var nama = [];
+                    var total = [];
+                    var bColor = [];
+                    for (let index = 0; index < data.data.length; index++) {
+                        // const element = array[index];
+                        $.each(data.data[index], function(k, v) {
+                            console.log(k, v);
+                            if(k == 'nama'){
+                                nama[index] = v;
+                            }else if(k == 'total'){
+                                total[index] = v;
+                                bColor[index] = 'rgb(51, 73, 242)';
+                            }
+                        });
+                    }
+                    
+                    var ctx = document.getElementById("chartPengawas").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: nama,
+                            datasets: [{
+                                label: 'Pengawas',
+                                data: total,
+                                backgroundColor: bColor,
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
     </script>
 @endsection

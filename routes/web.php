@@ -35,6 +35,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('laporan/pdf/{search}', [App\Http\Controllers\LaporanController::class, 'cetak_pdf']);
     Route::get('laporan/excel/{search}', [App\Http\Controllers\LaporanController::class, 'exportExcel']);
     Route::get('laporan/peralatan/{id_alat}', [App\Http\Controllers\LaporanController::class, 'getPeralatan']);
+    Route::get('dashboard/gardu/chart', [App\Http\Controllers\DashboardController::class, 'countGardu']);
+    Route::get('dashboard/bay/chart', [App\Http\Controllers\DashboardController::class, 'countBay']);
+    Route::get('dashboard/pengawas/chart', [App\Http\Controllers\DashboardController::class, 'countPengawas']);
 });
 
 // Route::middleware(['admin'])->group(function () {
