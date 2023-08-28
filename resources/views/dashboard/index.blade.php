@@ -97,7 +97,7 @@
                         <th>Dokumentasi</th>
                         <th>Pengawas Pekerjaan</th>
                         <th>Pelaksana Uji</th>
-                        <th>Status Pekerjaan</th>
+                        <!-- <th>Status Pekerjaan</th> -->
                         <th>Keterangan</th>
                     </tr>
                 </thead>
@@ -165,7 +165,7 @@
                             '<td><img src="{{ URL::asset("uploads") }}/images/'+value.dokumentasi+'" style="width: 100%;height: 100%;" alt="No Image Set"></img>'+'</td>'+
                             '<td>'+value.user_name+'</td>'+
                             '<td>'+value.pelaksana_uji+'</td>'+
-                            '<td>'+value.status_laporan+'</td>'+
+                            // '<td>'+value.status_laporan+'</td>'+
                             '<td>'+value.keterangan+'</td>'+
                         '</tr>');
 
@@ -231,7 +231,7 @@
                                         '<td><img src="{{ URL::asset("uploads") }}/images/'+value.dokumentasi+'" style="width: 100%;height: 100%;" alt="No Image Set"></img>'+'</td>'+
                                         '<td>'+value.user_name+'</td>'+
                                         '<td>'+value.pelaksana_uji+'</td>'+
-                                        '<td>'+value.status_laporan+'</td>'+
+                                        // '<td>'+value.status_laporan+'</td>'+
                                         '<td>'+value.keterangan+'</td>'+
                                     '</tr>');
 

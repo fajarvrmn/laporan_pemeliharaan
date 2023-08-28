@@ -361,7 +361,7 @@
                             </div>
 
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
 
                             <div class="form-group row">
                                 <div class="col-3 text-left">
@@ -374,11 +374,11 @@
                                         <option value="Selesai">Belum Selesai</option>
                                        
                                     </select>
-                                    <!-- <input type="hidden" name="id_peralatan" id="id_peralatan"> -->
+                                    
                                 </div>
                             </div>
 
-                        </div>
+                        </div> -->
 
                        <div class="col-6">
 
@@ -642,19 +642,18 @@
                             </div>
 
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
 
                             <div class="form-group row">
                                 <div class="col-2 text-left">
                                     <label for="name" class="control-label label-padding">Status Pekerjaan</label>
                                 </div>
                                 <div class="col-10 row">
-                                    <!-- <input type="number" name="kondisi_visual" id="kondisi_visual" class="form-control col-12 form-control-sm"> -->
                                     <p id="status_laporan_preview" class="label-padding">: </p>
                                 </div>
                             </div>
 
-                        </div>
+                        </div> -->
 
                         <div class="col-6">
 
