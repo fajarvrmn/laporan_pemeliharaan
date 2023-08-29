@@ -111,14 +111,17 @@
         </div>
 
         <div class="col-12">
+            <h3 align="center">Grafik Laporan Berdasarkan Gardu Induk</h3>
             <canvas id="chartGarduInduk"></canvas>
         </div>
         <div><hr></div>
         <div class="col-12">
+            <h3 align="center">Grafik Laporan Berdasarkan BAY</h3>
             <canvas id="chartBay"></canvas>
         </div>
         <div><hr></div>
         <div class="col-12">
+            <h3 align="center">Grafik Laporan Berdasarkan Pengawas Pekerjaan</h3>
             <canvas id="chartPengawas"></canvas>
         </div>
 
