@@ -326,7 +326,7 @@
                                 nama[index] = v;
                             }else if(k == 'total'){
                                 total[index] = v;
-                                bColor[index] = 'rgb(51, 73, 242)';
+                                bColor[index] = 'rgb(0, 128, 0)';
                             }
                         });
                     }
@@ -376,7 +376,7 @@
                                 nama[index] = v;
                             }else if(k == 'total'){
                                 total[index] = v;
-                                bColor[index] = 'rgb(51, 73, 242)';
+                                bColor[index] = 'rgb(100, 0, 0)';
                             }
                         });
                     }
