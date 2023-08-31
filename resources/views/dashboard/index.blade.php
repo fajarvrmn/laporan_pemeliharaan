@@ -75,7 +75,7 @@
         </form>
 
         <div class="col-12 table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table_dashboard">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -110,20 +110,75 @@
             <hr>
         </div>
 
+        <form id="search_grafik_gardu">
+            <div class="row">
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="start_date" id="start_date" class="form-control" placeholder="Start">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="end_date" id="end_date" class="form-control" placeholder="End">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-xl btn-primary">Filter Grafik Gardu</button>
+                </div>
+            </div>
+        </form>
+
+        <div><hr></div>
         <div class="col-12">
             <h3 align="center">Grafik Laporan Berdasarkan Gardu Induk</h3>
             <canvas id="chartGarduInduk"></canvas>
         </div>
         <div><hr></div>
+
+        <form id="search_grafik_bay">
+            <div class="row">
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="start_date" id="start_date" class="form-control" placeholder="Start">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="end_date" id="end_date" class="form-control" placeholder="End">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-xl btn-primary">Filter Grafik Bay</button>
+                </div>
+            </div>
+        </form>
+
+        <div><hr></div>
+
         <div class="col-12">
             <h3 align="center">Grafik Laporan Berdasarkan BAY</h3>
             <canvas id="chartBay"></canvas>
         </div>
         <div><hr></div>
+
+        <form id="search_grafik_pengawas">
+            <div class="row">
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="start_date" id="start_date" class="form-control" placeholder="Start">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-2 text-center">
+                    <input type="text" class="datepicker" name="end_date" id="end_date" class="form-control" placeholder="End">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-xl btn-primary">Filter Grafik Pengawas</button>
+                </div>
+            </div>
+        </form>
+
+        <div><hr></div>
         <div class="col-12">
             <h3 align="center">Grafik Laporan Berdasarkan Pengawas Pekerjaan</h3>
             <canvas id="chartPengawas"></canvas>
         </div>
+        
 
     </div>
 
@@ -175,6 +230,12 @@
                         i++;
 
                     });
+
+                    $('.table_dashboard').dataTable({
+                        "bFilter": false
+                    });
+                    // $('.table_dashboard').dataTable().fnClearTable();
+                    // $('.table_dashboard').dataTable().fnDestroy();
                 }
             });
 
@@ -258,9 +319,187 @@
 
             });
 
+            $( "#search_grafik_gardu" ).on( "submit", function( event ) {
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: "dashboard/gardu/chart",
+                    data: {date_start: $('#start_date').val(), date_end: $('#end_date').val()},
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+
+                        if(window.chartGardu && window.chartGardu !== null){
+                            console.log('chart tidak null');
+                            window.chartGardu.destroy();
+                        }
+
+                        var nama_gardu = [];
+                        var total_gardu = [];
+                        var bColor = [];
+                        for (let index = 0; index < data.data.length; index++) {
+                            // const element = array[index];
+                            $.each(data.data[index], function(k, v) {
+                                console.log(k, v);
+                                if(k == 'nama_gardu'){
+                                    nama_gardu[index] = v;
+                                }else if(k == 'total_gardu'){
+                                    total_gardu[index] = v;
+                                    bColor[index] = 'rgb(51, 73, 242)';
+                                }
+                            });
+                        }
+                        
+                        var ctxGardu = document.getElementById("chartGarduInduk").getContext('2d');
+                        window.chartGardu = new Chart(ctxGardu, {
+                            type: 'bar',
+                            data: {
+                                labels: nama_gardu,
+                                datasets: [{
+                                    label: 'Gardu Induk',
+                                    data: total_gardu,
+                                    backgroundColor: bColor,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+
+            });
+
+            $( "#search_grafik_bay" ).on( "submit", function( event ) {
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: "dashboard/bay/chart",
+                    data: {date_start: $('#start_date').val(), date_end: $('#end_date').val()},
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+
+                        if(window.chartBay && window.chartBay !== null){
+                            console.log('chart tidak null');
+                            window.chartBay.destroy();
+                        }
+                        
+                        var nama = [];
+                        var total = [];
+                        var bColor = [];
+                        for (let index = 0; index < data.data.length; index++) {
+                            // const element = array[index];
+                            $.each(data.data[index], function(k, v) {
+                                console.log(k, v);
+                                if(k == 'nama'){
+                                    nama[index] = v;
+                                }else if(k == 'total'){
+                                    total[index] = v;
+                                    bColor[index] = 'rgb(0, 128, 0)';
+                                }
+                            });
+                        }
+                        
+                        var ctx = document.getElementById("chartBay").getContext('2d');
+                        window.chartBay = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: nama,
+                                datasets: [{
+                                    label: 'Bay',
+                                    data: total,
+                                    backgroundColor: bColor,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+
+            });
+
+            $( "#search_grafik_pengawas" ).on( "submit", function( event ) {
+
+                event.preventDefault();
+
+                $.ajax({
+                    url: "dashboard/pengawas/chart",
+                    data: {date_start: $('#start_date').val(), date_end: $('#end_date').val()},
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+
+                        if(window.chartPengawas && window.chartPengawas !== null){
+                            console.log('chart tidak null');
+                            window.chartPengawas.destroy();
+                        }
+                        
+                        var nama = [];
+                        var total = [];
+                        var bColor = [];
+                        for (let index = 0; index < data.data.length; index++) {
+                            // const element = array[index];
+                            $.each(data.data[index], function(k, v) {
+                                console.log(k, v);
+                                if(k == 'nama'){
+                                    nama[index] = v;
+                                }else if(k == 'total'){
+                                    total[index] = v;
+                                    bColor[index] = 'rgb(100, 0, 0)';
+                                }
+                            });
+                        }
+                        
+                        var ctx = document.getElementById("chartPengawas").getContext('2d');
+                        window.chartPengawas = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: nama,
+                                datasets: [{
+                                    label: 'Pengawas',
+                                    data: total,
+                                    backgroundColor: bColor,
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                });
+
+            });
+
+
         });
 
-        function countGardu(){
+        function countGardu(data=""){
             $.ajax({
                 url: "dashboard/gardu/chart",
                 data: {},
@@ -285,7 +524,7 @@
                     }
                     
                     var ctx = document.getElementById("chartGarduInduk").getContext('2d');
-                    var myChart = new Chart(ctx, {
+                    window.chartGardu = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: nama_gardu,
@@ -308,9 +547,9 @@
                     });
                 }
             });
-        }
+        };
 
-        function countBay(){
+        function countBay(data=""){
             $.ajax({
                 url: "dashboard/bay/chart",
                 data: {},
@@ -335,7 +574,7 @@
                     }
                     
                     var ctx = document.getElementById("chartBay").getContext('2d');
-                    var myChart = new Chart(ctx, {
+                    window.chartBay = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: nama,
@@ -358,9 +597,9 @@
                     });
                 }
             });
-        }
+        };
 
-        function countPengawas(){
+        function countPengawas(data=""){
             $.ajax({
                 url: "dashboard/pengawas/chart",
                 data: {},
@@ -385,7 +624,7 @@
                     }
                     
                     var ctx = document.getElementById("chartPengawas").getContext('2d');
-                    var myChart = new Chart(ctx, {
+                    window.chartPengawas = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: nama,
@@ -408,7 +647,7 @@
                     });
                 }
             });
-        }
+        };
 
     </script>
 @endsection

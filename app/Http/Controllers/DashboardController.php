@@ -216,29 +216,41 @@ class DashboardController extends Controller
         return response()->json(['success'=>'Gardu deleted successfully.']);
     }
 
-    public function countGardu(){
+    public function countGardu(Request $request){
         $laporan = Laporan::select(DB::raw('COUNT(id_gardu_induk) as total_gardu'), 
             'gardu_induk.nama_gardu as nama_gardu')
                 ->join('gardu_induk', 'gardu_induk.id', '=', 'laporan.id_gardu_induk')
                 ->groupBy('id_gardu_induk');
 
+        if(isset($request->date_start) && isset($request->date_end) && $request->date_start !== "" && $request->date_end !== ""){
+            $laporan->whereBetween('tgl_pelaksanaan', [$request->date_start, $request->date_end]);
+        }
+
         return response()->json(['success'=>true, 'data' => $laporan->get()]);
     }
 
-    public function countBay(){
+    public function countBay(Request $request){
         $laporan = Laporan::select(DB::raw('COUNT(id_peralatan) as total'), 
             'peralatan.nama_bay as nama')
                 ->join('peralatan', 'peralatan.id_alat', '=', 'laporan.id_peralatan')
                 ->groupBy('id_peralatan');
 
+        if(isset($request->date_start) && isset($request->date_end) && $request->date_start !== "" && $request->date_end !== ""){
+            $laporan->whereBetween('tgl_pelaksanaan', [$request->date_start, $request->date_end]);
+        }
+
         return response()->json(['success'=>true, 'data' => $laporan->get()]);
     }
 
-    public function countPengawas(){
+    public function countPengawas(Request $request){
         $laporan = Laporan::select(DB::raw('COUNT(pengawas_pekerjaan) as total'), 
             'users.name as nama')
                 ->join('users', 'users.nip', '=', 'laporan.pengawas_pekerjaan')
                 ->groupBy('pengawas_pekerjaan');
+
+        if(isset($request->date_start) && isset($request->date_end) && $request->date_start !== "" && $request->date_end !== ""){
+            $laporan->whereBetween('tgl_pelaksanaan', [$request->date_start, $request->date_end]);
+        }
 
         return response()->json(['success'=>true, 'data' => $laporan->get()]);
     }
